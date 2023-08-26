@@ -20,72 +20,120 @@
 (def diminished-seventh 9)
 (def minor-seventh      10)
 (def major-seventh      11)
+(def ninth              major-second)
+(def eleventh           5)
+(def thirteen           8)
 (def octave             perfect-unison)
 (def perfect-octave     perfect-unison)
 
 (defn intervals []
   [{:semitones perfect-unison
     :function  "1"
-    :name      "Perfect unison"}
+    :name/en   "Root"
+    :name/sv   "Root"}
    {:semitones minor-second
     :function  "b2"
-    :name      "Minor second"}
+    :name/en   "Minor second"
+    :name/sv   "Liten sekund"}
    {:semitones major-second
     :function  "2"
-    :name      "Major second"}
+    :name/en   "Major second"
+    :name/sv   "Sekund"}
    {:semitones augmented-second
     :function  "#2"
-    :name      "Augmented second"}
+    :name/en   "Augmented second"
+    :name/sv   "Augmented second"}
    {:semitones minor-third
     :function  "b3"
-    :name      "Minor third"}
+    :name/en   "Minor third"
+    :text/en   "Blue note"
+    :name/sv   "Moll-ters"}
    {:semitones major-third
     :function  "3"
-    :name      "Major third"}
+    :name/en   "Major third"
+    :name/sv   "Dur-ters"}
    {:semitones augmented-third
     :function  "#3"
-    :name      "Augmented third"}
+    :name/en   "Augmented third"
+    :name/sv   "Augmented third"}
    {:semitones diminished-fourth
     :function  "b4"
-    :name      "Diminished fourth"}
+    :name/en   "Diminished fourth"
+    :name/sv   "Diminished fourth"}
    {:semitones perfect-fourth
     :function  "4"
-    :name      "perfect fourth"}
+    :name/en   "perfect fourth"
+    :name/sv   "Kvart"}
    {:semitones augmented-fourth
     :function  "#4"
-    :name      "Augmented fourth"}
+    :name/en   "Augmented fourth"
+    :name/sv   "Augmented fourth"}
    {:semitones diminished-fifth
     :function  "b5"
-    :name      "Diminished fifth"}
+    :name/en   "Diminished fifth"
+    :name/sv   "Diminished fifth"}
    {:semitones perfect-fifth
     :function  "5"
-    :name      "Perfect fifth"}
+    :name/en   "Perfect fifth"
+    :name/sv   "Kvint"}
    {:semitones augmented-fifth
     :function  "#5"
-    :name      "Augmented fifth"}
+    :name/en   "Augmented fifth"
+    :name/sv   "Augmented fifth"}
    {:semitones minor-sixth
     :function  "b6"
-    :name      "Minor sixth"}
+    :name/en   "Minor sixth"
+    :name/sv   "Liten sexa"}
    {:semitones major-sixth
     :function  "6"
-    :name      "Major sixth"}
+    :name/en   "Major sixth"
+    :name/sv   "Stor sexa"}
    {:semitones augmented-sixth
     :function  "#6"
-    :name      "Augmented sixth"}
+    :name/en   "Augmented sixth"
+    :name/sv   "Augmented sixth"}
    {:semitones diminished-seventh
     :function  "bb7"
-    :name      "Diminished seventh"}
+    :name/en   "Diminished seventh"
+    :name/sv   "Dubbelsänkt sjua"}
    {:semitones minor-seventh
     :function  "b7"
-    :name      "Minor seventh"}
+    :name/en   "Minor seventh"
+    :text/en   "Blue note"
+    :name/sv   "Liten sjua"}
    {:semitones major-seventh
     :function  "7"
-    :name      "Major seventh"}])
+    :name/en   "Major seventh"
+    :name/sv   "Sjua"}
+   {:semitones ninth
+    :function  "9"
+    :name/en   "Ninth"
+    :name/sv   "Nia"}
+   {:semitones ninth
+    :function  "#9"
+    :name/en   "Augmented ninth"
+    :name/sv   "Augmented ninth"}
+   {:semitones ninth
+    :function  "b9"
+    :name/en   "Diminished ninth"
+    :name/sv   "Diminished ninth"}
+   {:semitones eleventh
+    :function  "11"
+    :name/en   "Eleventh"
+    :name/sv   "Elva"}
+   {:semitones thirteen
+    :function  "13"
+    :name/en   "Thirteen"
+    :name/sv   "Tretton"}])
 
 (def intervals-map-by-function
   (->> (intervals)
        (map (juxt :function identity))
        (into {})))
+
+(defn functions-to-semitones [functions]
+  (->> functions
+       (mapv #(get-in intervals-map-by-function [% :semitones]))))
 
 (comment
   intervals-map-by-function)
