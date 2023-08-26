@@ -9,6 +9,7 @@
   Defines a scale without notion of instrument."
   [:map
    [:id               uuid?]
+   [:type             [:= :scale]]
    [:scale/scale      set?]
    [:scale/intervals  [:vector string?]]
    [:scale/indexes    [:vector number?]]

@@ -37,6 +37,7 @@
 (def FretboardPattern
   [:map
    [:id                           uuid?]
+   [:type                         [:= :pattern]]
    [:fretboard-pattern/belongs-to keyword?]
    [:fretboard-pattern/type       [:enum :triad :mode :scale :chord]]
    [:fretboard-pattern/tuning     [:+ keyword?]]
@@ -62,6 +63,7 @@
 
   (def fretboard-pattern
     {:id                           (random-uuid)
+     :type                         :pattern
      :fretboard-pattern/belongs-to :major
      :fretboard-pattern/type       :triad
      :fretboard-pattern/chord-id   :major,

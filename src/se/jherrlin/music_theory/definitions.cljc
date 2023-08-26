@@ -49,24 +49,31 @@
 
 ;; ---------------
 ;; State / data
+;; Atom that keeps all the definitions defined.
 ;; ---------------
-(def chords (atom {}))
-@chords
+(def definitions (atom {}))
+@definitions
+(:ids @definitions)
 
-(def scales (atom {}))
-@scales
+(defn chords []
+  (get @definitions :chords))
 
-(def chord-patterns (atom {}))
-@chord-patterns
+(defn scales []
+  (get @definitions :scales))
 
-(def triad-patterns (atom {}))
-@triad-patterns
+(defn patterns []
+  (get @definitions :patterns))
 
-(def mode-patterns (atom {}))
-@mode-patterns
+(defn ids [id]
+  (get-in @definitions [:ids]))
 
-(def scale-patterns (atom {}))
-@scale-patterns
+(defn by-id [id]
+  (get-in @definitions [:ids id]))
+
+(comment
+  (by-id #uuid "1559e2cf-5f29-4831-8a8f-dddd7ad89580")
+  )
+
 ;; ---------------
 ;; State / data end
 ;; ---------------
@@ -85,11 +92,15 @@
   ([id chord meta-data intervals]
    {:pre [(uuid? id)]}
    (let [meta-data (assoc meta-data :chord chord)
-         chord'    (utils/define-chord id meta-data intervals)
-         chords    (swap! chords assoc id chord')]
-     (if (models-chord/valid-chords? chords)
-       chords
-       (models-chord/explain-chords chords)))))
+         chord'    (utils/define-chord id meta-data intervals)]
+     (if (models-chord/valid-chord? chord')
+       (do
+         (swap! definitions assoc-in [:chords id] chord')
+         (swap! definitions assoc-in [:ids id] chord'))
+       (throw
+        (ex-info
+         "Chord error"
+         (models-chord/explain-chord chord')))))))
 
 
 (comment
@@ -103,7 +114,14 @@
    {:pre [(uuid? id) (set? scale-names)]}
    (let [meta-data (assoc meta-data :scale scale-names)
          scale (utils/define-scale id scale-names meta-data intervals-str)]
-     (swap! scales assoc id scale))))
+     (if (models-scale/valid-scale? scale)
+       (do
+         (swap! definitions assoc-in [:scales id] scale)
+         (swap! definitions assoc-in [:ids id] scale))
+       (throw
+        (ex-info
+         "Scale error"
+         (models-scale/explain-scale scale)))))))
 
 (comment
   ;; fretboard patterns model
@@ -115,7 +133,9 @@
   (let [meta-data'    (assoc meta-data :type :chord)
         chord-pattern (utils/define-pattern id meta-data' pattern)]
     (if (models-fretboard-pattern/validate-fretboard-pattern? chord-pattern)
-      (swap! chord-patterns assoc id chord-pattern)
+      (do
+        (swap! definitions assoc-in [:patterns id] chord-pattern)
+        (swap! definitions assoc-in [:ids id] chord-pattern))
       (throw
        (ex-info
         "Chord pattern error"
@@ -124,35 +144,41 @@
 (defn define-triad-pattern
   [id meta-data pattern]
   (let [meta-data'    (assoc meta-data :type :triad)
-        chord-pattern (utils/define-pattern id meta-data' pattern)]
-    (if (models-fretboard-pattern/validate-fretboard-pattern? chord-pattern)
-      (swap! triad-patterns assoc id chord-pattern)
+        pattern' (utils/define-pattern id meta-data' pattern)]
+    (if (models-fretboard-pattern/validate-fretboard-pattern? pattern')
+      (do
+        (swap! definitions assoc-in [:patterns id] pattern')
+        (swap! definitions assoc-in [:ids id] pattern'))
       (throw
        (ex-info
         "Triad pattern error"
-        (models-fretboard-pattern/explain-fretboard-pattern chord-pattern))))))
+        (models-fretboard-pattern/explain-fretboard-pattern pattern'))))))
 
 (defn define-mode-pattern
   [id meta-data pattern]
-  (let [meta-data'    (assoc meta-data :type :mode)
-        chord-pattern (utils/define-pattern id meta-data' pattern)]
-    (if (models-fretboard-pattern/validate-fretboard-pattern? chord-pattern)
-      (swap! mode-patterns assoc id chord-pattern)
+  (let [meta-data' (assoc meta-data :type :mode)
+        pattern'   (utils/define-pattern id meta-data' pattern)]
+    (if (models-fretboard-pattern/validate-fretboard-pattern? pattern')
+      (do
+        (swap! definitions assoc-in [:pattern id] pattern')
+        (swap! definitions assoc-in [:ids id] pattern'))
       (throw
        (ex-info
         "Mode pattern error"
-        (models-fretboard-pattern/explain-fretboard-pattern chord-pattern))))))
+        (models-fretboard-pattern/explain-fretboard-pattern pattern'))))))
 
 (defn define-scale-pattern
   [id meta-data pattern]
   (let [meta-data'    (assoc meta-data :type :scale)
-        chord-pattern (utils/define-pattern id meta-data' pattern)]
-    (if (models-fretboard-pattern/validate-fretboard-pattern? chord-pattern)
-      (swap! scale-patterns assoc id chord-pattern)
+        pattern' (utils/define-pattern id meta-data' pattern)]
+    (if (models-fretboard-pattern/validate-fretboard-pattern? pattern')
+      (do
+        (swap! definitions assoc-in [:patterns id] pattern')
+        (swap! definitions assoc-in [:ids id] pattern'))
       (throw
        (ex-info
         "Scale pattern error"
-        (models-fretboard-pattern/explain-fretboard-pattern chord-pattern))))))
+        (models-fretboard-pattern/explain-fretboard-pattern pattern'))))))
 ;; ---------------
 ;; Define helpers end.
 ;; ---------------

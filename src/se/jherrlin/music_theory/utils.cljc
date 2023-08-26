@@ -1149,6 +1149,7 @@
                         (-> (count intervals) (= 3))         (conj :triad)))
          chord      (merge
                      {:id              id
+                      :type            :chord
                       :chord/chord     chord
                       :chord/intervals intervals'
                       :chord/indexes   indexes
@@ -1225,6 +1226,7 @@
          pattern*   (merge
                      meta-data
                      {:id                           id
+                      :type                         :pattern
                       :fretboard-pattern/belongs-to belongs-to
                       :fretboard-pattern/type       type
                       :fretboard-pattern/tuning     tuning

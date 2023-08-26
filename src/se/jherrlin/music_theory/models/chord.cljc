@@ -24,6 +24,7 @@
   Defines a chord without notion of instrument."
   [:map
    [:id                 uuid?]
+   [:type               [:= :chord]]
    [:chord/chord        keyword?]
    [:chord/intervals    [:vector string?]]
    [:chord/indexes      [:vector number?]]
