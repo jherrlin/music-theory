@@ -947,7 +947,7 @@
 (->> (fretboard-strings
       (all-tones)
       [:e :b :g :d :a :e]
-      10)
+      16)
      (with-all-tones [:e :b :g])
      #_(utils/trim-matrix #(every? nil? (map :out %)))
      ;; (fretboard-str (fn [{:keys [out]}] (if (nil? out) "" out)))
