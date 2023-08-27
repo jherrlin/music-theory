@@ -1181,6 +1181,7 @@
          indexes    (intervals/functions-to-semitones intervals')
          scale'      (merge
                      {:id              id
+                      :type            :scale
                       :scale/scale     scale
                       :scale/intervals intervals'
                       :scale/indexes   indexes}

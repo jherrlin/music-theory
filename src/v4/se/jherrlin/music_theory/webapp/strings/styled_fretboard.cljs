@@ -3,7 +3,7 @@
    [re-frame.core :as re-frame]))
 
 
-#_(def matrix
+(def matrix
   [[{:x 0, :tone #{:e}, :y 0, :out "E"}
     {:x 1, :tone #{:f}, :y 0}
     {:x 2, :tone #{:gb :f#}, :y 0}
@@ -68,22 +68,23 @@
 
 
 (defn styled-view [matrix]
-  (let [circle-comp (fn [color] {:display          :flex
-                                 :height           "2em"
-                                 :width            "2em"
-                                 :background-color color #_"#ff7400"
-                                 :border-radius    "50%"
-                                 :z-index          0
-                                 :align-items      :center
-                                 :justify-content  :center})
-        max-x       (->> matrix first (map :x) (apply max))
-        fret-width "5"]
+  (let [circle-comp      (fn [color] {:display          :flex
+                                      :height           "2em"
+                                      :width            "2em"
+                                      :background-color color #_ "#ff7400"
+                                      :border-radius    "50%"
+                                      :z-index          0
+                                      :align-items      :center
+                                      :justify-content  :center})
+        max-x            (->> matrix first (map :x) (apply max))
+        fret-width       "5"
+        first-fret-width "5"]
     [:div
      [:div {:style {:display "flex"}}
       (for [{:keys [x]} (-> matrix first)]
         ^{:key (str "fretboard-fret-" x)}
         [:div {:style {:width           (if (= x 0)
-                                          "3.4em"
+                                          (str first-fret-width ".4em")
                                           (str fret-width ".4em"))
                        :display         "flex"
                        :justify-content "center"}}
@@ -94,7 +95,7 @@
         (for [{:keys [x y tone out]} fretboard-string]
           ^{:key (str "fretboard-string-" x "-" y)}
           [:<>
-           [:div {:id "hejsan"
+           [:div {:id    "hejsan"
                   :style {:display          "flex"
                           :flex-direction   "column"
                           :height           "3em"
@@ -123,15 +124,8 @@
                             :width            "6px"
                             :height           "3em"}}])])])]))
 
-#_(def routes
+(def routes
   (let [path-name :a/a]
-    ["/v5/derp"
+    ["/debug/styled-fretboard"
      {:name path-name
-      :view [styled-view]
-      :controllers
-      [{:parameters {:path  params/path-params
-                     :query params/query-params}
-        :start      (fn [{p :path q :query}]
-                      (re-frame/dispatch [:path-params p])
-                      (re-frame/dispatch [:query-params q])
-                      (re-frame/dispatch [:path-name path-name]))}]}]))
+      :view [styled-view matrix]}]))
