@@ -1,4 +1,4 @@
-(ns se.jherrlin.music-theory.webapp.focus
+(ns se.jherrlin.music-theory.webapp.chords
   (:require
    [clojure.set :as set]
    [clojure.string :as str]
@@ -8,25 +8,25 @@
    [se.jherrlin.music-theory.webapp.events :as events]))
 
 
-(defn focus-view []
-  [:div
-   [:h1 "focus view"]])
+(defn chord-view []
+  (let [path-params        @(re-frame/subscribe [:path-params])
+        query-params       @(re-frame/subscribe [:query-params])
+        current-route-name @(re-frame/subscribe [:current-route-name])]
+    [:div
+     [:h2 "chord-view"]]))
 
 (def routes
-  (let [route-name :focus]
-    ["/focus/:instrument-type/:tuning/:key-of/:id"
+  (let [route-name :chord]
+    ["/chord/:instrument-type/:tuning/:key-of/:chord"
      {:name       route-name
-      :view       [focus-view]
+      :view       [chord-view]
       :coercion   reitit.coercion.malli/coercion
       :parameters {:path [:map
                           [:instrument-type keyword?]
                           [:tuning          keyword?]
                           [:key-of          keyword?]
-                          [:id              uuid?]]}
+                          [:chord           keyword?]]}
       :controllers
-      [{:parameters {:path [:instrument-type :tuning :key-of :id]}
+      [{:parameters {:path [:instrument-type :tuning :key-of :chord]}
         :start      (fn [{p :path q :query}]
                       (events/do-on-url-change route-name p q))}]}]))
-
-
-;; http://localhost:8080/#/focus/c/1559e2cf-5f29-4831-8a8f-dddd7ad89580

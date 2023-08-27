@@ -54,12 +54,18 @@
 (def definitions (atom {}))
 @definitions
 (:ids @definitions)
+(:scales @definitions)
 
 (defn chords []
   (get @definitions :chords))
 
-(defn scales []
+(defn scales
+  []
   (get @definitions :scales))
+
+(defn scale
+  [k]
+  (get-in @definitions [:scales k]))
 
 (defn patterns []
   (get @definitions :patterns))
@@ -116,7 +122,8 @@
          scale (utils/define-scale id scale-names meta-data intervals-str)]
      (if (models-scale/valid-scale? scale)
        (do
-         (swap! definitions assoc-in [:scales id] scale)
+         (doseq [s (get scale :scale/scale)]
+           (swap! definitions assoc-in [:scales s] scale))
          (swap! definitions assoc-in [:ids id] scale))
        (throw
         (ex-info

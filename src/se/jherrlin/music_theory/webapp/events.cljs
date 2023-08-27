@@ -16,8 +16,16 @@
   (assoc db k (merge (get db k) m)))
 
 (def events-
-  [{:n :key-of}
+  [{:n :key-of
+    :s (fn [db [k]] (get db k :c))}
    {:n :current-route}
+   {:n :current-route-name}
+   {:n :instrument-type
+    :s (fn [db [k]] (get db k :strings))}
+   {:n :tuning
+    :s (fn [db [k]] (get db k :guitar))}
+   {:n :scale
+    :s (fn [db [k]] (get db k :major))}
    {:n :path-params
     :e merge'}
    {:n :query-params
@@ -47,3 +55,19 @@
    (if db
      db
      {:current-route nil})))
+
+(defn do-on-url-change
+  [new-route-name
+   {:keys [key-of instrument-type tuning scale] :as path-params}
+   query-params]
+  (re-frame/dispatch [:current-route-name new-route-name])
+  (re-frame/dispatch [:path-params path-params])
+  (re-frame/dispatch [:query-params query-params])
+  (when key-of
+    (re-frame/dispatch [:key-of key-of]))
+  (when instrument-type
+    (re-frame/dispatch [:instrument-type instrument-type]))
+  (when tuning
+    (re-frame/dispatch [:tuning tuning]))
+  (when scale
+    (re-frame/dispatch [:scale scale])))

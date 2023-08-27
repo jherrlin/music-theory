@@ -10,12 +10,18 @@
    [clojure.string :as str]
    [clojure.set :as set]
    [se.jherrlin.music-theory.webapp.focus :as focus]
+   [se.jherrlin.music-theory.webapp.harmonizations :as harmonizations]
+   [se.jherrlin.music-theory.webapp.chords :as chords]
+   [se.jherrlin.music-theory.webapp.scales :as scales]
    [v4.se.jherrlin.music-theory.webapp.strings.styled-fretboard :as styled-fretboard]))
 
 
 
 (def routes
   [focus/routes
+   chords/routes
+   scales/routes
+   harmonizations/routes
    styled-fretboard/routes
    ["/"
     [""
