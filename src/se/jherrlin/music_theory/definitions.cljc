@@ -59,6 +59,9 @@
 (defn chords []
   (get @definitions :chords))
 
+(defn chord [k]
+  (get-in @definitions [:chords k]))
+
 (defn scales
   []
   (get @definitions :scales))
@@ -101,7 +104,7 @@
          chord'    (utils/define-chord id meta-data intervals)]
      (if (models-chord/valid-chord? chord')
        (do
-         (swap! definitions assoc-in [:chords id] chord')
+         (swap! definitions assoc-in [:chords (get chord' :chord/chord)] chord')
          (swap! definitions assoc-in [:ids id] chord'))
        (throw
         (ex-info
@@ -390,17 +393,6 @@
    :explanation "thirteenth. Dominant"}
   "1 3 5 b7 9 11 13")
 
-(define-chord #uuid "2dfba16e-3816-461b-b088-ef2dcb394f43"
-  :maj-thirteen
-  {:sufix "13"
-   :explanation "major thirteenth"}
-  "1 3 5 7 9 11 13")
-
-(define-chord #uuid "97465c6d-9c7a-4ee9-9ebd-336913569935"
-  :minor-thirteen
-  {:sufix "13"
-   :explanation "major thirteenth"}
-  "1 b3 5 7 9 11 13")
 ;; ---------------
 ;; Chords end
 ;; ---------------

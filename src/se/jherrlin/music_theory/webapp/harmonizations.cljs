@@ -13,13 +13,13 @@
   (let [path-params        @(re-frame/subscribe [:path-params])
         query-params       @(re-frame/subscribe [:query-params])
         current-route-name @(re-frame/subscribe [:current-route-name])]
-    [:div
+    [:<>
      [menus/menu]
      [menus/key-selection]
      [menus/instrument-selection]
      [menus/scale-selection]
-
-     [:h2 "harmonizations-view"]]))
+     [:div
+      [:h2 "harmonizations-view"]]]))
 
 (def routes
   (let [route-name :harmonizations]

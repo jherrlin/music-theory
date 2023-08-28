@@ -19,7 +19,8 @@
   [{:n :key-of
     :s (fn [db [k]] (get db k :c))}
    {:n :current-route}
-   {:n :current-route-name}
+   {:n :current-route-name
+    :s (fn [db [k]] (get db k :home))}
    {:n :instrument-type
     :s (fn [db [k]] (get db k :strings))}
    {:n :tuning
@@ -32,11 +33,12 @@
     :e merge'
     :s (fn [db [k]]
          (merge
-          {:key-of          :c
-           :instrument-type :strings
-           :tuning          :guitar
-           :scale           :major
-           :chord           :major}
+          {:current-route-name :home
+           :key-of             :c
+           :instrument-type    :strings
+           :tuning             :guitar
+           :scale              :major
+           :chord              :major}
           (get db k)))}
    {:n :query-params
     :e merge'}

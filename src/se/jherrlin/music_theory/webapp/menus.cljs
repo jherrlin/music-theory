@@ -122,6 +122,47 @@
           {:disabled (= scale' scale)}
           title]]])]))
 
+(defn chord-sort-order []
+  (let [chords (se.jherrlin.music-theory.definitions/chords)
+        predifined-order [:major :minor
+                          :dominant-seven :minor-seven]]
+    (->> (concat
+          predifined-order
+          (->> chords
+               keys
+               (remove (set predifined-order))
+               (map name)
+               (sort)
+               (map keyword)))
+         (map (fn [x]
+                (get chords x)))
+         (remove nil?))))
+
+(defn chord-selection []
+  (let [current-route      @(re-frame/subscribe [:current-route])
+        path-params        @(re-frame/subscribe [:path-params])
+        query-params       @(re-frame/subscribe [:query-params])
+        current-route-name @(re-frame/subscribe [:current-route-name])
+        key-of             @(re-frame/subscribe [:key-of])
+        instrument-type    @(re-frame/subscribe [:instrument-type])
+        tuning             @(re-frame/subscribe [:tuning])
+        chord'             @(re-frame/subscribe [:chord])]
+    [:div
+     (for [{chord :chord/chord
+            title :chord/display-text
+            sufix :chord/sufix
+            id :id
+            :as m} (chord-sort-order)]
+       ^{:key id}
+       [:div {:style {:margin-right "10px" :display "inline"}}
+        [:a {:href (rfe/href
+                    :chord
+                    (assoc path-params :chord chord)
+                    query-params)}
+         [:button
+          {:disabled (= chord' chord)}
+          (or title sufix)]]])]))
+
 (defn menu []
   (let [current-route      @(re-frame/subscribe [:current-route])
         path-params        @(re-frame/subscribe [:path-params])
@@ -135,9 +176,9 @@
     [:div
      [:div {:style {:margin-right "10px" :display "inline"}}
       [:a {:href (rfe/href :home)}
-         [:button
-          {:disabled (= current-route-name :home)}
-          "Home"]]]
+       [:button
+        {:disabled (= current-route-name :home)}
+        "Home"]]]
 
      [:div {:style {:margin-right "10px" :display "inline"}}
       [:a {:href (rfe/href :chord path-params query-params)}
@@ -147,18 +188,18 @@
 
      [:div {:style {:margin-right "10px" :display "inline"}}
       [:a {:href (rfe/href :scale path-params query-params)}
-         [:button
-          {:disabled (= current-route-name :scale)}
-          "Scale"]]]
+       [:button
+        {:disabled (= current-route-name :scale)}
+        "Scale"]]]
 
      [:div {:style {:margin-right "10px" :display "inline"}}
       [:a {:href (rfe/href :harmonizations path-params query-params)}
-         [:button
-          {:disabled (= current-route-name :harmonizations)}
-          "Harmonizations"]]]
+       [:button
+        {:disabled (= current-route-name :harmonizations)}
+        "Harmonizations"]]]
 
      [:div {:style {:margin-right "10px" :display "inline"}}
       [:a {:href (rfe/href :bookmarks path-params query-params)}
-         [:button
-          {:disabled (= current-route-name :bookmarks)}
-          "Bookmarks"]]]]))
+       [:button
+        {:disabled (= current-route-name :bookmarks)}
+        "Bookmarks"]]]]))

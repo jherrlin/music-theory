@@ -5,15 +5,21 @@
    [re-frame.core :as re-frame]
    [reitit.frontend.easy :as rfe]
    [reitit.coercion.malli]
-   [se.jherrlin.music-theory.webapp.events :as events]))
+   [se.jherrlin.music-theory.webapp.events :as events]
+   [se.jherrlin.music-theory.webapp.menus :as menus]))
 
 
 (defn chord-view []
   (let [path-params        @(re-frame/subscribe [:path-params])
         query-params       @(re-frame/subscribe [:query-params])
         current-route-name @(re-frame/subscribe [:current-route-name])]
-    [:div
-     [:h2 "chord-view"]]))
+    [:<>
+     [menus/menu]
+     [menus/key-selection]
+     [menus/instrument-selection]
+     [menus/chord-selection]
+     [:div
+      [:h2 "chord-view"]]]))
 
 (def routes
   (let [route-name :chord]
