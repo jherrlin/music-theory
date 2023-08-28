@@ -6,7 +6,7 @@
    [re-frame.core :as re-frame]))
 
 
-(defn menu [component]
+(defn menu1 [component]
   (let [current-route @(re-frame/subscribe [:current-route])
         path-params   @(re-frame/subscribe [:path-params])
         query-params  @(re-frame/subscribe [:query-params])]
@@ -121,3 +121,43 @@
          [:button
           {:disabled (= scale' scale)}
           title]]])]))
+
+(defn menu []
+  (let [current-route      @(re-frame/subscribe [:current-route])
+        path-params        @(re-frame/subscribe [:path-params])
+        query-params       @(re-frame/subscribe [:query-params])
+        current-route-name @(re-frame/subscribe [:current-route-name])
+        key-of             @(re-frame/subscribe [:key-of])
+        instrument-type    @(re-frame/subscribe [:instrument-type])
+        tuning             @(re-frame/subscribe [:tuning])
+        scale              @(re-frame/subscribe [:scale])
+        chord              @(re-frame/subscribe [:chord])]
+    [:div
+     [:div {:style {:margin-right "10px" :display "inline"}}
+      [:a {:href (rfe/href :home)}
+         [:button
+          {:disabled (= current-route-name :home)}
+          "Home"]]]
+
+     [:div {:style {:margin-right "10px" :display "inline"}}
+      [:a {:href (rfe/href :chord path-params query-params)}
+       [:button
+        {:disabled (= current-route-name :chord)}
+        "Chords"]]]
+
+     [:div {:style {:margin-right "10px" :display "inline"}}
+      [:a {:href (rfe/href :scale path-params query-params)}
+         [:button
+          {:disabled (= current-route-name :scale)}
+          "Scale"]]]
+
+     [:div {:style {:margin-right "10px" :display "inline"}}
+      [:a {:href (rfe/href :harmonizations path-params query-params)}
+         [:button
+          {:disabled (= current-route-name :harmonizations)}
+          "Harmonizations"]]]
+
+
+     ]
+    )
+  )

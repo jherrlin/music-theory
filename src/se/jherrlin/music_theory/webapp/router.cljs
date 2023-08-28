@@ -13,7 +13,9 @@
    [se.jherrlin.music-theory.webapp.harmonizations :as harmonizations]
    [se.jherrlin.music-theory.webapp.chords :as chords]
    [se.jherrlin.music-theory.webapp.scales :as scales]
-   [v4.se.jherrlin.music-theory.webapp.strings.styled-fretboard :as styled-fretboard]))
+   [v4.se.jherrlin.music-theory.webapp.strings.styled-fretboard :as styled-fretboard]
+   [se.jherrlin.music-theory.webapp.events :as events]
+   [se.jherrlin.music-theory.webapp.menus :as menus]))
 
 
 
@@ -25,8 +27,15 @@
    styled-fretboard/routes
    ["/"
     [""
-     {:name :home
-      :view [:div [:h1 "Home"]]}]]])
+     (let [route-name :home]
+       {:name route-name
+        :view [:div
+               [menus/menu]
+               [:h1 "Home"]]
+        :controllers
+        [{:parameters {:path []}
+          :start      (fn [{p :path q :query}]
+                        (events/do-on-url-change route-name p q))}]})]]])
 
 (def router
   (rf/router

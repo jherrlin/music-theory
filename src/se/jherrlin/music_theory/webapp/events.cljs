@@ -26,8 +26,18 @@
     :s (fn [db [k]] (get db k :guitar))}
    {:n :scale
     :s (fn [db [k]] (get db k :major))}
+   {:n :chord
+    :s (fn [db [k]] (get db k :major))}
    {:n :path-params
-    :e merge'}
+    :e merge'
+    :s (fn [db [k]]
+         (merge
+          {:key-of          :c
+           :instrument-type :strings
+           :tuning          :guitar
+           :scale           :major
+           :chord           :major}
+          (get db k)))}
    {:n :query-params
     :e merge'}
    {:n :nr-of-frets}
@@ -58,7 +68,8 @@
 
 (defn do-on-url-change
   [new-route-name
-   {:keys [key-of instrument-type tuning scale] :as path-params}
+   {:keys [key-of instrument-type tuning scale chord]
+    :as   path-params}
    query-params]
   (re-frame/dispatch [:current-route-name new-route-name])
   (re-frame/dispatch [:path-params path-params])
@@ -70,4 +81,6 @@
   (when tuning
     (re-frame/dispatch [:tuning tuning]))
   (when scale
-    (re-frame/dispatch [:scale scale])))
+    (re-frame/dispatch [:scale scale]))
+  (when chord
+    (re-frame/dispatch [:chord chord])))
