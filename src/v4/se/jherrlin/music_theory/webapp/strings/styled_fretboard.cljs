@@ -109,12 +109,14 @@
                  :justify-content :center}}
    n])
 
-(defn fret [idx]
-  (let [background-color "#000000d6"
-        string-color     "linear-gradient(#737270 , #b9bab3, #737270)"
-        string-height    "0.5rem"
-        fret-color       "linear-gradient(to right, #FFFFFF , #706e68)"]
-    [:div {:on-click #(js/console.log (str "tjena" idx))
+(defn fret
+  [{:keys [on-click circle-text background-color fret-color y]
+    :or   {y                0
+           background-color "#000000d6"
+           fret-color       "linear-gradient(to right, #FFFFFF , #706e68)"}}]
+  (let [string-color  "linear-gradient(#737270 , #b9bab3, #737270)"
+        string-height (str (+ 0.2 y) "rem")]
+    [:div {:on-click on-click
            :style    {:width          "5rem"
                       :height         "3rem"
                       :display        "flex"
@@ -132,12 +134,16 @@
                      :height           string-height
                      :width            "5rem"
                      :z-index          100}}
-       [:div {:style {:display          "flex"
-                      :height           "2rem"
-                      :width            "2rem"
-                      :background-color "orange"
-                      :border-radius    "50%"
-                      :z-index          0}}]]]
+       (when circle-text
+         [:div {:style {:display          "flex"
+                        :align-items      :center
+                        :justify-content  :center
+                        :height           "2rem"
+                        :width            "2rem"
+                        :background-color "orange"
+                        :border-radius    "50%"
+                        :z-index          0}}
+          circle-text])]]
 
      [:div {:style {:background-image fret-color
                     :z-index          50
@@ -145,16 +151,8 @@
                     :height           "100%"}}]]))
 
 (defn styled-view [matrix]
-  (let [circle-comp (fn [color] {:display          :flex
-                                 :height           "2em"
-                                 :width            "2em"
-                                 :background-color color #_ "#ff7400"
-                                 :border-radius    "50%"
-                                 :z-index          0
-                                 :align-items      :center
-                                 :justify-content  :center})
-        max-x       (->> matrix first (map :x) (apply max))
-        fret-width  "5"]
+  (let [min-x (->> matrix first (map :x) (apply min))
+        max-x (->> matrix first (map :x) (apply max))]
     [:div
      [:div {:style {:overflow-x "auto"}}
       [:div {:style {:display :flex}}
@@ -165,52 +163,32 @@
       [:div {:style {:display :flex}}
        (for [idx (range 16)]
          ^{:key (str "tone-" idx)}
-         [fret idx])]]
+         [fret
+          {:on-click identity}])]]
 
 
-     [:div {:style {:display "flex"}}
-      (for [{:keys [x]} (-> matrix first)]
-        ^{:key (str "fretboard-fret-" x)}
-        [:div {:style {:width           (if (= x 0)
-                                          "3.4em"
-                                          (str fret-width ".4em"))
-                       :display         "flex"
-                       :justify-content "center"}}
-         x])]
-     (for [[idx fretboard-string] (map-indexed vector matrix)]
-       ^{:key (str "fretboard-string-" idx)}
-       [:div {:style {:display "flex"}}
-        (for [{:keys [x y tone out]} fretboard-string]
-          ^{:key (str "fretboard-string-" x "-" y)}
-          [:<>
-           [:div {:id    "hejsan"
-                  :style {:display          "flex"
-                          :flex-direction   "column"
-                          :height           "3em"
-                          :width            (if (= x 0)
-                                              "3em"
-                                              (str fret-width "em"))
-                          :background-color (when-not (= x 0) "#000000d6")
-                          :justify-content  "center"}}
-            [:div {:style {:background-image "linear-gradient(#737270 , #b9bab3, #737270)"
-                           :display          "flex"
-                           :margin-left      (when-not (= 0 x) "-0.5em")
-                           :margin-right     (when-not (= x max-x) "-0.5em")
-                           :margin-bottom    "-0.5em"
-                           :height           (str (+ 3 idx) "px")}}]
-            [:div {:style {:display         "flex"
-                           :align-items     "center"
-                           :justify-content "center"
-                           :height          (str (+ 3 idx) "px")}}
-             [:div {:style (when out
-                             (circle-comp "orange"))}
-              (when out out)]]]
-           (when-not (= x max-x)
-             [:div {:style {:background-image (if (= x 0)
-                                                "linear-gradient(to right, black , black)"
-                                                "linear-gradient(to right, #FFFFFF , #706e68)")
-                            :width            "6px"
-                            :height           "3em"}}])])])]))
+     [:div {:style {:overflow-x "auto"}}
+      [:div {:style {:display "flex"}}
+       (for [{:keys [x]} (-> matrix first)]
+         ^{:key (str "fretboard-fret-" x)}
+         [fret-number x])]
+      (for [[idx fretboard-string] (map-indexed vector matrix)]
+        ^{:key (str "fretboard-string-" idx)}
+        [:div {:style {:display "flex"}}
+         (for [{:keys [x y tone out] :as m} fretboard-string]
+           ^{:key (str "fretboard-string-" x "-" y)}
+           [fret
+            {:y                (/ y 10)
+             :on-click         #(js/console.log m)
+             :circle-text      (when out out)
+             :background-color (if (= x 0)
+                                 "white"
+                                 "#000000d6")
+             :fret-color       (cond
+                                 (= x min-x) "linear-gradient(black, black, black)"
+                                 (= x max-x) "linear-gradient(#000000d6, #000000d6, #000000d6)"
+                                 :else
+                                 "linear-gradient(to right, #FFFFFF , #706e68)")}])])]]))
 
 (def routes
   (let [path-name :a/a]
