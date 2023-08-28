@@ -15,7 +15,8 @@
    [se.jherrlin.music-theory.webapp.scales :as scales]
    [v4.se.jherrlin.music-theory.webapp.strings.styled-fretboard :as styled-fretboard]
    [se.jherrlin.music-theory.webapp.events :as events]
-   [se.jherrlin.music-theory.webapp.menus :as menus]))
+   [se.jherrlin.music-theory.webapp.menus :as menus]
+   [se.jherrlin.music-theory.webapp.bookmarks :as bookmarks]))
 
 
 
@@ -25,6 +26,7 @@
    scales/routes
    harmonizations/routes
    styled-fretboard/routes
+   bookmarks/routes
    ["/"
     [""
      (let [route-name :home]

@@ -157,7 +157,8 @@
           {:disabled (= current-route-name :harmonizations)}
           "Harmonizations"]]]
 
-
-     ]
-    )
-  )
+     [:div {:style {:margin-right "10px" :display "inline"}}
+      [:a {:href (rfe/href :bookmarks path-params query-params)}
+         [:button
+          {:disabled (= current-route-name :bookmarks)}
+          "Bookmarks"]]]]))
