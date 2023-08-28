@@ -102,6 +102,44 @@
   {:x 15, :tone #{:g}, :y 5, :out "G"}]])
 
 
+(defn tone []
+  (let [background-color "#000000d6"
+        string-color     "linear-gradient(#737270 , #b9bab3, #737270)"
+        string-height    "0.5rem"
+        fret-color       "linear-gradient(to right, #FFFFFF , #706e68)"]
+    [:div
+     [:h2 "tone"]
+
+     [:div {:style {:width          "5rem"
+                    :height         "3rem"
+                    :display        "flex"
+                    :flex-direction "row"}}
+      [:div {:style {:position         :relative
+                     :background-color background-color
+                     :width            "4.5rem"
+                     :height           "100%"
+                     :justify-content  :center
+                     :display          "flex"
+                     :flex-direction   "column"}}
+       #_[:div {:style {:position         :absolut
+                      :height           "2em"
+                      :width            "2em"
+                      :background-color "orange"
+                      :border-radius    "50%"
+                      :z-index          0}}]
+       [:div {:style {:position :absolut
+                      :background-image string-color
+                      :height           string-height
+                      :width            "5rem"
+                      :z-index          100}}]
+
+       ]
+
+      [:div {:style {:background-image fret-color
+                     :z-index          50
+                     :width            "0.5rem"
+                     :height           "100%"}}]]]))
+
 (defn styled-view [matrix]
   (let [circle-comp (fn [color] {:display          :flex
                                  :height           "2em"
@@ -114,6 +152,9 @@
         max-x       (->> matrix first (map :x) (apply max))
         fret-width "5"]
     [:div
+
+     [tone]
+
      [:div {:style {:display "flex"}}
       (for [{:keys [x]} (-> matrix first)]
         ^{:key (str "fretboard-fret-" x)}
