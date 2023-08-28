@@ -101,59 +101,72 @@
   {:x 14, :tone #{:gb :f#}, :y 5}
   {:x 15, :tone #{:g}, :y 5, :out "G"}]])
 
+(defn fret-number [n]
+  [:div {:style {:width           "5rem"
+                 :min-width       "5rem"
+                 :height          "2rem"
+                 :display         "flex"
+                 :justify-content :center}}
+   n])
 
-(defn tone []
+(defn fret [idx]
   (let [background-color "#000000d6"
         string-color     "linear-gradient(#737270 , #b9bab3, #737270)"
         string-height    "0.5rem"
         fret-color       "linear-gradient(to right, #FFFFFF , #706e68)"]
-    [:div
-     [:h2 "tone"]
-
-     [:div {:style {:width          "5rem"
-                    :height         "3rem"
-                    :display        "flex"
-                    :flex-direction "row"}}
-      [:div {:style {:position         :relative
-                     :background-color background-color
-                     :width            "4.5rem"
-                     :height           "100%"
+    [:div {:on-click #(js/console.log (str "tjena" idx))
+           :style    {:width          "5rem"
+                      :height         "3rem"
+                      :display        "flex"
+                      :flex-direction "row"}}
+     [:div {:style {:background-color background-color
+                    :width            "4.5rem"
+                    :height           "100%"
+                    :justify-content  :center
+                    :display          "flex"
+                    :flex-direction   "column"}}
+      [:div {:style {:display          "flex"
+                     :align-items      :center
                      :justify-content  :center
-                     :display          "flex"
-                     :flex-direction   "column"}}
-       #_[:div {:style {:position         :absolut
-                      :height           "2em"
-                      :width            "2em"
+                     :background-image string-color
+                     :height           string-height
+                     :width            "5rem"
+                     :z-index          100}}
+       [:div {:style {:display          "flex"
+                      :height           "2rem"
+                      :width            "2rem"
                       :background-color "orange"
                       :border-radius    "50%"
-                      :z-index          0}}]
-       [:div {:style {:position :absolut
-                      :background-image string-color
-                      :height           string-height
-                      :width            "5rem"
-                      :z-index          100}}]
+                      :z-index          0}}]]]
 
-       ]
-
-      [:div {:style {:background-image fret-color
-                     :z-index          50
-                     :width            "0.5rem"
-                     :height           "100%"}}]]]))
+     [:div {:style {:background-image fret-color
+                    :z-index          50
+                    :width            "0.5rem"
+                    :height           "100%"}}]]))
 
 (defn styled-view [matrix]
   (let [circle-comp (fn [color] {:display          :flex
                                  :height           "2em"
                                  :width            "2em"
-                                 :background-color color #_"#ff7400"
+                                 :background-color color #_ "#ff7400"
                                  :border-radius    "50%"
                                  :z-index          0
                                  :align-items      :center
                                  :justify-content  :center})
         max-x       (->> matrix first (map :x) (apply max))
-        fret-width "5"]
+        fret-width  "5"]
     [:div
+     [:div {:style {:overflow-x "auto"}}
+      [:div {:style {:display :flex}}
+       (for [idx (range 16)]
+         ^{:key (str "tone-" idx)}
+         [fret-number idx])]
 
-     [tone]
+      [:div {:style {:display :flex}}
+       (for [idx (range 16)]
+         ^{:key (str "tone-" idx)}
+         [fret idx])]]
+
 
      [:div {:style {:display "flex"}}
       (for [{:keys [x]} (-> matrix first)]
@@ -170,7 +183,7 @@
         (for [{:keys [x y tone out]} fretboard-string]
           ^{:key (str "fretboard-string-" x "-" y)}
           [:<>
-           [:div {:id "hejsan"
+           [:div {:id    "hejsan"
                   :style {:display          "flex"
                           :flex-direction   "column"
                           :height           "3em"
