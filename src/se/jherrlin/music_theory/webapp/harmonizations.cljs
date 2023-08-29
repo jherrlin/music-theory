@@ -15,8 +15,8 @@
         current-route-name @(re-frame/subscribe [:current-route-name])]
     [:<>
      [menus/menu]
-     [menus/key-selection]
      [menus/instrument-selection]
+     [menus/key-selection]
      [menus/scale-selection]
      [:div
       [:h2 "harmonizations-view"]]]))
