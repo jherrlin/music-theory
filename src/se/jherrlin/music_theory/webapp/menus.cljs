@@ -6,32 +6,26 @@
    [re-frame.core :as re-frame]))
 
 
-(defn menu1 [component]
-  (let [current-route @(re-frame/subscribe [:current-route])
-        path-params   @(re-frame/subscribe [:path-params])
-        query-params  @(re-frame/subscribe [:query-params])]
-    [:<>
-     (when component
-       [component])]))
-
-
 (defn key-selection []
   (let [current-route      @(re-frame/subscribe [:current-route])
         path-params        @(re-frame/subscribe [:path-params])
         query-params       @(re-frame/subscribe [:query-params])
         current-route-name @(re-frame/subscribe [:current-route-name])
         key-of             @(re-frame/subscribe [:key-of])]
-    [:div
+    [:div {:style {:display        "flow"
+                   :flow-direction "column"
+                   :overflow-x     "auto"
+                   :white-space    "nowrap"}}
      (for [{:keys [title key]}
            (->> [:a :a# :b :c :c# :d :d# :e :f :f# :g :g#]
-                (map (fn [x] {:key  x
+                (map (fn [x] {:key   x
                               :title (-> x name str/capitalize)})))]
        ^{:key title}
-       [:div {:style {:margin-right "10px" :display "inline"}}
-        [:a {:href (rfe/href current-route-name (assoc path-params :key-of key) query-params)}
-         [:button
-          {:disabled (= key-of key)}
-          title]]])]))
+       [:a {:style {:margin-right "10px"}
+            :href  (rfe/href current-route-name (assoc path-params :key-of key) query-params)}
+        [:button
+         {:disabled (= key-of key)}
+         title]])]))
 
 (def instruments
   [{:instrument-type :keyboard
@@ -70,21 +64,24 @@
         key-of             @(re-frame/subscribe [:key-of])
         instrument-type    @(re-frame/subscribe [:instrument-type])
         tuning             @(re-frame/subscribe [:tuning])]
-    [:div
+    [:div {:style {:display        "flow"
+                   :flow-direction "column"
+                   :overflow-x     "auto"
+                   :white-space    "nowrap"}}
      (for [{instrument-type' :instrument-type
             tuning'          :tuning
             :keys            [title] :as m}
            (->> instruments)]
        ^{:key title}
-       [:div {:style {:margin-right "10px" :display "inline"}}
-        [:a {:href (rfe/href
-                    current-route-name
-                    (assoc path-params :instrument-type instrument-type' :tuning tuning')
-                    query-params)}
+       [:a {:style {:margin-right "10px"}
+            :href  (rfe/href
+                   current-route-name
+                   (assoc path-params :instrument-type instrument-type' :tuning tuning')
+                   query-params)}
          [:button
           {:disabled (and (= instrument-type instrument-type')
                           (= tuning tuning'))}
-          title]]])]))
+          title]])]))
 
 (defn scale-sort-order []
   (let [predifined-order [:major :minor
@@ -173,33 +170,34 @@
         tuning             @(re-frame/subscribe [:tuning])
         scale              @(re-frame/subscribe [:scale])
         chord              @(re-frame/subscribe [:chord])]
-    [:div
-     [:div {:style {:margin-right "10px" :display "inline"}}
-      [:a {:href (rfe/href :home)}
+    [:div {:style {:display        "flow"
+                   :flow-direction "column"
+                   :overflow-x     "auto"
+                   :white-space    "nowrap"}}
+     [:a {:style {:margin-right "10px"} :href (rfe/href :home)}
        [:button
         {:disabled (= current-route-name :home)}
-        "Home"]]]
-
-     [:div {:style {:margin-right "10px" :display "inline"}}
-      [:a {:href (rfe/href :chord path-params query-params)}
+        "Home"]]
+     [:a {:style {:margin-right "10px"}
+          :href  (rfe/href :chord path-params query-params)}
        [:button
         {:disabled (= current-route-name :chord)}
-        "Chords"]]]
+        "Chords"]]
 
-     [:div {:style {:margin-right "10px" :display "inline"}}
-      [:a {:href (rfe/href :scale path-params query-params)}
+     [:a {:style {:margin-right "10px"}
+          :href  (rfe/href :scale path-params query-params)}
        [:button
         {:disabled (= current-route-name :scale)}
-        "Scale"]]]
+        "Scale"]]
 
-     [:div {:style {:margin-right "10px" :display "inline"}}
-      [:a {:href (rfe/href :harmonizations path-params query-params)}
+     [:a {:style {:margin-right "10px"}
+          :href  (rfe/href :harmonizations path-params query-params)}
        [:button
         {:disabled (= current-route-name :harmonizations)}
-        "Harmonizations"]]]
+        "Harmonizations"]]
 
-     [:div {:style {:margin-right "10px" :display "inline"}}
-      [:a {:href (rfe/href :bookmarks path-params query-params)}
+     [:a {:style {:margin-right "10px"}
+          :href  (rfe/href :bookmarks path-params query-params)}
        [:button
         {:disabled (= current-route-name :bookmarks)}
-        "Bookmarks"]]]]))
+        "Bookmarks"]]]))
