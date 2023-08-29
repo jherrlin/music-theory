@@ -9,19 +9,9 @@
    [se.jherrlin.music-theory.webapp.menus :as menus]
    [se.jherrlin.music-theory.definitions :as definitions]
    [se.jherrlin.music-theory.utils :as utils]
-   [se.jherrlin.music-theory.webapp.common :as common]))
+   [se.jherrlin.music-theory.webapp.common :as common]
+   [se.jherrlin.music-theory.webapp.instrument-types :as instrument-types]))
 
-
-
-(defmulti chord-view :instrument-type)
-
-(defmethod chord-view :keyboard [_]
-  [:div
-   [:h2 "keyboard"]])
-
-(defmethod chord-view :fretboard [_]
-  [:div
-   [:h2 "strings"]])
 
 (defn chord-component []
   (let [path-params        @(re-frame/subscribe [:path-params])
@@ -53,10 +43,11 @@
          [common/highlight-tones interval-tones key-of]
 
          [common/intervals-to-tones intervals interval-tones]
-         [chord-view {:instrument-type instrument-type}]
-
-
-         ]))))
+         [instrument-types/instrument
+          {:instrument-type instrument-type
+           :key-of          key-of
+           :tuning          tuning
+           :chord           chord}]]))))
 
 (def routes
   (let [route-name :chord]

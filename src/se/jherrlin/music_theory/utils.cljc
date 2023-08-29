@@ -259,6 +259,7 @@
    {:pre [(models.tone/valid-index-tones? all-tones)
           (models.tone/valid-interval-tones? string-tunes)]}
    (->> string-tunes
+        (reverse)
         (mapv
          (fn [y string-tune]
            (mapv
@@ -945,7 +946,7 @@
        (add-layer (partial add-chord-tones tones))))
 
 (->> (fretboard-strings
-      (all-tones)
+      ;; (all-tones)
       [:e :b :g :d :a :e]
       16)
      (with-all-tones [:e :b :g])

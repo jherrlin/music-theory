@@ -3,7 +3,7 @@
    [re-frame.core :as re-frame]))
 
 
-(def matrix
+#_(def matrix
   [[{:x 0, :tone #{:e}, :y 0, :out "E"}
   {:x 1, :tone #{:f}, :y 0}
   {:x 2, :tone #{:gb :f#}, :y 0}
@@ -150,33 +150,19 @@
                     :width            "0.5rem"
                     :height           "100%"}}]]))
 
-(defn styled-view [matrix]
+(defn styled-view [{:keys [on-click matrix] :as m}]
   (let [min-x (->> matrix first (map :x) (apply min))
         max-x (->> matrix first (map :x) (apply max))]
-    [:div
-     [:div {:style {:overflow-x "auto"}}
-      [:div {:style {:display :flex}}
-       (for [idx (range 16)]
-         ^{:key (str "tone-" idx)}
-         [fret-number idx])]
-
-      [:div {:style {:display :flex}}
-       (for [idx (range 16)]
-         ^{:key (str "tone-" idx)}
-         [fret
-          {:on-click identity}])]]
-
-
-     [:div {:style {:overflow-x "auto"}}
-      [:div {:style {:display "flex"}}
-       (for [{:keys [x]} (-> matrix first)]
-         ^{:key (str "fretboard-fret-" x)}
+    [:div {:style {:overflow-x "auto"}}
+     [:div {:style {:display "flex"}}
+      (for [{:keys [x]} (-> matrix first)]
+        ^{:key (str "fretboard-fret-" x)}
          [fret-number x])]
-      (for [[idx fretboard-string] (map-indexed vector matrix)]
-        ^{:key (str "fretboard-string-" idx)}
-        [:div {:style {:display "flex"}}
-         (for [{:keys [x y tone out] :as m} fretboard-string]
-           ^{:key (str "fretboard-string-" x "-" y)}
+     (for [[idx fretboard-string] (map-indexed vector matrix)]
+       ^{:key (str "fretboard-string-" idx)}
+       [:div {:style {:display "flex"}}
+        (for [{:keys [x y tone out] :as m} fretboard-string]
+          ^{:key (str "fretboard-string-" x "-" y)}
            [fret
             {:y                (/ y 10)
              :on-click         #(js/console.log m)
@@ -188,10 +174,10 @@
                                  (= x min-x) "linear-gradient(black, black, black)"
                                  (= x max-x) "linear-gradient(#000000d6, #000000d6, #000000d6)"
                                  :else
-                                 "linear-gradient(to right, #FFFFFF , #706e68)")}])])]]))
+                                 "linear-gradient(to right, #FFFFFF , #706e68)")}])])]))
 
 (def routes
   (let [path-name :a/a]
     ["/debug/styled-fretboard"
      {:name path-name
-      :view [styled-view matrix]}]))
+      :view [styled-view nil #_matrix]}]))
