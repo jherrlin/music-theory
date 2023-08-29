@@ -73,6 +73,24 @@
 (defn patterns []
   (get @definitions :patterns))
 
+(defn chord-patterns-by-belonging [belongs-to]
+  (->> (get @definitions :patterns)
+       (vals)
+       (filter (fn [{bt :fretboard-pattern/belongs-to
+                     t  :fretboard-pattern/type}]
+                 (and (= belongs-to bt)
+                      (= :chord t))))
+       (sort-by :fretboard-pattern/order)))
+
+(defn chord-triad-patterns-by-belonging [belongs-to]
+  (->> (get @definitions :patterns)
+       (vals)
+       (filter (fn [{bt :fretboard-pattern/belongs-to
+                     t  :fretboard-pattern/type}]
+                 (and (= belongs-to bt)
+                      (= :chord t))))
+       (sort-by :fretboard-pattern/order)))
+
 (defn ids [id]
   (get-in @definitions [:ids]))
 

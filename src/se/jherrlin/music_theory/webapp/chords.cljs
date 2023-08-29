@@ -35,11 +35,12 @@
             interval-tones  (utils/interval-tones intervals key-of)]
         [:<>
          [menus/menu]
-         [menus/key-selection]
+         [:br]
          [menus/instrument-selection]
+         [:br]
+         [menus/key-selection]
+         [:br]
          [menus/chord-selection]
-         [:div
-          [:h2 "chord-view"]]
          [common/highlight-tones interval-tones key-of]
 
          [common/intervals-to-tones intervals interval-tones]
@@ -47,7 +48,10 @@
           {:instrument-type instrument-type
            :key-of          key-of
            :tuning          tuning
-           :chord           chord}]]))))
+           :chord           chord}]
+
+         #_(definitions/chord-triad-patterns-by-belonging :major)
+         ]))))
 
 (def routes
   (let [route-name :chord]
