@@ -31,7 +31,7 @@ jobs:
             mv -f main.js.bak js/main.js
             mv -f index.html.bak index.html
             git add js/main.js index.html
-            git commit --allow-empty -am "Automatic commit from CircleCI [skip ci]"
+            git commit --allow-empty -am "Latest build"
             git push -f origin gh-pages
 
 workflows:
