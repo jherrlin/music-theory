@@ -24,8 +24,7 @@
                         :tuning          :guitar
                         :scale           :major
                         :chord           :major}
-   :query-params       {:nr-of-frets 15
-                        :as-text     false}})
+   :query-params       {:nr-of-frets 15}})
 
 (def events-
   [{:n :key-of
@@ -33,6 +32,10 @@
    {:n :current-route}
    {:n :current-route-name
     :s (fn [db [k]] (get db k :home))}
+
+   {:n :path-params
+    :e merge'
+    :s (fn [db [k]] (get db k))}
    {:n :instrument-type
     :s (fn [db [k]] (get-in db [:path-params k]))
     :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
@@ -45,14 +48,22 @@
    {:n :chord
     :s (fn [db [k]] (get-in db [:path-params k]))
     :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
-   {:n :path-params
-    :e merge'
-    :s (fn [db [k]] (get db k))}
+
    {:n :query-params
     :e merge'
     :s (fn [db [k]] (get db k))}
-   {:n :nr-of-frets}
-   {:n :nr-of-octavs}])
+   {:n :nr-of-frets
+    :s (fn [db [k]] (get-in db [:query-params k]))
+    :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
+   {:n :nr-of-octavs
+    :s (fn [db [k]] (get-in db [:query-params k]))
+    :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
+   {:n :as-intervals
+    :s (fn [db [k]] (get-in db [:query-params k] false))
+    :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
+   {:n :as-text
+    :s (fn [db [k]] (get-in db [:query-params k] false))
+    :e (fn [db [k v]] (assoc-in db [:query-params k] v))}])
 
 (doseq [{:keys [n s e]} events-]
   (re-frame/reg-sub n (or s (fn [db [n']] (get db n'))))
@@ -81,7 +92,7 @@
   [new-route-name
    {:keys [key-of instrument-type tuning scale chord]
     :as   path-params}
-   query-params]
+   {:keys [nr-of-frets] :as query-params}]
   (re-frame/dispatch [:current-route-name new-route-name])
   (re-frame/dispatch [:path-params path-params])
   (re-frame/dispatch [:query-params query-params])

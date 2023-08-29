@@ -14,7 +14,9 @@
    [:h2 "keyboard"]])
 
 (defmethod instrument :fretboard
-  [{:keys [on-click matrix instrument-type key-of tuning chord] :as m}]
+  [{:keys [on-click instrument-type key-of tuning chord
+           as-text as-intervals nr-of-frets
+           ] :as m}]
   (let [{id          :id
          indexes     :chord/indexes
          intervals   :chord/intervals
@@ -30,6 +32,7 @@
                             interval-tones #_[:e :b :g]
                             (utils/fretboard-strings
                              instrument-tuning
-                             16))]
+                             nr-of-frets
+                             #_16))]
     [:div
      [fretboard/styled-view {:matrix fretboard-matrix}]]))

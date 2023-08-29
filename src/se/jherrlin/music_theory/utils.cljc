@@ -258,14 +258,15 @@
   ([all-tones string-tunes number-of-frets]
    {:pre [(models.tone/valid-index-tones? all-tones)
           (models.tone/valid-interval-tones? string-tunes)]}
-   (->> string-tunes
-        (reverse)
-        (mapv
-         (fn [y string-tune]
-           (mapv
-            #(assoc % :y y)
-            (fretboard-string all-tones string-tune number-of-frets)))
-         (iterate inc 0)))))
+   (let [number-of-frets (inc number-of-frets)]
+     (->> string-tunes
+          (reverse)
+          (mapv
+           (fn [y string-tune]
+             (mapv
+              #(assoc % :y y)
+              (fretboard-string all-tones string-tune number-of-frets)))
+           (iterate inc 0))))))
 
 (fretboard-strings
  (all-tones)
