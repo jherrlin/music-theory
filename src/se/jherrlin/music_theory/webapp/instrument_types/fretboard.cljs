@@ -107,7 +107,9 @@
                  :height          "2rem"
                  :display         "flex"
                  :justify-content :center}}
-   n])
+   (if (= n 0)
+     ""
+     n)])
 
 (defn fret
   [{:keys [on-click circle-text background-color fret-color y]
