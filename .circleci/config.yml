@@ -12,7 +12,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "6a:34:9d:06:d9:29:cb:ca:f7:37:49:09:6b:df:29:0a"
+            - "10:f3:26:96:3e:60:99:94:81:22:0e:ca:89:d4:ca:2a"
       - checkout
       - run: sudo npm install -g shadow-cljs
       - run: npm install
@@ -31,7 +31,7 @@ jobs:
             mv -f main.js.bak js/main.js
             mv -f index.html.bak index.html
             git add js/main.js index.html
-            git commit --allow-empty -am "Automatic commit from CircleCI [skip ci]"
+            git commit --allow-empty -am "Latest build"
             git push -f origin gh-pages
 
 workflows:
