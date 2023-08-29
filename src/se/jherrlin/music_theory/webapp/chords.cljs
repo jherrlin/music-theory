@@ -6,26 +6,63 @@
    [reitit.frontend.easy :as rfe]
    [reitit.coercion.malli]
    [se.jherrlin.music-theory.webapp.events :as events]
-   [se.jherrlin.music-theory.webapp.menus :as menus]))
+   [se.jherrlin.music-theory.webapp.menus :as menus]
+   [se.jherrlin.music-theory.definitions :as definitions]
+   [se.jherrlin.music-theory.utils :as utils]
+   [se.jherrlin.music-theory.webapp.common :as common]))
 
 
-(defn chord-view []
+
+(defmulti chord-view :instrument-type)
+
+(defmethod chord-view :keyboard [_]
+  [:div
+   [:h2 "keyboard"]])
+
+(defmethod chord-view :fretboard [_]
+  [:div
+   [:h2 "strings"]])
+
+(defn chord-component []
   (let [path-params        @(re-frame/subscribe [:path-params])
         query-params       @(re-frame/subscribe [:query-params])
-        current-route-name @(re-frame/subscribe [:current-route-name])]
-    [:<>
-     [menus/menu]
-     [menus/key-selection]
-     [menus/instrument-selection]
-     [menus/chord-selection]
-     [:div
-      [:h2 "chord-view"]]]))
+        current-route-name @(re-frame/subscribe [:current-route-name])
+        key-of             @(re-frame/subscribe [:key-of])
+        instrument-type    @(re-frame/subscribe [:instrument-type])
+        tuning             @(re-frame/subscribe [:tuning])
+        chord              @(re-frame/subscribe [:chord])]
+    (when (and chord key-of)
+      (let [{id          :id
+             indexes     :chord/indexes
+             intervals   :chord/intervals
+             explanation :chord/explanation
+             sufix       :chord/sufix
+             text        :chord/text
+             chord-name  :chord/name
+             :as         m} (definitions/chord chord)
+            _               (def m m)
+            index-tones     (utils/index-tones indexes key-of)
+            interval-tones  (utils/interval-tones intervals key-of)]
+        [:<>
+         [menus/menu]
+         [menus/key-selection]
+         [menus/instrument-selection]
+         [menus/chord-selection]
+         [:div
+          [:h2 "chord-view"]]
+         [common/highlight-tones interval-tones key-of]
+
+         [common/intervals-to-tones intervals interval-tones]
+         [chord-view {:instrument-type instrument-type}]
+
+
+         ]))))
 
 (def routes
   (let [route-name :chord]
     ["/chord/:instrument-type/:tuning/:key-of/:chord"
      {:name       route-name
-      :view       [chord-view]
+      :view       [chord-component]
       :coercion   reitit.coercion.malli/coercion
       :parameters {:path [:map
                           [:instrument-type keyword?]

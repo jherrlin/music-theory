@@ -15,6 +15,18 @@
 (defn merge' [db [k m]]
   (assoc db k (merge (get db k) m)))
 
+
+(def init-db
+  {:current-route      nil
+   :current-route-name :home
+   :path-params        {:key-of          :c
+                        :instrument-type :fretboard
+                        :tuning          :guitar
+                        :scale           :major
+                        :chord           :major}
+   :query-params       {:nr-of-frets 15
+                        :as-text     false}})
+
 (def events-
   [{:n :key-of
     :s (fn [db [k]] (get db k :c))}
@@ -22,26 +34,23 @@
    {:n :current-route-name
     :s (fn [db [k]] (get db k :home))}
    {:n :instrument-type
-    :s (fn [db [k]] (get db k :strings))}
+    :s (fn [db [k]] (get-in db [:path-params k]))
+    :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
    {:n :tuning
-    :s (fn [db [k]] (get db k :guitar))}
+    :s (fn [db [k]] (get-in db [:path-params k]))
+    :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
    {:n :scale
-    :s (fn [db [k]] (get db k :major))}
+    :s (fn [db [k]] (get-in db [:path-params k]))
+    :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
    {:n :chord
-    :s (fn [db [k]] (get db k :major))}
+    :s (fn [db [k]] (get-in db [:path-params k]))
+    :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
    {:n :path-params
     :e merge'
-    :s (fn [db [k]]
-         (merge
-          {:current-route-name :home
-           :key-of             :c
-           :instrument-type    :strings
-           :tuning             :guitar
-           :scale              :major
-           :chord              :major}
-          (get db k)))}
+    :s (fn [db [k]] (get db k))}
    {:n :query-params
-    :e merge'}
+    :e merge'
+    :s (fn [db [k]] (get db k))}
    {:n :nr-of-frets}
    {:n :nr-of-octavs}])
 
@@ -64,9 +73,9 @@
 (re-frame/reg-event-db
  :initialize-db
  (fn [db _]
-   (if db
+   (if (get db :path-params)
      db
-     {:current-route nil})))
+     init-db)))
 
 (defn do-on-url-change
   [new-route-name

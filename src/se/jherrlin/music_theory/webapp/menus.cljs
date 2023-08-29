@@ -37,28 +37,28 @@
   [{:instrument-type :keyboard
     :tuning          :standard
     :title           "Piano"}
-   {:instrument-type :strings
+   {:instrument-type :fretboard
     :tuning          :guitar
     :title           "Gitar"}
-   {:instrument-type :strings
+   {:instrument-type :fretboard
     :tuning          :mandolin
     :title           "Mandolin"}
-   {:instrument-type :strings
+   {:instrument-type :fretboard
     :tuning          :bass
     :title           "Bass"}
-   {:instrument-type :strings
+   {:instrument-type :fretboard
     :tuning          :guitar-dadgad
     :title           "Gitar (DADGAD)"}
-   {:instrument-type :strings
+   {:instrument-type :fretboard
     :tuning          :mandola
     :title           "Mandola"}
-   {:instrument-type :strings
+   {:instrument-type :fretboard
     :tuning          :octave-mandolin
     :title           "Octave mandolin"}
-   {:instrument-type :strings
+   {:instrument-type :fretboard
     :tuning          :ukulele
     :title           "Ukulele"}
-   {:instrument-type :strings
+   {:instrument-type :fretboard
     :tuning          :banjo-irish
     :title           "Banjo (irish)"}])
 
