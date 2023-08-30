@@ -1386,10 +1386,19 @@
     5   -
     -  b3")
 
-(define-triad-pattern #uuid "319567c3-4218-4baf-8eea-681a2f9df2e0"
+(define-triad-pattern #uuid "caa73690-3602-42f3-b11c-1ffe12ae04a6"
   {:belongs-to :major
    :tuning     mandolin
    :order      1}
+  "-   -   -   -
+   -   1   -   -
+   3   -   -   -
+   -   -   -   1")
+
+(define-triad-pattern #uuid "319567c3-4218-4baf-8eea-681a2f9df2e0"
+  {:belongs-to :major
+   :tuning     mandolin
+   :order      2}
   "-   -   -
    -   -   3
    5   -   -
@@ -1398,7 +1407,7 @@
 (define-triad-pattern #uuid "3bed9889-984e-4f4d-9c57-aa3096e9fa7f"
   {:belongs-to :major
    :tuning     mandolin
-   :order      2}
+   :order      3}
   "-   -   3
    5   -   -
    1   -   -
@@ -1407,7 +1416,7 @@
 (define-triad-pattern #uuid "87d66805-8b91-4d70-aa33-257ac33b01d1"
   {:belongs-to :major
    :tuning     mandolin
-   :order      3}
+   :order      4}
   "-   -
    -   5
    -   1
@@ -1416,7 +1425,7 @@
 (define-triad-pattern #uuid "914ebc94-498a-4d0c-8963-01451c64ff6f"
   {:belongs-to :major
    :tuning     mandolin
-   :order      4}
+   :order      5}
   "-   -   -   -
    -   -   -   1
    -   -   3   -
