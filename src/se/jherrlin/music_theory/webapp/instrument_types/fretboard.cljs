@@ -102,8 +102,8 @@
   {:x 15, :tone #{:g}, :y 5, :out "G"}]])
 
 (defn fret-number [n]
-  [:div {:style {:width           "5rem"
-                 :min-width       "5rem"
+  [:div {:style {:width           "3.9rem"
+                 :min-width       "3.9rem"
                  :height          "2rem"
                  :display         "flex"
                  :justify-content :center}}
@@ -117,14 +117,16 @@
            background-color "#000000d6"
            fret-color       "linear-gradient(to right, #FFFFFF , #706e68)"}}]
   (let [string-color  "linear-gradient(#737270 , #b9bab3, #737270)"
-        string-height (str (+ 0.2 y) "rem")]
+        string-height (str (+ 0.2 y) "rem")
+        fret-width    3.9
+        fret-height   2.7]
     [:div {:on-click on-click
-           :style    {:width          "5rem"
-                      :height         "3rem"
+           :style    {:width          (str fret-width "rem")
+                      :height         (str fret-height "rem")
                       :display        "flex"
                       :flex-direction "row"}}
      [:div {:style {:background-color background-color
-                    :width            "4.5rem"
+                    :width            (str (- fret-width 0.3) "rem")
                     :height           "100%"
                     :justify-content  :center
                     :display          "flex"
@@ -134,7 +136,7 @@
                      :justify-content  :center
                      :background-image string-color
                      :height           string-height
-                     :width            "5rem"
+                     :width            (str fret-width "rem")
                      :z-index          100}}
        (when circle-text
          [:div {:style {:display          "flex"
