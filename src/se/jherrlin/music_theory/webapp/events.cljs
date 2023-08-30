@@ -24,7 +24,9 @@
                         :tuning          :guitar
                         :scale           :major
                         :chord           :major}
-   :query-params       {:nr-of-frets 15}})
+   :query-params       {:nr-of-frets 15
+                        :as-intervals false
+                        :as-text      false}})
 
 (def events-
   [{:n :key-of
@@ -51,7 +53,8 @@
 
    {:n :query-params
     :e merge'
-    :s (fn [db [k]] (get db k))}
+    :s (fn [db [k]]
+         (get db k))}
    {:n :nr-of-frets
     :s (fn [db [k]] (get-in db [:query-params k]))
     :e (fn [db [k v]] (assoc-in db [:query-params k] v))}

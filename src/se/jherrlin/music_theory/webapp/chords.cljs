@@ -40,12 +40,11 @@
             interval-tones    (utils/interval-tones intervals key-of)
             _                 (def interval-tones interval-tones)
             instrument-tuning (get-in definitions/instrument-with-tuning [tuning :tuning])
-            index-tones       (utils/index-tones indexes key-of)
-            interval-tones    (utils/interval-tones intervals key-of)
+            _                 (def instrument-tuning instrument-tuning)
             fretboard-matrix  (utils/fretboard-strings
                                instrument-tuning
-                               nr-of-frets
-                               #_16)]
+                               nr-of-frets)
+            _                 (def fretboard-matrix fretboard-matrix)]
         [:<>
          [menus/menu]
          [:br]
@@ -59,9 +58,14 @@
          [common/intervals-to-tones intervals interval-tones]
          [:h3 "All " (if as-intervals "interval" "tone") " positions in the chord"]
          [instrument-types/instrument
-          {:fretboard-matrix (utils/with-all-tones
-                               interval-tones
-                               fretboard-matrix)
+          {:fretboard-matrix (if as-intervals
+                               (utils/with-all-intervals
+                                 (mapv vector interval-tones intervals)
+                                 fretboard-matrix)
+                               (utils/with-all-tones
+                                 interval-tones
+                                 fretboard-matrix))
+           :as-text          as-text
            :instrument-type  instrument-type
            :key-of           key-of
            :tuning           tuning
@@ -72,41 +76,61 @@
            (when (seq chord-patterns)
              [:<>
               [:h3 "Chord patterns"]
-              (for [{id         :id
-                     pattern    :fretboard-pattern/pattern
-                     :as        chord-pattern}
+              (for [{id      :id
+                     pattern :fretboard-pattern/pattern
+                     :as     chord-pattern}
                     chord-patterns]
                 ^{:key id}
                 [:div
-                 [:p id]
                  [instrument-types/instrument
                   {:instrument-type  instrument-type
-                   :fretboard-matrix (utils/pattern-with-tones
-                                      key-of
-                                      pattern
-                                      fretboard-matrix)}]
-                 #_[common/debug-view
-                    (utils/pattern-with-tones
-                     key-of
-                     pattern
-                     fretboard-matrix)]
-                 #_[common/debug-view chord-pattern]
-                 #_[common/debug-view
-                    (utils/pattern-with-tones
-                     key-of
-                     pattern
-                     fretboard-matrix)]
-                 #_[common/debug-view
-                    (utils/pattern-with-intervals
-                     key-of
-                     pattern
-                     fretboard-matrix)]])]))
+                   :as-text          as-text
+                   :fretboard-matrix (if as-intervals
+                                       (utils/with-all-intervals
+                                         (mapv vector interval-tones intervals)
+                                         fretboard-matrix)
+                                       (utils/pattern-with-tones
+                                        key-of
+                                        pattern
+                                        fretboard-matrix))}]])]))
 
-         [:h3 "Triad patterns"]
-         (for [patterns (definitions/chord-triad-patterns-by-belonging-and-tuning chord instrument-tuning)]
-           [common/debug-view patterns])
+         (let [triad-patterns (definitions/chord-triad-patterns-by-belonging-and-tuning chord instrument-tuning)]
+           (when (seq triad-patterns)
+             [:<>
+              [:h3 "Triad patterns"]
+              (for [{id      :id
+                     pattern :fretboard-pattern/pattern
+                     :as     chord-pattern}
+                    triad-patterns]
+                ^{:key id}
+                [:div
+                 [instrument-types/instrument
+                  {:instrument-type  instrument-type
+                   :as-text          as-text
+                   :fretboard-matrix (if as-intervals
+                                       (utils/with-all-intervals
+                                         (mapv vector interval-tones intervals)
+                                         fretboard-matrix)
+                                       (utils/pattern-with-tones
+                                        key-of
+                                        pattern
+                                        fretboard-matrix))}]])]))
 
-         #_(definitions/chord-triad-patterns-by-belonging :major)]))))
+
+
+
+         #_(let [scales-to-chord (utils/scales-to-chord @definitions/scales indexes)]
+           (when (seq scales-to-chord)
+             [:<>
+              [:h3 "Scales to chord"]
+              (for [{scale-title :scale/name
+                     scale-id    :scale/id}
+                    scales-to-chord]
+                ^{:key scale-title}
+                [:div {:style {:margin-right "10px" :display "inline"}}
+                 [:a {:href
+                      (rfe/href :v4.strings/scale (assoc path-params :scale scale-id) query-params)}
+                  [:button scale-title]]])]))]))))
 
 (def routes
   (let [route-name :chord]

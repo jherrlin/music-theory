@@ -15,7 +15,11 @@
 
 (defmethod instrument :fretboard
   [{:keys [on-click instrument-type key-of tuning chord
-           as-text as-intervals nr-of-frets fretboard-matrix
-           ] :as m}]
-  [:div
-     [fretboard/styled-view {:matrix fretboard-matrix}]])
+           as-text as-intervals nr-of-frets fretboard-matrix] :as m}]
+  (if as-text
+      [:pre {:style {:overflow-x "auto"
+                     :margin     "0em"}}
+       (utils/fretboard-str
+        (fn [{:keys [out]}] (if (nil? out) "" out))
+        fretboard-matrix)]
+      [fretboard/styled-view {:matrix fretboard-matrix}]))
