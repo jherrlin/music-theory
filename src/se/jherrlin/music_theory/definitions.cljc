@@ -73,13 +73,15 @@
 (defn patterns []
   (get @definitions :patterns))
 
-(defn chord-patterns-by-belonging [belongs-to]
+(defn chord-patterns-by-belonging-and-tuning [belongs-to tuning]
   (->> (get @definitions :patterns)
        (vals)
-       (filter (fn [{bt :fretboard-pattern/belongs-to
-                     t  :fretboard-pattern/type}]
+       (filter (fn [{bt      :fretboard-pattern/belongs-to
+                     t       :fretboard-pattern/type
+                     tuning' :fretboard-pattern/tuning}]
                  (and (= belongs-to bt)
-                      (= :chord t))))
+                      (= :chord t)
+                      (= tuning' tuning))))
        (sort-by :fretboard-pattern/order)))
 
 (defn chord-triad-patterns-by-belonging [belongs-to]

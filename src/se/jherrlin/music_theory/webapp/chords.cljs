@@ -23,7 +23,8 @@
         as-text            @(re-frame/subscribe [:as-text])
         nr-of-frets        @(re-frame/subscribe [:nr-of-frets])
         tuning             @(re-frame/subscribe [:tuning])
-        chord              @(re-frame/subscribe [:chord])]
+        chord              @(re-frame/subscribe [:chord])
+        _                  (def chord chord)]
     (when (and chord key-of)
       (let [{id          :id
              indexes     :chord/indexes
@@ -32,10 +33,19 @@
              sufix       :chord/sufix
              text        :chord/text
              chord-name  :chord/name
-             :as         m} (definitions/chord chord)
-            _               (def m m)
-            index-tones     (utils/index-tones indexes key-of)
-            interval-tones  (utils/interval-tones intervals key-of)]
+             :as         m}   (definitions/chord chord)
+            _                 (def m m)
+            index-tones       (utils/index-tones indexes key-of)
+            _                 (def index-tones index-tones)
+            interval-tones    (utils/interval-tones intervals key-of)
+            _                 (def interval-tones interval-tones)
+            instrument-tuning (get-in definitions/instrument-with-tuning [tuning :tuning])
+            index-tones       (utils/index-tones indexes key-of)
+            interval-tones    (utils/interval-tones intervals key-of)
+            fretboard-matrix  (utils/fretboard-strings
+                                 instrument-tuning
+                                 nr-of-frets
+                                 #_16)]
         [:<>
          [menus/menu]
          [:br]
@@ -49,11 +59,49 @@
          [common/intervals-to-tones intervals interval-tones]
          [:h3 "All " (if as-intervals "interval" "tone") " positions in the chord"]
          [instrument-types/instrument
-          {:instrument-type instrument-type
-           :key-of          key-of
-           :tuning          tuning
-           :chord           chord
-           :nr-of-frets     nr-of-frets}]
+          {:fretboard-matrix (utils/with-all-tones
+                               interval-tones
+                               fretboard-matrix)
+           :instrument-type  instrument-type
+           :key-of           key-of
+           :tuning           tuning
+           :chord            chord
+           :nr-of-frets      nr-of-frets}]
+
+         [:h3 "Chord patterns"]
+         (for [{id         :id
+                pattern    :fretboard-pattern/pattern
+                :as        chord-pattern}
+               (definitions/chord-patterns-by-belonging-and-tuning chord instrument-tuning)]
+           ^{:key id}
+           [:div
+            [:p id]
+            [instrument-types/instrument
+             {:instrument-type  instrument-type
+              :fretboard-matrix (utils/pattern-with-tones
+                                 key-of
+                                 pattern
+                                 fretboard-matrix)}]
+            #_[common/debug-view
+               (utils/pattern-with-tones
+                key-of
+                pattern
+                fretboard-matrix)]
+            #_[common/debug-view chord-pattern]
+            #_[common/debug-view
+               (utils/pattern-with-tones
+                key-of
+                pattern
+                fretboard-matrix)]
+            #_[common/debug-view
+             (utils/pattern-with-intervals
+              key-of
+              pattern
+              fretboard-matrix)]])
+
+         [:h3 "Triad patterns"]
+         (for [patterns (definitions/chord-triad-patterns-by-belonging chord)]
+           [common/debug-view patterns])
 
          #_(definitions/chord-triad-patterns-by-belonging :major)]))))
 

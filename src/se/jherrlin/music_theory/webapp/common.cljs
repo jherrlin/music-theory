@@ -5,6 +5,12 @@
    [re-frame.core :as re-frame]
    [se.jherrlin.music-theory.utils :as utils]))
 
+(defn debug-view
+  ([]
+   (debug-view @re-frame.db/app-db))
+  ([x]
+   [:pre
+    (with-out-str (cljs.pprint/pprint x))]))
 
 (defn highlight-tones [tones key-of]
   [:div {:style {:margin-top  "1em"

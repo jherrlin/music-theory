@@ -500,7 +500,7 @@
    -   -   -")
 
 (defn find-fretboard-pattern
-  "Find patterns on the "
+  "Find patterns on the fretboard"
   [all-tones key-of interval-matrix fretboard-matrix]
   (let [;; interval-matrix       (trim-matrix interval-matrix)
         interval-matrix-width (-> interval-matrix first count)
@@ -577,8 +577,8 @@
   ["1" nil nil]]
  (fretboard-strings
   (all-tones)
-  [:e :b :g :d :a :e]
-  4))
+  [:e :a :d :g :b :e]
+  5))
 
 (defn match-chord-with-scales
   "Find what scales that works with a chord, by the chord indexes.
@@ -908,7 +908,7 @@
        ["5" nil nil]]
       (fretboard-strings
        (all-tones)
-       [:e :b :g :d :a :e]
+       [:e :a :d :g :b :e]
        10))
      (trim-matrix #(every? nil? (map :out %)))
      (fretboard-str (fn [{:keys [out]}] (if (nil? out) "" out)))
