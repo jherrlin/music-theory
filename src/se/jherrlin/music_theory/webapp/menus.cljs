@@ -54,7 +54,7 @@
     :title           "Ukulele"}
    {:instrument-type :fretboard
     :tuning          :banjo-irish
-    :title           "Banjo (irish)"}])
+    :title           "Banjo (Irish)"}])
 
 (defn instrument-selection []
   (let [current-route      @(re-frame/subscribe [:current-route])
@@ -188,7 +188,7 @@
           :href  (rfe/href :scale path-params query-params)}
        [:button
         {:disabled (= current-route-name :scale)}
-        "Scale"]]
+        "Scales"]]
 
      [:a {:style {:margin-right "10px"}
           :href  (rfe/href :harmonizations path-params query-params)}
