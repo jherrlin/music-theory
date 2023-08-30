@@ -13,29 +13,27 @@
         ;;                                 :interval  "b3"}
         ;;                                {:interval-tone      :g,
         ;;                                 :interval  "5"}]
-        sharp-keys-styling            {:margin-left      "-1.5em"
+        sharp-keys-styling            {:margin-left      "-1rem"
                                        :height           "65%"
-                                       :width            "3em"
+                                       :width            "2rem"
                                        :background-color "black"
                                        :border-radius    "0px 0px 5px 5px"}
-        full-keys-styling             {:height        "100%"
-                                       :width         "4em"
+        full-keys-styling             {:width         "3rem"
                                        :border        "2px solid black"
                                        :border-radius "0px 0px 10px 10px"}
         full-keys-styling-with-margin (merge full-keys-styling
-                                             {:margin-left "-1.5em"})
+                                             {:margin-left "-1rem"})
         column-reverse                {:flex-direction :column-reverse
                                        :height         "100%"
                                        :display        :flex
-                                       :align-self     :flex-end
                                        :align-items    :center
-                                       :margin         "-1em"}
+                                       :margin         "-0.5rem"}
         orange                        "#ff7400"
         white                         "white"
         black                         "black"
         circle-style                  (fn [color] {:display          :flex
-                                                   :height           "2em"
-                                                   :width            "2em"
+                                                   :height           "1.8rem"
+                                                   :width            "1.8rem"
                                                    :background-color color #_ "#ff7400"
                                                    :border-radius    "50%"
                                                    :z-index          0
@@ -49,7 +47,6 @@
                                               :interval interval
                                               (-> interval-tone name str/capitalize))])])]
     [:div {:style {:display        :flex
-                   :height         "150px"
                    :flex-direction :row}}
 
      ;; C
@@ -103,16 +100,17 @@
 
 (defn piano-unit
   [{:keys [as-intervals index-tones interval-tones intervals key-of nr-of-octavs] :as m}]
-  [:div {:style {:display         :flex
-                 :justify-content :center}}
-   (for [index (range 0 nr-of-octavs)]
-     ^{:key (str "piano-octav-index-" index)}
-     [piano
-      (if as-intervals
-        :interval
-        :tone)
-      (mapv
-       (fn [interval interval-tone]
-         {:interval interval :interval-tone interval-tone})
-       intervals
-       interval-tones)])])
+  [:div {:style {:overflow-x "auto"}}
+   [:div {:style {:display    :flex
+                  :height     "7rem"}}
+    (for [index (range 0 nr-of-octavs)]
+      ^{:key (str "piano-octav-index-" index)}
+      [piano
+       (if as-intervals
+         :interval
+         :tone)
+       (mapv
+        (fn [interval interval-tone]
+          {:interval interval :interval-tone interval-tone})
+        intervals
+        interval-tones)])]])
