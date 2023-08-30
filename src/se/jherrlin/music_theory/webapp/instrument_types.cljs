@@ -2,16 +2,16 @@
   (:require
    [se.jherrlin.music-theory.webapp.instrument-types.fretboard :as fretboard]
    [se.jherrlin.music-theory.utils :as utils]
-   [se.jherrlin.music-theory.definitions :as definitions]))
+   [se.jherrlin.music-theory.definitions :as definitions]
+   [se.jherrlin.music-theory.webapp.instrument-types.keyboard :as keyboard]))
 
 
 
 
 (defmulti instrument :instrument-type)
 
-(defmethod instrument :keyboard [_]
-  [:div
-   [:h2 "keyboard"]])
+(defmethod instrument :keyboard [m]
+  [keyboard/piano-unit m])
 
 (defmethod instrument :fretboard
   [{:keys [on-click instrument-type key-of tuning chord

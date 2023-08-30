@@ -18,8 +18,10 @@
         query-params       @(re-frame/subscribe [:query-params])
         current-route-name @(re-frame/subscribe [:current-route-name])
         key-of             @(re-frame/subscribe [:key-of])
+        _                  (def key-of key-of)
         instrument-type    @(re-frame/subscribe [:instrument-type])
         as-intervals       @(re-frame/subscribe [:as-intervals])
+        nr-of-octavs       @(re-frame/subscribe [:nr-of-octavs])
         as-text            @(re-frame/subscribe [:as-text])
         nr-of-frets        @(re-frame/subscribe [:nr-of-frets])
         tuning             @(re-frame/subscribe [:tuning])
@@ -36,15 +38,17 @@
              :as         m}   (definitions/chord chord)
             _                 (def indexes indexes)
             _                 (def m m)
+            _                 (def intervals intervals)
             index-tones       (utils/index-tones indexes key-of)
             _                 (def index-tones index-tones)
             interval-tones    (utils/interval-tones intervals key-of)
             _                 (def interval-tones interval-tones)
             instrument-tuning (get-in definitions/instrument-with-tuning [tuning :tuning])
             _                 (def instrument-tuning instrument-tuning)
-            fretboard-matrix  (utils/fretboard-strings
-                               instrument-tuning
-                               nr-of-frets)
+            fretboard-matrix  (when (= instrument-type :fretboard)
+                                (utils/fretboard-strings
+                                 instrument-tuning
+                                 nr-of-frets))
             _                 (def fretboard-matrix fretboard-matrix)]
         [:<>
          [menus/menu]
@@ -71,7 +75,12 @@
            :key-of           key-of
            :tuning           tuning
            :chord            chord
-           :nr-of-frets      nr-of-frets}]
+           :nr-of-frets      nr-of-frets
+           :as-intervals     as-intervals
+           :index-tones      index-tones
+           :interval-tones   interval-tones
+           :intervals        intervals
+           :nr-of-octavs     nr-of-octavs}]
 
          (let [chord-patterns (definitions/chord-patterns-by-belonging-and-tuning chord instrument-tuning)]
            (when (seq chord-patterns)

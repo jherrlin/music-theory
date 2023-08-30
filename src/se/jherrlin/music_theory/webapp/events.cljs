@@ -24,7 +24,8 @@
                         :tuning          :guitar
                         :scale           :major
                         :chord           :major}
-   :query-params       {:nr-of-frets 15
+   :query-params       {:nr-of-frets  15
+                        :nr-of-octavs 2
                         :as-intervals false
                         :as-text      false}})
 
