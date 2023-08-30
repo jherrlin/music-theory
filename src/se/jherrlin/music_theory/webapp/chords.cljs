@@ -34,6 +34,7 @@
              text        :chord/text
              chord-name  :chord/name
              :as         m}   (definitions/chord chord)
+            _                 (def indexes indexes)
             _                 (def m m)
             index-tones       (utils/index-tones indexes key-of)
             _                 (def index-tones index-tones)
@@ -81,7 +82,7 @@
                      :as     chord-pattern}
                     chord-patterns]
                 ^{:key id}
-                [:div
+                [:div {:style {:margin-bottom "2rem"}}
                  #_[common/debug-view chord-pattern]
                  [instrument-types/instrument
                   {:instrument-type  instrument-type
@@ -102,7 +103,7 @@
                      :as     chord-pattern}
                     triad-patterns]
                 ^{:key id}
-                [:div
+                [:div {:style {:margin-bottom "2rem"}}
                  [instrument-types/instrument
                   {:instrument-type  instrument-type
                    :as-text          as-text
@@ -113,18 +114,21 @@
                                       pattern
                                       fretboard-matrix)}]])]))
 
-         #_(let [scales-to-chord (utils/scales-to-chord @definitions/scales indexes)]
-             (when (seq scales-to-chord)
-               [:<>
-                [:h3 "Scales to chord"]
-                (for [{scale-title :scale/name
-                       scale-id    :scale/id}
-                      scales-to-chord]
-                  ^{:key scale-title}
-                  [:div {:style {:margin-right "10px" :display "inline"}}
-                   [:a {:href
-                        (rfe/href :v4.strings/scale (assoc path-params :scale scale-id) query-params)}
-                    [:button scale-title]]])]))]))))
+         (let [scales-to-chord (utils/scales-to-chord (definitions/scales) indexes)]
+           (when (seq scales-to-chord)
+             [:<>
+              [:h3 "Scales to chord"]
+              (for [{scale :scale/scale
+                     id    :id}
+                    scales-to-chord]
+                ^{:key id}
+                [:div {:style {:margin-right "10px" :display "inline"}}
+                 [:a {:href
+                      (rfe/href :scale (assoc path-params :scale (-> scale first)) query-params)}
+                  [:button
+                   (->> scale
+                        (map (comp str/capitalize #(str/replace % "-" "") name))
+                        (str/join " / "))]]])]))]))))
 
 (def routes
   (let [route-name :chord]
