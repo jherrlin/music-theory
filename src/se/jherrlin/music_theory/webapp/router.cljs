@@ -16,6 +16,7 @@
    [v4.se.jherrlin.music-theory.webapp.strings.styled-fretboard :as styled-fretboard]
    [se.jherrlin.music-theory.webapp.events :as events]
    [se.jherrlin.music-theory.webapp.menus :as menus]
+   [se.jherrlin.music-theory.webapp.home :as home]
    [se.jherrlin.music-theory.webapp.bookmarks :as bookmarks]))
 
 
@@ -27,17 +28,7 @@
    harmonizations/routes
    styled-fretboard/routes
    bookmarks/routes
-   ["/"
-    [""
-     (let [route-name :home]
-       {:name route-name
-        :view [:div
-               [menus/menu]
-               [:h1 "Home"]]
-        :controllers
-        [{:parameters {:path []}
-          :start      (fn [{p :path q :query}]
-                        (events/do-on-url-change route-name p q))}]})]]])
+   home/routes])
 
 (def router
   (rf/router
