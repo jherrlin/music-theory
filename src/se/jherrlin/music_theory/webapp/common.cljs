@@ -12,6 +12,20 @@
    [:pre
     (with-out-str (cljs.pprint/pprint x))]))
 
+(defn chord-name
+  [key-of
+   {explanation :chord/explanation
+    sufix       :chord/sufix}]
+  [:div {:style {:margin-top      "1em"
+                 :height          "100%"
+                 :display         "inline-flex"
+                 :justify-content :center
+                 :align-items     :center}}
+   [:h2 (str (-> key-of name str/capitalize) sufix)]
+   (when explanation
+     [:p {:style {:margin-left "2rem"}}
+      (str "(" explanation ")")])])
+
 (defn highlight-tones [tones key-of]
   [:div {:style {:margin-top  "1em"
                  :display     "flex"

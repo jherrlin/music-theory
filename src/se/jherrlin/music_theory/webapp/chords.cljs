@@ -67,9 +67,13 @@
          [menus/key-selection]
          [:br]
          [menus/chord-selection]
+         [:br]
+         [common/chord-name key-of m]
+         [:br]
          [common/highlight-tones interval-tones key-of]
-
+         [:br]
          [common/intervals-to-tones intervals interval-tones]
+
          [:h3 "All " (if as-intervals "interval" "tone") " positions in the chord"]
          [instrument-types/instrument
           {:fretboard-matrix (if as-intervals

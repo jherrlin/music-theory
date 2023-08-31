@@ -123,7 +123,8 @@
 (defn chord-sort-order []
   (let [chords (se.jherrlin.music-theory.definitions/chords)
         predifined-order [:major :minor
-                          :dominant-seven :minor-seven]]
+                          :sus2 :sus4
+                          :dominant-seven :minor-seven :major-maj-seven :diminished-seventh :minor-maj-seven]]
     (->> (concat
           predifined-order
           (->> chords
