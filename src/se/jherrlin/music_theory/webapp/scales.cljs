@@ -24,7 +24,7 @@
         _                  (def key-of key-of)
         instrument-type    @(re-frame/subscribe [:instrument-type])
         _                  (def instrument-type instrument-type)
-        as-intervalse      @(re-frame/subscribe [:as-intervals])
+        as-intervals       @(re-frame/subscribe [:as-intervals])
         _                  (def as-intervals as-intervals)
         nr-of-octavs       @(re-frame/subscribe [:nr-of-octavs])
         _                  (def nr-of-octavs nr-of-octavs)
@@ -110,23 +110,19 @@
                                       pattern
                                       fretboard-matrix)}]])]))
 
-
-         ;; Chords to scale
-         #_(let [scales-to-chord (utils/scales-to-chord (definitions/scales) indexes)]
-           (when (seq scales-to-chord)
+         (let [chords-to-scale (utils/chords-to-scale (definitions/chords) indexes)]
+           (when (seq chords-to-scale)
              [:<>
-              [:h3 "Scales to chord"]
-              (for [{scale :scale/scale
+              [:h3 "Chords to scale"]
+              (for [{chord :chord/chord
+                     name  :chord/name
                      id    :id}
-                    scales-to-chord]
+                    chords-to-scale]
                 ^{:key id}
                 [:div {:style {:margin-right "10px" :display "inline"}}
                  [:a {:href
-                      (rfe/href :scale (assoc path-params :scale (-> scale first)) query-params)}
-                  [:button
-                   (->> scale
-                        (map (comp str/capitalize #(str/replace % "-" "") name))
-                        (str/join " / "))]]])]))]))))
+                      (rfe/href :chord (assoc path-params :chord chord) query-params)}
+                  [:button name]]])]))]))))
 
 (def routes
   (let [route-name :scale]
