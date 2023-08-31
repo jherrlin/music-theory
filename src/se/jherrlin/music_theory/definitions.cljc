@@ -427,7 +427,7 @@
   "1, 2, 3, 4, 5, 6, 7")
 
 (define-scale #uuid "d091b747-63b9-4db2-9daa-6e9974852080"
-  #{:minor :aeolian}
+  #{:minor :aeolian :natural-minor}
   "1, 2, b3, 4, 5, b6, b7")
 
 (define-scale #uuid "8c0a7209-4ac4-4ec7-b8a5-e4fdaf449ad6"
@@ -457,10 +457,6 @@
 (define-scale #uuid "6d8e0cba-658d-4072-838e-3d50d926ed0f"
   #{:melodic-minor}
   "1, 2, b3, 4, 5, 6, 7")
-
-(define-scale #uuid "2b5857e2-e368-4847-ae91-d385e9286148"
-  #{:natural-minor}
-  "1, 2, b3, 4, 5, b6, b7")
 
 (define-scale #uuid "e7ad3188-1e4c-4d19-bd4b-99e97213c6f6"
   #{:pentatonic-major}

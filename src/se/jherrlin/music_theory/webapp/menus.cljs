@@ -85,7 +85,8 @@
 
 (defn scale-sort-order []
   (let [predifined-order [:major :minor
-                          :ionian :dorian :phrygian :lydian :mixolydian :aeolian :locrian]]
+                          :ionian :dorian :phrygian :lydian :mixolydian :aeolian :locrian
+                          :harmonic-minor :natural-minor :melodic-minor]]
     (->> (concat
           predifined-order
           (->> (se.jherrlin.music-theory.definitions/scales)
