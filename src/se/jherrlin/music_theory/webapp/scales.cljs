@@ -70,7 +70,7 @@
 
          [common/intervals-to-tones intervals interval-tones]
          [:h3 "All " (if as-intervals "interval" "tone") " positions in the scale"]
-         [instrument-types/instrument
+         [instrument-types/instrument-component
           {:fretboard-matrix (if as-intervals
                                (utils/with-all-intervals
                                  (mapv vector interval-tones intervals)
@@ -100,7 +100,7 @@
                 ^{:key id}
                 [:div {:style {:margin-bottom "2rem"}}
                  #_[common/debug-view scale-pattern]
-                 [instrument-types/instrument
+                 [instrument-types/instrument-component
                   {:instrument-type  instrument-type
                    :as-text          as-text
                    :fretboard-matrix ((if as-intervals

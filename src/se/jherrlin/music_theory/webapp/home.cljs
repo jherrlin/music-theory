@@ -47,7 +47,7 @@
                              [nil nil "3" nil]
                              [nil nil nil "1"]
                              [nil nil nil nil]]]
-      [instrument-types/instrument
+      [instrument-types/instrument-component
        {:fretboard-matrix #_ (if as-intervals
                                (utils/with-all-intervals
                                  (mapv vector interval-tones intervals)
@@ -94,7 +94,7 @@
                              [nil nil "3" nil]
                              [nil nil nil "1"]
                              [nil nil nil nil]]]
-      [instrument-types/instrument
+      [instrument-types/instrument-component
        {:fretboard-matrix #_ (if as-intervals
                                (utils/with-all-intervals
                                  (mapv vector interval-tones intervals)
@@ -141,7 +141,7 @@
                              [nil nil "3" nil]
                              [nil nil nil "1"]
                              [nil nil nil nil]]]
-      [instrument-types/instrument
+      [instrument-types/instrument-component
        {:fretboard-matrix #_ (if as-intervals
                                (utils/with-all-intervals
                                  (mapv vector interval-tones intervals)
@@ -189,7 +189,7 @@
                              [nil nil "3" nil]
                              [nil nil nil "1"]
                              [nil nil nil nil]]]
-      [instrument-types/instrument
+      [instrument-types/instrument-component
        {:fretboard-matrix #_ (if as-intervals
                                (utils/with-all-intervals
                                  (mapv vector interval-tones intervals)

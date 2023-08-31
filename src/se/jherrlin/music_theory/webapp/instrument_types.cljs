@@ -1,5 +1,6 @@
 (ns se.jherrlin.music-theory.webapp.instrument-types
   (:require
+   [re-frame.core :as re-frame]
    [se.jherrlin.music-theory.webapp.instrument-types.fretboard :as fretboard]
    [se.jherrlin.music-theory.utils :as utils]
    [se.jherrlin.music-theory.definitions :as definitions]
@@ -23,3 +24,38 @@
         (fn [{:keys [out]}] (if (nil? out) "" out))
         fretboard-matrix)]
       [fretboard/styled-view {:matrix fretboard-matrix}]))
+
+(defn instrument-component
+  [{:keys [as-intervals
+           as-text
+           bookmark-idx
+           fretboard-matrix
+           index-tones
+           instrument-type
+           interval-tones
+           intervals
+           key-of
+           nr-of-frets
+           nr-of-octavs
+           tuning]
+    :as   m}]
+  (let [bookmarks        @(re-frame/subscribe [:bookmarks])
+        _                (def bookmarks bookmarks)
+        bookmarks-set    @(re-frame/subscribe [:bookmarks-set])
+        _                (def bookmarks-set bookmarks-set)
+        bookmark-exists? (bookmarks-set m)
+        _                (def bookmark-exists? bookmark-exists?)]
+
+    [:<>
+     [instrument m]
+     [:div {:style {:margin-top "0.5rem"
+                    :display    "flex"}}
+      [:button {:on-click (if bookmark-exists?
+                            #(re-frame/dispatch [:remove-bookmark m])
+                            #(re-frame/dispatch [:add-bookmark m]))}
+       (if bookmark-exists?
+         "Remove from bookmarks"
+         "Add to bookmark")]
+      #_[:button {:style    {:margin-left "1rem"}
+                  :on-click #(js/console.log "hejsan")}
+         "Focus"]]]))

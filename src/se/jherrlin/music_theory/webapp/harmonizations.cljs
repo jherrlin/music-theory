@@ -226,7 +226,7 @@
        [menus/key-selection]
 
        [:h3 "All " (if as-intervals "interval" "tone") " positions in the scale"]
-       [instrument-types/instrument
+       [instrument-types/instrument-component
         {:fretboard-matrix (if as-intervals
                              (utils/with-all-intervals
                                (mapv vector interval-tones intervals)
@@ -278,7 +278,7 @@
              (->> (utils/tones-by-key-and-intervals root intervals)
                   (map (comp str/capitalize name))
                   (str/join ", "))]]]
-          [instrument-types/instrument
+          [instrument-types/instrument-component
            {:fretboard-matrix (if as-intervals
                                 (utils/with-all-intervals
                                   (mapv vector interval-tones intervals)

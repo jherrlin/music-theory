@@ -9,7 +9,8 @@
    [reitit.frontend.controllers :as rfc]
    [reitit.frontend.easy :as rfe]
    [clojure.string :as str]
-   [clojure.set :as set]))
+   [clojure.set :as set]
+   [se.jherrlin.music-theory.utils :as utils]))
 
 
 (defn merge' [db [k m]]
@@ -19,6 +20,8 @@
 (def init-db
   {:current-route      nil
    :current-route-name :home
+   :bookmarks          []
+   :bookmarks-set      #{} ;; quick lookup if bookmark already exists
    :path-params        {:key-of          :c
                         :instrument-type :fretboard
                         :tuning          :guitar
@@ -71,7 +74,27 @@
     :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
    {:n :as-text
     :s (fn [db [k]] (get-in db [:query-params k] false))
-    :e (fn [db [k v]] (assoc-in db [:query-params k] v))}])
+    :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
+
+   {:n :add-bookmark
+    :e (fn [db [k m]]
+         (-> db
+             (update :bookmarks conj m)
+             (update :bookmarks-set conj m)))}
+   {:n :remove-bookmark
+    :e (fn [db [k m]]
+         (let [idx (->> (get db :bookmarks)
+                        (map-indexed vector)
+                        (filter (comp #{m} second))
+                        (ffirst))]
+           (when idx
+             (-> db
+                 (update :bookmarks (partial utils/vec-remove idx))
+                 (update :bookmarks-set disj m)))))}
+   {:n :bookmarks}
+   {:n :bookmarks-set}])
+
+
 
 (doseq [{:keys [n s e]} events-]
   (re-frame/reg-sub n (or s (fn [db [n']] (get db n'))))

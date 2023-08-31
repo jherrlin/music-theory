@@ -18,7 +18,10 @@
 
 
 
-
+(defn vec-remove
+  "remove elem in coll"
+  [idx coll]
+  (into (subvec coll 0 idx) (subvec coll (inc idx))))
 
 (defn list-insert
   "Insert `element` on `index` on `lst`.
