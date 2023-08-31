@@ -27,192 +27,193 @@
     [:p "This is pattern that shows how you can play a Major C chord on guitar."]
     [:p "It displays the positions and what tone is in the position on the fretboard."]
 
-    (let [nr-of-frets       4
-          instrument-tuning [:e :a :d :g :b :e]
-          fretboard-matrix  (utils/fretboard-strings
-                             instrument-tuning
-                             nr-of-frets)
-          as-intervals      false
-          interval-tones    [:c :e :g]
-          intervals         ["1" "3" "5"]
-          key-of            :c
-          index-tones       [#{:c} #{:e} #{:g}]
-          nr-of-octavs      1
-          tuning            :guitar
-          as-text           false
-          instrument-type   :fretboard
-          chord-pattern     [["3" nil nil nil]
-                             [nil "1" nil nil]
-                             ["5" nil nil nil]
-                             [nil nil "3" nil]
-                             [nil nil nil "1"]
-                             [nil nil nil nil]]]
-      [instrument-types/instrument-component
-       {:fretboard-matrix #_ (if as-intervals
-                               (utils/with-all-intervals
-                                 (mapv vector interval-tones intervals)
-                                 fretboard-matrix)
-                               (utils/with-all-tones
-                                 interval-tones
-                                 fretboard-matrix))
-        ((if as-intervals
-           utils/pattern-with-intervals
-           utils/pattern-with-tones)
-         key-of
-         chord-pattern
-         fretboard-matrix)
-        :as-text          as-text
-        :instrument-type  instrument-type
-        :key-of           key-of
-        :tuning           tuning
-        :nr-of-frets      nr-of-frets
-        :as-intervals     as-intervals
-        :index-tones      index-tones
-        :interval-tones   interval-tones
-        :intervals        intervals
-        :nr-of-octavs     nr-of-octavs}])
+    ;; (let [nr-of-frets       4
+    ;;       instrument-tuning [:e :a :d :g :b :e]
+    ;;       fretboard-matrix  (utils/fretboard-strings
+    ;;                          instrument-tuning
+    ;;                          nr-of-frets)
+    ;;       as-intervals      false
+    ;;       interval-tones    [:c :e :g]
+    ;;       intervals         ["1" "3" "5"]
+    ;;       key-of            :c
+    ;;       index-tones       [#{:c} #{:e} #{:g}]
+    ;;       nr-of-octavs      1
+    ;;       tuning            :guitar
+    ;;       as-text           false
+    ;;       instrument-type   :fretboard
+    ;;       chord-pattern     [["3" nil nil nil]
+    ;;                          [nil "1" nil nil]
+    ;;                          ["5" nil nil nil]
+    ;;                          [nil nil "3" nil]
+    ;;                          [nil nil nil "1"]
+    ;;                          [nil nil nil nil]]]
+    ;;   [instrument-types/instrument-component
+    ;;    {:fretboard-matrix #_ (if as-intervals
+    ;;                            (utils/with-all-intervals
+    ;;                              (mapv vector interval-tones intervals)
+    ;;                              fretboard-matrix)
+    ;;                            (utils/with-all-tones
+    ;;                              interval-tones
+    ;;                              fretboard-matrix))
+    ;;     ((if as-intervals
+    ;;        utils/pattern-with-intervals
+    ;;        utils/pattern-with-tones)
+    ;;      key-of
+    ;;      chord-pattern
+    ;;      fretboard-matrix)
+    ;;     :as-text          as-text
+    ;;     :instrument-type  instrument-type
+    ;;     :key-of           key-of
+    ;;     :tuning           tuning
+    ;;     :nr-of-frets      nr-of-frets
+    ;;     :as-intervals     as-intervals
+    ;;     :index-tones      index-tones
+    ;;     :interval-tones   interval-tones
+    ;;     :intervals        intervals
+    ;;     :nr-of-octavs     nr-of-octavs}])
 
-    [:p "It's possible to change the styling of the fretboard to be text."]
+    ;; [:p "It's possible to change the styling of the fretboard to be text."]
 
-    (let [nr-of-frets       4
-          instrument-tuning [:e :a :d :g :b :e]
-          fretboard-matrix  (utils/fretboard-strings
-                             instrument-tuning
-                             nr-of-frets)
-          as-intervals      false
-          interval-tones    [:c :e :g]
-          intervals         ["1" "3" "5"]
-          key-of            :c
-          index-tones       [#{:c} #{:e} #{:g}]
-          nr-of-octavs      1
-          tuning            :guitar
-          as-text           true
-          instrument-type   :fretboard
-          chord-pattern     [["3" nil nil nil]
-                             [nil "1" nil nil]
-                             ["5" nil nil nil]
-                             [nil nil "3" nil]
-                             [nil nil nil "1"]
-                             [nil nil nil nil]]]
-      [instrument-types/instrument-component
-       {:fretboard-matrix #_ (if as-intervals
-                               (utils/with-all-intervals
-                                 (mapv vector interval-tones intervals)
-                                 fretboard-matrix)
-                               (utils/with-all-tones
-                                 interval-tones
-                                 fretboard-matrix))
-        ((if as-intervals
-           utils/pattern-with-intervals
-           utils/pattern-with-tones)
-         key-of
-         chord-pattern
-         fretboard-matrix)
-        :as-text          as-text
-        :instrument-type  instrument-type
-        :key-of           key-of
-        :tuning           tuning
-        :nr-of-frets      nr-of-frets
-        :as-intervals     as-intervals
-        :index-tones      index-tones
-        :interval-tones   interval-tones
-        :intervals        intervals
-        :nr-of-octavs     nr-of-octavs}])
+    ;; (let [nr-of-frets       4
+    ;;       instrument-tuning [:e :a :d :g :b :e]
+    ;;       fretboard-matrix  (utils/fretboard-strings
+    ;;                          instrument-tuning
+    ;;                          nr-of-frets)
+    ;;       as-intervals      false
+    ;;       interval-tones    [:c :e :g]
+    ;;       intervals         ["1" "3" "5"]
+    ;;       key-of            :c
+    ;;       index-tones       [#{:c} #{:e} #{:g}]
+    ;;       nr-of-octavs      1
+    ;;       tuning            :guitar
+    ;;       as-text           true
+    ;;       instrument-type   :fretboard
+    ;;       chord-pattern     [["3" nil nil nil]
+    ;;                          [nil "1" nil nil]
+    ;;                          ["5" nil nil nil]
+    ;;                          [nil nil "3" nil]
+    ;;                          [nil nil nil "1"]
+    ;;                          [nil nil nil nil]]]
+    ;;   [instrument-types/instrument-component
+    ;;    {:fretboard-matrix #_ (if as-intervals
+    ;;                            (utils/with-all-intervals
+    ;;                              (mapv vector interval-tones intervals)
+    ;;                              fretboard-matrix)
+    ;;                            (utils/with-all-tones
+    ;;                              interval-tones
+    ;;                              fretboard-matrix))
+    ;;     ((if as-intervals
+    ;;        utils/pattern-with-intervals
+    ;;        utils/pattern-with-tones)
+    ;;      key-of
+    ;;      chord-pattern
+    ;;      fretboard-matrix)
+    ;;     :as-text          as-text
+    ;;     :instrument-type  instrument-type
+    ;;     :key-of           key-of
+    ;;     :tuning           tuning
+    ;;     :nr-of-frets      nr-of-frets
+    ;;     :as-intervals     as-intervals
+    ;;     :index-tones      index-tones
+    ;;     :interval-tones   interval-tones
+    ;;     :intervals        intervals
+    ;;     :nr-of-octavs     nr-of-octavs}])
 
-    [:p "Or as a piano"]
+    ;; [:p "Or as a piano"]
 
-    (let [nr-of-frets       4
-          instrument-tuning [:e :a :d :g :b :e]
-          fretboard-matrix  (utils/fretboard-strings
-                             instrument-tuning
-                             nr-of-frets)
-          as-intervals      false
-          interval-tones    [:c :e :g]
-          intervals         ["1" "3" "5"]
-          key-of            :c
-          index-tones       [#{:c} #{:e} #{:g}]
-          nr-of-octavs      1
-          tuning            :guitar
-          as-text           false
-          instrument-type   :keyboard
-          chord-pattern     [["3" nil nil nil]
-                             [nil "1" nil nil]
-                             ["5" nil nil nil]
-                             [nil nil "3" nil]
-                             [nil nil nil "1"]
-                             [nil nil nil nil]]]
-      [instrument-types/instrument-component
-       {:fretboard-matrix #_ (if as-intervals
-                               (utils/with-all-intervals
-                                 (mapv vector interval-tones intervals)
-                                 fretboard-matrix)
-                               (utils/with-all-tones
-                                 interval-tones
-                                 fretboard-matrix))
-        ((if as-intervals
-           utils/pattern-with-intervals
-           utils/pattern-with-tones)
-         key-of
-         chord-pattern
-         fretboard-matrix)
-        :as-text          as-text
-        :instrument-type  instrument-type
-        :key-of           key-of
-        :tuning           tuning
-        :nr-of-frets      nr-of-frets
-        :as-intervals     as-intervals
-        :index-tones      index-tones
-        :interval-tones   interval-tones
-        :intervals        intervals
-        :nr-of-octavs     nr-of-octavs}])
+    ;; (let [
+    ;;       nr-of-frets       4
+    ;;       instrument-tuning [:e :a :d :g :b :e]
+    ;;       fretboard-matrix  (utils/fretboard-strings
+    ;;                          instrument-tuning
+    ;;                          nr-of-frets)
+    ;;       as-intervals      false
+    ;;       interval-tones    [:c :e :g]
+    ;;       intervals         ["1" "3" "5"]
+    ;;       key-of            :c
+    ;;       index-tones       [#{:c} #{:e} #{:g}]
+    ;;       nr-of-octavs      1
+    ;;       tuning            :guitar
+    ;;       as-text           false
+    ;;       instrument-type   :keyboard
+    ;;       chord-pattern     [["3" nil nil nil]
+    ;;                          [nil "1" nil nil]
+    ;;                          ["5" nil nil nil]
+    ;;                          [nil nil "3" nil]
+    ;;                          [nil nil nil "1"]
+    ;;                          [nil nil nil nil]]]
+    ;;   [instrument-types/instrument-component
+    ;;    {:fretboard-matrix #_ (if as-intervals
+    ;;                            (utils/with-all-intervals
+    ;;                              (mapv vector interval-tones intervals)
+    ;;                              fretboard-matrix)
+    ;;                            (utils/with-all-tones
+    ;;                              interval-tones
+    ;;                              fretboard-matrix))
+    ;;     ((if as-intervals
+    ;;        utils/pattern-with-intervals
+    ;;        utils/pattern-with-tones)
+    ;;      key-of
+    ;;      chord-pattern
+    ;;      fretboard-matrix)
+    ;;     :as-text          as-text
+    ;;     :instrument-type  instrument-type
+    ;;     :key-of           key-of
+    ;;     :tuning           tuning
+    ;;     :nr-of-frets      nr-of-frets
+    ;;     :as-intervals     as-intervals
+    ;;     :index-tones      index-tones
+    ;;     :interval-tones   interval-tones
+    ;;     :intervals        intervals
+    ;;     :nr-of-octavs     nr-of-octavs}])
 
-    [:p "It's possible to look at this chord in another perspective."]
-    [:p "This image shows the intervals that makes up chord."]
+    ;; [:p "It's possible to look at this chord in another perspective."]
+    ;; [:p "This image shows the intervals that makes up chord."]
 
-    (let [nr-of-frets       4
-          instrument-tuning [:e :a :d :g :b :e]
-          fretboard-matrix  (utils/fretboard-strings
-                             instrument-tuning
-                             nr-of-frets)
-          as-intervals      true
-          interval-tones    [:c :e :g]
-          intervals         ["1" "3" "5"]
-          key-of            :c
-          index-tones       [#{:c} #{:e} #{:g}]
-          nr-of-octavs      1
-          tuning            :guitar
-          as-text           false
-          instrument-type   :fretboard
-          chord-pattern     [["3" nil nil nil]
-                             [nil "1" nil nil]
-                             ["5" nil nil nil]
-                             [nil nil "3" nil]
-                             [nil nil nil "1"]
-                             [nil nil nil nil]]]
-      [instrument-types/instrument-component
-       {:fretboard-matrix #_ (if as-intervals
-                               (utils/with-all-intervals
-                                 (mapv vector interval-tones intervals)
-                                 fretboard-matrix)
-                               (utils/with-all-tones
-                                 interval-tones
-                                 fretboard-matrix))
-        ((if as-intervals
-           utils/pattern-with-intervals
-           utils/pattern-with-tones)
-         key-of
-         chord-pattern
-         fretboard-matrix)
-        :as-text          as-text
-        :instrument-type  instrument-type
-        :key-of           key-of
-        :tuning           tuning
-        :nr-of-frets      nr-of-frets
-        :as-intervals     as-intervals
-        :index-tones      index-tones
-        :interval-tones   interval-tones
-        :intervals        intervals
-        :nr-of-octavs     nr-of-octavs}])
+    ;; (let [nr-of-frets       4
+    ;;       instrument-tuning [:e :a :d :g :b :e]
+    ;;       fretboard-matrix  (utils/fretboard-strings
+    ;;                          instrument-tuning
+    ;;                          nr-of-frets)
+    ;;       as-intervals      true
+    ;;       interval-tones    [:c :e :g]
+    ;;       intervals         ["1" "3" "5"]
+    ;;       key-of            :c
+    ;;       index-tones       [#{:c} #{:e} #{:g}]
+    ;;       nr-of-octavs      1
+    ;;       tuning            :guitar
+    ;;       as-text           false
+    ;;       instrument-type   :fretboard
+    ;;       chord-pattern     [["3" nil nil nil]
+    ;;                          [nil "1" nil nil]
+    ;;                          ["5" nil nil nil]
+    ;;                          [nil nil "3" nil]
+    ;;                          [nil nil nil "1"]
+    ;;                          [nil nil nil nil]]]
+    ;;   [instrument-types/instrument-component
+    ;;    {:fretboard-matrix #_ (if as-intervals
+    ;;                            (utils/with-all-intervals
+    ;;                              (mapv vector interval-tones intervals)
+    ;;                              fretboard-matrix)
+    ;;                            (utils/with-all-tones
+    ;;                              interval-tones
+    ;;                              fretboard-matrix))
+    ;;     ((if as-intervals
+    ;;        utils/pattern-with-intervals
+    ;;        utils/pattern-with-tones)
+    ;;      key-of
+    ;;      chord-pattern
+    ;;      fretboard-matrix)
+    ;;     :as-text          as-text
+    ;;     :instrument-type  instrument-type
+    ;;     :key-of           key-of
+    ;;     :tuning           tuning
+    ;;     :nr-of-frets      nr-of-frets
+    ;;     :as-intervals     as-intervals
+    ;;     :index-tones      index-tones
+    ;;     :interval-tones   interval-tones
+    ;;     :intervals        intervals
+    ;;     :nr-of-octavs     nr-of-octavs}])
 
     #_(let [interval-tones [:c :e :g]
             key-of         :c]

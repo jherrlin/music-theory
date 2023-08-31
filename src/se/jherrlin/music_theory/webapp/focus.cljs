@@ -41,15 +41,59 @@
           _                            (def instrument-tuning instrument-tuning)
           {definition-type :type
            :as             definition} (definitions/by-id id)
+          _                            (def definition definition)
           _                            (def definition-type definition-type)
-          fretboard-matrix             (when (= instrument-type :fretboard)
-                                         (utils/fretboard-strings
-                                          instrument-tuning
-                                          nr-of-frets))
-          _                            (def fretboard-matrix fretboard-matrix)
           ]
-      [:div
-       [:h1 "focus view"]])))
+      [:<>
+       [menus/menu]
+       [:br]
+       [:div
+        (when definition
+            (let [{id          :id
+                   indexes     (condp = definition-type
+                                 :chord :chord/indexes
+                                 :scale :scale/indexes)
+                   intervals   (condp = definition-type
+                                 :chord :chord/intervals
+                                 :scale :scale/intervals)
+                   :as         m}   (case definition-type
+                                      :chord (definitions/chord (:chord/chord definition))
+                                      :scale (definitions/scale (-> definition :scale/scale first)))
+                  _                 (def indexes indexes)
+                  _                 (def m m)
+                  _                 (def intervals intervals)
+                  index-tones       (utils/index-tones indexes key-of)
+                  _                 (def index-tones index-tones)
+                  interval-tones    (utils/interval-tones intervals key-of)
+                  _                 (def interval-tones interval-tones)
+                  instrument-tuning (get-in definitions/instrument-with-tuning [tuning :tuning])
+                  _                 (def instrument-tuning instrument-tuning)
+                  fretboard-matrix  (when (= instrument-type :fretboard)
+                                      (utils/fretboard-strings
+                                       instrument-tuning
+                                       nr-of-frets))
+                  _                 (def fretboard-matrix fretboard-matrix)]
+
+              [instrument-types/instrument-component
+               {:fretboard-matrix (if as-intervals
+                                    (utils/with-all-intervals
+                                      (mapv vector interval-tones intervals)
+                                      fretboard-matrix)
+                                    (utils/with-all-tones
+                                      interval-tones
+                                      fretboard-matrix))
+                :id id
+                :as-text          as-text
+                :instrument-type  instrument-type
+                :key-of           key-of
+                :tuning           tuning
+                :chord            chord
+                :nr-of-frets      nr-of-frets
+                :as-intervals     as-intervals
+                :index-tones      index-tones
+                :interval-tones   interval-tones
+                :intervals        intervals
+                :nr-of-octavs     nr-of-octavs}]))]])))
 
 (def routes
   (let [route-name :focus]

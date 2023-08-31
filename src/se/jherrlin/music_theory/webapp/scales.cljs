@@ -78,6 +78,7 @@
                                (utils/with-all-tones
                                  interval-tones
                                  fretboard-matrix))
+           :id               id
            :as-text          as-text
            :instrument-type  instrument-type
            :key-of           key-of
@@ -101,8 +102,17 @@
                 [:div {:style {:margin-bottom "2rem"}}
                  #_[common/debug-view scale-pattern]
                  [instrument-types/instrument-component
-                  {:instrument-type  instrument-type
+                  {:id               id
                    :as-text          as-text
+                   :instrument-type  instrument-type
+                   :key-of           key-of
+                   :tuning           tuning
+                   :nr-of-frets      nr-of-frets
+                   :as-intervals     as-intervals
+                   :index-tones      index-tones
+                   :interval-tones   interval-tones
+                   :intervals        intervals
+                   :nr-of-octavs     nr-of-octavs
                    :fretboard-matrix ((if as-intervals
                                         utils/pattern-with-intervals
                                         utils/pattern-with-tones)

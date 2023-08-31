@@ -1,5 +1,6 @@
 (ns se.jherrlin.music-theory.webapp.instrument-types
   (:require
+   [reitit.frontend.easy :as rfe]
    [re-frame.core :as re-frame]
    [se.jherrlin.music-theory.webapp.instrument-types.fretboard :as fretboard]
    [se.jherrlin.music-theory.utils :as utils]
@@ -26,7 +27,8 @@
       [fretboard/styled-view {:matrix fretboard-matrix}]))
 
 (defn instrument-component
-  [{:keys [as-intervals
+  [{:keys [id
+           as-intervals
            as-text
            bookmark-idx
            fretboard-matrix
@@ -39,12 +41,15 @@
            nr-of-octavs
            tuning]
     :as   m}]
+  {:pre [(uuid? id)]}
   (let [bookmarks        @(re-frame/subscribe [:bookmarks])
         _                (def bookmarks bookmarks)
         bookmarks-set    @(re-frame/subscribe [:bookmarks-set])
         _                (def bookmarks-set bookmarks-set)
         bookmark-exists? (bookmarks-set m)
-        _                (def bookmark-exists? bookmark-exists?)]
+        _                (def bookmark-exists? bookmark-exists?)
+        query-params     @(re-frame/subscribe [:query-params])
+        _                (def query-params query-params)]
 
     [:<>
      [instrument m]
@@ -56,6 +61,6 @@
        (if bookmark-exists?
          "Remove from bookmarks"
          "Add to bookmark")]
-      #_[:button {:style    {:margin-left "1rem"}
-                  :on-click #(js/console.log "hejsan")}
-         "Focus"]]]))
+      #_[:a {:style {:margin-left "1rem"}
+           :href  (rfe/href :focus (select-keys m [:instrument-type :tuning :key-of :id]) query-params)}
+       [:button "Focus"]]]]))
