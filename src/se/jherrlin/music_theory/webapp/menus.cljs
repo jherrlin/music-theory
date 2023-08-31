@@ -33,7 +33,7 @@
     :title           "Piano"}
    {:instrument-type :fretboard
     :tuning          :guitar
-    :title           "Gitar"}
+    :title           "Guitar"}
    {:instrument-type :fretboard
     :tuning          :mandolin
     :title           "Mandolin"}
@@ -42,7 +42,7 @@
     :title           "Bass"}
    {:instrument-type :fretboard
     :tuning          :guitar-dadgad
-    :title           "Gitar (DADGAD)"}
+    :title           "Guitar (DADGAD)"}
    {:instrument-type :fretboard
     :tuning          :mandola
     :title           "Mandola"}
