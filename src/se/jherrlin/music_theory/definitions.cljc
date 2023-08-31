@@ -95,6 +95,19 @@
                       (= tuning' tuning))))
        (sort-by :fretboard-pattern/order)))
 
+(defn scale-patterns-by-belonging-and-tuning
+  [belongs-to tuning]
+  {:pre [(set? belongs-to)]}
+  (->> (get @definitions :patterns)
+       (vals)
+       (filter (fn [{bt      :fretboard-pattern/belongs-to
+                     t       :fretboard-pattern/type
+                     tuning' :fretboard-pattern/tuning}]
+                 (and (belongs-to bt)
+                      (= :scale t)
+                      (= tuning' tuning))))
+       (sort-by :fretboard-pattern/order)))
+
 (defn ids [id]
   (get-in @definitions [:ids]))
 
@@ -184,19 +197,6 @@
       (throw
        (ex-info
         "Triad pattern error"
-        (models-fretboard-pattern/explain-fretboard-pattern pattern'))))))
-
-(defn define-mode-pattern
-  [id meta-data pattern]
-  (let [meta-data' (assoc meta-data :type :mode)
-        pattern'   (utils/define-pattern id meta-data' pattern)]
-    (if (models-fretboard-pattern/validate-fretboard-pattern? pattern')
-      (do
-        (swap! definitions assoc-in [:pattern id] pattern')
-        (swap! definitions assoc-in [:ids id] pattern'))
-      (throw
-       (ex-info
-        "Mode pattern error"
         (models-fretboard-pattern/explain-fretboard-pattern pattern'))))))
 
 (defn define-scale-pattern
@@ -1474,9 +1474,10 @@
 ;; --------------------
 ;; Modes
 ;; --------------------
-(define-mode-pattern #uuid "55189945-37fa-4071-9170-b0b068a23174"
+(define-scale-pattern #uuid "55189945-37fa-4071-9170-b0b068a23174"
   {:belongs-to :ionian
-   :tuning     guitar}
+   :tuning     guitar
+   :order      1}
   "7   1   -   2
    -   5   -   6
    2   -   3   4
@@ -1484,10 +1485,10 @@
    3   4   -   5
    -   1   -   2")
 
-(define-mode-pattern #uuid "1aaa72af-7c36-4b87-8e22-b1b4a719ed1b"
+(define-scale-pattern #uuid "1aaa72af-7c36-4b87-8e22-b1b4a719ed1b"
   {:belongs-to :ionian
-   :string     6
-   :tuning     guitar}
+   :tuning     guitar
+   :order      2}
   "-   -   -   -
    -   -   -   -
    -   -   -   -
@@ -1495,10 +1496,10 @@
    3   4   -   5
    -   1   -   2")
 
-(define-mode-pattern #uuid "8e9ee464-1a23-459a-82f7-9cd30728215a"
+(define-scale-pattern #uuid "8e9ee464-1a23-459a-82f7-9cd30728215a"
   {:belongs-to :ionian
-   :string     5
-   :tuning     guitar}
+   :tuning     guitar
+   :order      3}
   "-   -   -   -
    -   -   -   -
    6   -   7   1
@@ -1506,10 +1507,10 @@
    -   1   -   2
    -   -   -   -")
 
-(define-mode-pattern #uuid "cec2cd9d-ae7f-4d3e-8107-aaf22aaf4004"
+(define-scale-pattern #uuid "cec2cd9d-ae7f-4d3e-8107-aaf22aaf4004"
   {:belongs-to :ionian
-   :string     4
-   :tuning     guitar}
+   :tuning     guitar
+   :order      4}
   "-   -   -   -   -
    -   6   -   7   1
    3   4   -   5   -
@@ -1517,10 +1518,10 @@
    -   -   -   -   -
    -   -   -   -   -")
 
-(define-mode-pattern #uuid "e0c2d152-729c-45ce-b59f-1088677d010b"
+(define-scale-pattern #uuid "e0c2d152-729c-45ce-b59f-1088677d010b"
   {:belongs-to :ionian
-   :string     4
-   :tuning     guitar}
+   :tuning     guitar
+   :order      5}
   "-   -   -   -   -
    6   -   7   1   -
    4   -   5   -   -
@@ -1528,10 +1529,10 @@
    -   -   -   -   -
    -   -   -   -   -")
 
-(define-mode-pattern #uuid "dbc69a09-b3dc-4bfa-a4df-6dd767b65d25"
+(define-scale-pattern #uuid "dbc69a09-b3dc-4bfa-a4df-6dd767b65d25"
   {:belongs-to :ionian
-   :string     3
-   :tuning     guitar}
+   :tuning     guitar
+   :order      5}
   "6   -   7   1
    3   4   -   5
    1   -   2   -
@@ -1539,7 +1540,7 @@
    -   -   -   -
    -   -   -   -")
 
-(define-mode-pattern #uuid "900094ba-9561-4bca-8750-f21f47d08c27"
+(define-scale-pattern #uuid "900094ba-9561-4bca-8750-f21f47d08c27"
   {:belongs-to :mixolydian
    :tuning     guitar}
   "-   1   -   2   -
@@ -1549,7 +1550,7 @@
    3   4   -   5   -
    -   1   -   2   -")
 
-(define-mode-pattern #uuid "1a422a8c-b40c-4c91-9734-b41f437ddc51"
+(define-scale-pattern #uuid "1a422a8c-b40c-4c91-9734-b41f437ddc51"
   {:belongs-to :mixolydian
    :string     6
    :tuning     guitar}
@@ -1560,7 +1561,7 @@
    3   4   -   5
    -   1   -   2")
 
-(define-mode-pattern #uuid "5c63f201-aee6-4ec8-a224-5ed856a0b8ab"
+(define-scale-pattern #uuid "5c63f201-aee6-4ec8-a224-5ed856a0b8ab"
   {:belongs-to :mixolydian
    :string     5
    :tuning     guitar}
@@ -1571,7 +1572,7 @@
    -   1   -   2
    -   -   -   -")
 
-(define-mode-pattern #uuid "4422ee55-0d0d-4944-a0b7-f5ba18a6b8fe"
+(define-scale-pattern #uuid "4422ee55-0d0d-4944-a0b7-f5ba18a6b8fe"
   {:belongs-to :mixolydian
    :string     4
    :tuning     guitar}
@@ -1582,7 +1583,7 @@
    -   -   -   -   -
    -   -   -   -   -")
 
-(define-mode-pattern #uuid "66e4daed-4d20-485a-b7fa-954c7c876a51"
+(define-scale-pattern #uuid "66e4daed-4d20-485a-b7fa-954c7c876a51"
   {:belongs-to :mixolydian
    :string     3
    :tuning     guitar}
@@ -1593,7 +1594,7 @@
    -   -   -   -
    -   -   -   -")
 
-(define-mode-pattern #uuid "86adb0c7-0f12-46c2-90f1-6634e3da8cf2"
+(define-scale-pattern #uuid "86adb0c7-0f12-46c2-90f1-6634e3da8cf2"
   {:belongs-to :aeolian
    :tuning     guitar}
   "-   1   -   2  b3
@@ -1603,7 +1604,7 @@
    -   4   -   5  b6
    -   1   -   2  b3")
 
-(define-mode-pattern #uuid "52340c31-5897-42fe-8920-b5ba0b6d9d61"
+(define-scale-pattern #uuid "52340c31-5897-42fe-8920-b5ba0b6d9d61"
   {:belongs-to :aeolian
    :string     6
    :tuning     guitar}
@@ -1614,7 +1615,7 @@
    4   -   5  b6
    1   -   2  b3")
 
-(define-mode-pattern #uuid "45897120-9d79-4272-baf9-f90b4d3b4fb0"
+(define-scale-pattern #uuid "45897120-9d79-4272-baf9-f90b4d3b4fb0"
   {:belongs-to :aeolian
    :string     5
    :tuning     guitar}
@@ -1625,7 +1626,7 @@
    1   -   2  b3
    -   -   -   -")
 
-(define-mode-pattern #uuid "473802da-be04-4b35-99c4-4f8c2557169c"
+(define-scale-pattern #uuid "473802da-be04-4b35-99c4-4f8c2557169c"
   {:belongs-to :aeolian
    :string     4
    :tuning     guitar}
@@ -1636,7 +1637,7 @@
    -   -   -   -
    -   -   -   -")
 
-(define-mode-pattern #uuid "228ead56-2275-459d-819d-52ddd40c3370"
+(define-scale-pattern #uuid "228ead56-2275-459d-819d-52ddd40c3370"
   {:belongs-to :aeolian
    :string     3
    :tuning     guitar}
@@ -1647,7 +1648,7 @@
    -   -   -   -   -
    -   -   -   -   -")
 
-(define-mode-pattern #uuid "9c1b21b5-028a-4a0c-a201-d592e3e319d3"
+(define-scale-pattern #uuid "9c1b21b5-028a-4a0c-a201-d592e3e319d3"
   {:belongs-to :dorian
    :tuning     guitar}
   "-   1   -   2  b3
@@ -1657,7 +1658,7 @@
    -   4   -   5   -
    -   1   -   2  b3")
 
-(define-mode-pattern #uuid "8d921443-11e6-4bfc-b10e-f017ce748375"
+(define-scale-pattern #uuid "8d921443-11e6-4bfc-b10e-f017ce748375"
   {:belongs-to :dorian
    :string     6
    :tuning     guitar}
@@ -1668,7 +1669,7 @@
    -   4   -   5   -
    -   1   -   2  b3")
 
-(define-mode-pattern #uuid "dd98e6d1-68c7-429a-b8a5-c5c18b898b59"
+(define-scale-pattern #uuid "dd98e6d1-68c7-429a-b8a5-c5c18b898b59"
   {:belongs-to :dorian
    :string     5
    :tuning     guitar}
@@ -1679,7 +1680,7 @@
    -   1   -   2  b3
    -   -   -   -   -")
 
-(define-mode-pattern #uuid "8168c9d7-6201-4e0c-88b3-f5bcba5d68f1"
+(define-scale-pattern #uuid "8168c9d7-6201-4e0c-88b3-f5bcba5d68f1"
   {:belongs-to :dorian
    :string     4
    :tuning     guitar}
@@ -1690,7 +1691,7 @@
    -   -   -   -
    -   -   -   -")
 
-(define-mode-pattern #uuid "5bae88ab-d90c-4f4e-8e79-6783aaa51788"
+(define-scale-pattern #uuid "5bae88ab-d90c-4f4e-8e79-6783aaa51788"
   {:belongs-to :dorian
    :string     3
    :tuning     guitar}
@@ -1701,7 +1702,7 @@
    -   -   -   -
    -   -   -   -")
 
-(define-mode-pattern #uuid "24aeb3b1-99dd-46bf-953a-fb21ac41c88e"
+(define-scale-pattern #uuid "24aeb3b1-99dd-46bf-953a-fb21ac41c88e"
   {:belongs-to :phrygian
    :tuning     guitar}
   "1  b2   -  b3
@@ -1711,7 +1712,7 @@
    4   -   5  b6
    1  b2   -  b3")
 
-(define-mode-pattern #uuid "3b414277-b301-40cc-bb30-238b82c21098"
+(define-scale-pattern #uuid "3b414277-b301-40cc-bb30-238b82c21098"
   {:belongs-to :phrygian
    :tuning     guitar}
   "-   -   -   -
@@ -1721,7 +1722,7 @@
    4   -   5  b6
    1  b2   -  b3")
 
-(define-mode-pattern #uuid "63a3ddd4-2430-451d-90fe-47522e819cb9"
+(define-scale-pattern #uuid "63a3ddd4-2430-451d-90fe-47522e819cb9"
   {:belongs-to :phrygian
    :tuning     guitar}
   "-   -   -   -
@@ -1731,7 +1732,7 @@
    1  b2   -  b3
    -   -   -   -")
 
-(define-mode-pattern #uuid "1fd0e509-9f40-4c20-8070-03f96477873c"
+(define-scale-pattern #uuid "1fd0e509-9f40-4c20-8070-03f96477873c"
   {:belongs-to :phrygian
    :tuning     guitar}
   "-   -   -   -
@@ -1741,7 +1742,7 @@
    -   -   -   -
    -   -   -   -")
 
-(define-mode-pattern #uuid "a2f11495-c4f9-48b2-b18f-7de5a97763bb"
+(define-scale-pattern #uuid "a2f11495-c4f9-48b2-b18f-7de5a97763bb"
   {:belongs-to :phrygian
    :tuning     guitar}
   "-  b7   -   1   -
@@ -1751,7 +1752,7 @@
    -   -   -   -   -
    -   -   -   -   -")
 
-(define-mode-pattern #uuid "cffc762f-b2aa-43bc-9651-29668ab982db"
+(define-scale-pattern #uuid "cffc762f-b2aa-43bc-9651-29668ab982db"
   {:belongs-to :lydian
    :tuning     guitar}
   "7   1   -   2
@@ -1761,7 +1762,7 @@
    3   -  b5   5
    -   1   -   2")
 
-(define-mode-pattern #uuid "37e8a1b9-79b6-46bd-ae0b-37b6af92ebeb"
+(define-scale-pattern #uuid "37e8a1b9-79b6-46bd-ae0b-37b6af92ebeb"
   {:belongs-to :lydian
    :tuning     guitar}
   "-   -   -   -
@@ -1771,7 +1772,7 @@
    3   -  #4   5
    -   1   -   2")
 
-(define-mode-pattern #uuid "ff997c3d-26e9-4805-8812-e087f468238e"
+(define-scale-pattern #uuid "ff997c3d-26e9-4805-8812-e087f468238e"
   {:belongs-to :lydian
    :tuning     guitar}
   "-   -   -   -
@@ -1781,7 +1782,7 @@
    -   1   -   2
    -   -   -   -")
 
-(define-mode-pattern #uuid "b66957a2-c045-4a48-aa73-7b6014e6b451"
+(define-scale-pattern #uuid "b66957a2-c045-4a48-aa73-7b6014e6b451"
   {:belongs-to :lydian
    :tuning     guitar}
   "-   -   -   -   -
@@ -1791,7 +1792,7 @@
    -   -   -   -   -
    -   -   -   -   -")
 
-(define-mode-pattern #uuid "6c906182-ab7d-4ebe-845f-5f7381c84dc3"
+(define-scale-pattern #uuid "6c906182-ab7d-4ebe-845f-5f7381c84dc3"
   {:belongs-to :lydian
    :tuning     guitar}
   "6   -   7   1
@@ -1801,7 +1802,7 @@
    -   -   -   -
    -   -   -   -")
 
-(define-mode-pattern #uuid "b8594762-64ed-48f9-bcea-c1ddae24a610"
+(define-scale-pattern #uuid "b8594762-64ed-48f9-bcea-c1ddae24a610"
   {:belongs-to :locrian
    :tuning     guitar}
   "1  b2   -  b3
@@ -1811,7 +1812,7 @@
    4  b5   -  b6
    1  b2   -  b3")
 
-(define-mode-pattern #uuid "5e44c225-8508-472c-8121-03d9b0408e3d"
+(define-scale-pattern #uuid "5e44c225-8508-472c-8121-03d9b0408e3d"
   {:belongs-to :locrian
    :tuning     guitar}
   "-   -   -   -
@@ -1821,7 +1822,7 @@
    4  b5   -  b6
    1  b2   -  b3")
 
-(define-mode-pattern #uuid "30fdd92d-4ef5-42a2-80eb-daf2245ec637"
+(define-scale-pattern #uuid "30fdd92d-4ef5-42a2-80eb-daf2245ec637"
   {:belongs-to :locrian
    :tuning     guitar}
   "-   -   -   -
@@ -1831,7 +1832,7 @@
    1  b2   -  b3
    -   -   -   -")
 
-(define-mode-pattern #uuid "d92fed54-eb65-40df-ada3-b707228d782f"
+(define-scale-pattern #uuid "d92fed54-eb65-40df-ada3-b707228d782f"
   {:belongs-to :locrian
    :tuning     guitar}
   "-   -   -   -
@@ -1841,7 +1842,7 @@
    -   -   -   -
    -   -   -   -")
 
-(define-mode-pattern #uuid "f1e11c06-deda-4458-b020-119dd3713b9c"
+(define-scale-pattern #uuid "f1e11c06-deda-4458-b020-119dd3713b9c"
   {:belongs-to :locrian
    :tuning     guitar}
   "-  b7   -   1   -
@@ -1851,7 +1852,7 @@
    -   -   -   -   -
    -   -   -   -   -")
 
-(define-mode-pattern #uuid "81610fe6-98c3-441f-b361-5a268b8dd45a"
+(define-scale-pattern #uuid "81610fe6-98c3-441f-b361-5a268b8dd45a"
   {:belongs-to :mixolydian-blues-hybrid
    :tuning     guitar}
   "-   1   -   2  b3
@@ -1985,7 +1986,7 @@
 
 
 
-#uuid "5e5989bc-0445-4c42-857a-c3f7cdf2ce83"
+
 
 (define-scale-pattern #uuid "11a94327-3df5-419b-8c0a-eba0c46ef780"
   {:belongs-to :major

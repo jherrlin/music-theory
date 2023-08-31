@@ -15,16 +15,25 @@
 
 (defn chord-component []
   (let [path-params        @(re-frame/subscribe [:path-params])
+        _                  (def path-params path-params)
         query-params       @(re-frame/subscribe [:query-params])
+        _                  (def query-params query-params)
         current-route-name @(re-frame/subscribe [:current-route-name])
+        _                  (def current-route-name current-route-name)
         key-of             @(re-frame/subscribe [:key-of])
         _                  (def key-of key-of)
         instrument-type    @(re-frame/subscribe [:instrument-type])
-        as-intervals       @(re-frame/subscribe [:as-intervals])
+        _                  (def instrument-type instrument-type)
+        as-intervalse      @(re-frame/subscribe [:as-intervals])
+        _                  (def as-intervals as-intervals)
         nr-of-octavs       @(re-frame/subscribe [:nr-of-octavs])
+        _                  (def nr-of-octavs nr-of-octavs)
         as-text            @(re-frame/subscribe [:as-text])
+        _                  (def as-text as-text)
         nr-of-frets        @(re-frame/subscribe [:nr-of-frets])
+        _                  (def nr-of-frets nr-of-frets)
         tuning             @(re-frame/subscribe [:tuning])
+        _                  (def tuning tuning)
         chord              @(re-frame/subscribe [:chord])
         _                  (def chord chord)]
     (when (and chord key-of)
@@ -151,11 +160,12 @@
                            [:key-of          keyword?]
                            [:chord           keyword?]]
                    :query [:map
-                           [:nr-of-frets {:optional true} int?]
+                           [:nr-of-frets  {:optional true} int?]
+                           [:nr-of-octavs {:optional true} int?]
                            [:as-intervals {:optional true} boolean?]
-                           [:as-text {:optional true} boolean?]]}
+                           [:as-text      {:optional true} boolean?]]}
       :controllers
       [{:parameters {:path  [:instrument-type :tuning :key-of :chord]
-                     :query [:nr-of-frets :as-intervals :as-text]}
+                     :query [:nr-of-frets :as-intervals :as-text :nr-of-octavs]}
         :start      (fn [{p :path q :query}]
                       (events/do-on-url-change route-name p q))}]}]))

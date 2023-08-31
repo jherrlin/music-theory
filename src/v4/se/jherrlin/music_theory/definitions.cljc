@@ -104,7 +104,7 @@
          id            (get chord-pattern :fretboard-pattern/id)]
      (swap! triad-patterns assoc id chord-pattern))))
 
-(defn define-mode-pattern
+(defn define-scale-pattern
   ([pattern-name pattern]
    (define-chord-pattern pattern-name {} pattern))
   ([pattern-name meta-data pattern]

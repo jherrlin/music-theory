@@ -1227,6 +1227,7 @@
                          (= "1")
                          (not))
          pattern*   (merge
+                     {:fretboard-pattern/order 1000}
                      meta-data
                      {:id                           id
                       :type                         :pattern
