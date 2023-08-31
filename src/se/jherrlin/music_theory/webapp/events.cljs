@@ -23,7 +23,8 @@
                         :instrument-type :fretboard
                         :tuning          :guitar
                         :scale           :major
-                        :chord           :major}
+                        :chord           :major
+                        :fn              :triad}
    :query-params       {:nr-of-frets  15
                         :nr-of-octavs 2
                         :as-intervals false
@@ -49,6 +50,9 @@
     :s (fn [db [k]] (get-in db [:path-params k]))
     :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
    {:n :chord
+    :s (fn [db [k]] (get-in db [:path-params k]))
+    :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
+   {:n :fn
     :s (fn [db [k]] (get-in db [:path-params k]))
     :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
 

@@ -24,7 +24,7 @@
         _                  (def key-of key-of)
         instrument-type    @(re-frame/subscribe [:instrument-type])
         _                  (def instrument-type instrument-type)
-        as-intervalse      @(re-frame/subscribe [:as-intervals])
+        as-intervals       @(re-frame/subscribe [:as-intervals])
         _                  (def as-intervals as-intervals)
         nr-of-octavs       @(re-frame/subscribe [:nr-of-octavs])
         _                  (def nr-of-octavs nr-of-octavs)
