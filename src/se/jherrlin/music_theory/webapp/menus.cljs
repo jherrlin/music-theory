@@ -120,6 +120,58 @@
           {:disabled (= scale' scale)}
           title]]])]))
 
+(defn harmonization-scale-selection []
+  (let [current-route      @(re-frame/subscribe [:current-route])
+        path-params        @(re-frame/subscribe [:path-params])
+        query-params       @(re-frame/subscribe [:query-params])
+        current-route-name @(re-frame/subscribe [:current-route-name])
+        key-of             @(re-frame/subscribe [:key-of])
+        instrument-type    @(re-frame/subscribe [:instrument-type])
+        tuning             @(re-frame/subscribe [:tuning])
+        scale'             @(re-frame/subscribe [:harmonization-scale])]
+    [:div
+     (for [{:keys [title scale] :as m}
+           ;; Only scales with 7 notes
+           (->> (scale-sort-order)
+                (filter (comp #{7} count :scale/intervals definitions/scale :scale)))]
+       ^{:key title}
+       [:div {:style {:margin-right "10px" :display "inline"}}
+        [:a {:href (rfe/href
+                    :harmonizations
+                    (assoc path-params :harmonization-scale scale)
+                    query-params)}
+         [:button
+          {:disabled (= scale' scale)}
+          title]]])]))
+
+(defn harmonization-fn []
+  (let [current-route      @(re-frame/subscribe [:current-route])
+        path-params        @(re-frame/subscribe [:path-params])
+        query-params       @(re-frame/subscribe [:query-params])
+        current-route-name @(re-frame/subscribe [:current-route-name])
+        key-of             @(re-frame/subscribe [:key-of])
+        instrument-type    @(re-frame/subscribe [:instrument-type])
+        tuning             @(re-frame/subscribe [:tuning])
+        scale'             @(re-frame/subscribe [:harmonization-scale])
+        harmonization-fn   @(re-frame/subscribe [:harmonization-fn])]
+    [:div {:style {:display "flex"}}
+     [:div {:style {:margin-right "10px"}}
+      [:a {:href (rfe/href
+                  :harmonizations
+                  (assoc path-params :harmonization-fn :triad)
+                  query-params)}
+       [:button
+        {:disabled (= harmonization-fn :triad)}
+        "Triads"]]]
+     [:div {:style {:margin-right "10px"}}
+      [:a {:href (rfe/href
+                  :harmonizations
+                  (assoc path-params :harmonization-fn :seventh)
+                  query-params)}
+       [:button
+        {:disabled (= harmonization-fn :seventh)}
+        "Sevens"]]]]))
+
 (defn chord-sort-order []
   (let [chords (se.jherrlin.music-theory.definitions/chords)
         predifined-order [:major :minor

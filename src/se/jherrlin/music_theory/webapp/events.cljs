@@ -22,12 +22,13 @@
    :current-route-name :home
    :bookmarks          []
    :bookmarks-set      #{} ;; quick lookup if bookmark already exists
-   :path-params        {:key-of          :c
-                        :instrument-type :fretboard
-                        :tuning          :guitar
-                        :scale           :major
-                        :chord           :major
-                        :fn              :triad}
+   :path-params        {:key-of              :c
+                        :instrument-type     :fretboard
+                        :tuning              :guitar
+                        :scale               :major
+                        :harmonization-scale :major
+                        :chord               :major
+                        :harmonization-fn    :triad}
    :query-params       {:nr-of-frets  15
                         :nr-of-octavs 2
                         :as-intervals false
@@ -52,10 +53,13 @@
    {:n :scale
     :s (fn [db [k]] (get-in db [:path-params k]))
     :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
+   {:n :harmonization-scale
+    :s (fn [db [k]] (get-in db [:path-params k]))
+    :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
    {:n :chord
     :s (fn [db [k]] (get-in db [:path-params k]))
     :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
-   {:n :fn
+   {:n :harmonization-fn
     :s (fn [db [k]] (get-in db [:path-params k]))
     :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
 

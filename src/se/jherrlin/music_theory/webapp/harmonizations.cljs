@@ -162,38 +162,38 @@
 
 
 (defn harmonizations-view []
-  (let [path-params        @(re-frame/subscribe [:path-params])
-        _                  (def path-params path-params)
-        query-params       @(re-frame/subscribe [:query-params])
-        _                  (def query-params query-params)
-        current-route-name @(re-frame/subscribe [:current-route-name])
-        _                  (def current-route-name current-route-name)
-        key-of             @(re-frame/subscribe [:key-of])
-        _                  (def key-of key-of)
-        instrument-type    @(re-frame/subscribe [:instrument-type])
-        _                  (def instrument-type instrument-type)
-        as-intervals       @(re-frame/subscribe [:as-intervals])
-        _                  (def as-intervals as-intervals)
-        nr-of-octavs       @(re-frame/subscribe [:nr-of-octavs])
-        _                  (def nr-of-octavs nr-of-octavs)
-        as-text            @(re-frame/subscribe [:as-text])
-        _                  (def as-text as-text)
-        nr-of-frets        @(re-frame/subscribe [:nr-of-frets])
-        _                  (def nr-of-frets nr-of-frets)
-        tuning             @(re-frame/subscribe [:tuning])
-        _                  (def tuning tuning)
-        chord              @(re-frame/subscribe [:chord])
-        _                  (def chord chord)
-        scale              @(re-frame/subscribe [:scale])
-        _                  (def scale scale)
-        fn'                @(re-frame/subscribe [:fn])
-        _                  (def fn' fn')]
+  (let [path-params         @(re-frame/subscribe [:path-params])
+        _                   (def path-params path-params)
+        query-params        @(re-frame/subscribe [:query-params])
+        _                   (def query-params query-params)
+        current-route-name  @(re-frame/subscribe [:current-route-name])
+        _                   (def current-route-name current-route-name)
+        key-of              @(re-frame/subscribe [:key-of])
+        _                   (def key-of key-of)
+        instrument-type     @(re-frame/subscribe [:instrument-type])
+        _                   (def instrument-type instrument-type)
+        as-intervals        @(re-frame/subscribe [:as-intervals])
+        _                   (def as-intervals as-intervals)
+        nr-of-octavs        @(re-frame/subscribe [:nr-of-octavs])
+        _                   (def nr-of-octavs nr-of-octavs)
+        as-text             @(re-frame/subscribe [:as-text])
+        _                   (def as-text as-text)
+        nr-of-frets         @(re-frame/subscribe [:nr-of-frets])
+        _                   (def nr-of-frets nr-of-frets)
+        tuning              @(re-frame/subscribe [:tuning])
+        _                   (def tuning tuning)
+        chord               @(re-frame/subscribe [:chord])
+        _                   (def chord chord)
+        harmonization-scale @(re-frame/subscribe [:harmonization-scale])
+        _                   (def scale harmonization-scale)
+        harmonization-fn                 @(re-frame/subscribe [:harmonization-fn])
+        _                   (def harmonization-fn harmonization-fn)]
     (let [{id          :id
            indexes     :scale/indexes
            intervals   :scale/intervals
            text        :scale/text
            scale-names :scale/scale
-           :as         m}   (definitions/scale scale)
+           :as         m}   (definitions/scale harmonization-scale)
           _                 (def indexes indexes)
           _                 (def intervals intervals)
           _                 (def scale-names scale-names)
@@ -213,8 +213,8 @@
                              (vals (definitions/scales))
                              (vals (definitions/chords))
                              key-of
-                             scale
-                             (condp = fn'
+                             harmonization-scale
+                             (condp = harmonization-fn
                                :seventh utils/seventh
                                utils/triad))
           _                 (def harmonization' harmonization')]
@@ -224,6 +224,10 @@
        [menus/instrument-selection]
        [:br]
        [menus/key-selection]
+       [:br]
+       [menus/harmonization-scale-selection]
+       [:br]
+       [menus/harmonization-fn]
        [:br]
        [menus/settings
         {:as-text?      (= instrument-type :fretboard)
@@ -303,31 +307,27 @@
             :index-tones      index-tones
             :interval-tones   interval-tones
             :intervals        intervals
-            :nr-of-octavs     nr-of-octavs}]
-          ]
-
-         )
-       ])))
+            :nr-of-octavs     nr-of-octavs}]])])))
 
 (def routes
   (let [route-name :harmonizations]
-    ["/harmonizations/:instrument-type/:tuning/:key-of/:fn/:scale"
+    ["/harmonizations/:instrument-type/:tuning/:key-of/:harmonization-fn/:harmonization-scale"
      {:name       route-name
       :view       [harmonizations-view]
       :coercion   reitit.coercion.malli/coercion
       :parameters {:path  [:map
-                           [:instrument-type keyword?]
-                           [:tuning          keyword?]
-                           [:key-of          keyword?]
-                           [:fn              keyword?]
-                           [:scale           keyword?]]
+                           [:instrument-type     keyword?]
+                           [:tuning              keyword?]
+                           [:key-of              keyword?]
+                           [:harmonization-fn    keyword?]
+                           [:harmonization-scale keyword?]]
                    :query [:map
                            [:nr-of-frets  {:optional true} int?]
                            [:nr-of-octavs {:optional true} int?]
                            [:as-intervals {:optional true} boolean?]
                            [:as-text      {:optional true} boolean?]]}
       :controllers
-      [{:parameters {:path  [:instrument-type :tuning :key-of :fn :scale]
+      [{:parameters {:path  [:instrument-type :tuning :key-of :harmonization-fn :harmonization-scale]
                      :query [:nr-of-frets :as-intervals :as-text :nr-of-octavs]}
         :start      (fn [{p :path q :query}]
                       (events/do-on-url-change route-name p q))}]}]))
