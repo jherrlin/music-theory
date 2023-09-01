@@ -12,7 +12,6 @@
    [se.jherrlin.music-theory.webapp.harmonizations :as harmonizations]
    [se.jherrlin.music-theory.webapp.chords :as chords]
    [se.jherrlin.music-theory.webapp.scales :as scales]
-   [v4.se.jherrlin.music-theory.webapp.strings.styled-fretboard :as styled-fretboard]
    [se.jherrlin.music-theory.webapp.events :as events]
    [se.jherrlin.music-theory.webapp.menus :as menus]
    [se.jherrlin.music-theory.webapp.home :as home]
@@ -25,7 +24,6 @@
    chords/routes
    scales/routes
    harmonizations/routes
-   styled-fretboard/routes
    bookmarks/routes
    home/routes])
 
