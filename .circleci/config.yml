@@ -19,6 +19,7 @@ jobs:
       - run: shadow-cljs release frontend
       - run: mv -f resources/public/js/main.js main.js.bak
       - run: mv -f resources/public/index.html index.html.bak
+      - run: mv -f resources/public/favicon.ico favicon.html.bak
       - run:
           name: Commit to GitHub
           command: |
@@ -30,6 +31,7 @@ jobs:
             mkdir -p js
             mv -f main.js.bak js/main.js
             mv -f index.html.bak index.html
+            mv -f favicon.html.bak favicon.html
             git add js/main.js index.html
             git commit --allow-empty -am "Latest build"
             git push -f origin gh-pages
