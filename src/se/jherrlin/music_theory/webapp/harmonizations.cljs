@@ -186,7 +186,7 @@
         _                   (def chord chord)
         harmonization-scale @(re-frame/subscribe [:harmonization-scale])
         _                   (def scale harmonization-scale)
-        harmonization-fn                 @(re-frame/subscribe [:harmonization-fn])
+        harmonization-fn    @(re-frame/subscribe [:harmonization-fn])
         _                   (def harmonization-fn harmonization-fn)]
     (let [{id          :id
            indexes     :scale/indexes
@@ -233,6 +233,11 @@
         {:as-text?      (= instrument-type :fretboard)
          :nr-of-frets?  (= instrument-type :fretboard)
          :nr-of-octavs? (= instrument-type :keyboard)}]
+
+       [:br]
+       [:pre {:style {:overflow-x "auto"}}
+        (->> harmonization' (utils/harmonization-str))]
+       [:br]
 
        [:h3 "All " (if as-intervals "interval" "tone") " positions in the scale"]
 
