@@ -1,6 +1,5 @@
 (ns se.jherrlin.music-theory.webapp.router
   (:require
-   ["semantic-ui-react" :as semantic-ui]
    [reagent.dom :as rd]
    [re-frame.core :as re-frame]
    [reitit.coercion.spec :as rss]
