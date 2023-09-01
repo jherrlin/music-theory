@@ -112,6 +112,11 @@
  (fn [route]
    (apply rfe/push-state route)))
 
+(re-frame/reg-event-fx
+ :href
+ (fn [_ [_ route]]
+   {:push-state route}))
+
 (re-frame/reg-event-db
  :initialize-db
  (fn [db _]

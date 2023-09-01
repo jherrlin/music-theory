@@ -97,7 +97,7 @@
 
 (def routes
   (let [route-name :focus]
-    ["/focus/:instrument-type/:tuning/:key-of/:id"
+    ["/focus/:instrument-type/:tuning/:key-of/:chord-or-scale/:id"
      {:name       route-name
       :view       [focus-view]
       :coercion   reitit.coercion.malli/coercion

@@ -65,6 +65,11 @@
          [:br]
          [menus/key-selection]
          [:br]
+         [menus/settings
+          {:as-text?      (= instrument-type :fretboard)
+           :nr-of-frets?  (= instrument-type :fretboard)
+           :nr-of-octavs? (= instrument-type :keyboard)}]
+         [:br]
          [menus/scale-selection]
          [common/highlight-tones interval-tones key-of]
 

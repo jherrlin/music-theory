@@ -66,6 +66,11 @@
          [:br]
          [menus/key-selection]
          [:br]
+         [menus/settings
+          {:as-text?      (= instrument-type :fretboard)
+           :nr-of-frets?  (= instrument-type :fretboard)
+           :nr-of-octavs? (= instrument-type :keyboard)}]
+         [:br]
          [menus/chord-selection]
          [:br]
          [common/chord-name key-of m]

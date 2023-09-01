@@ -224,6 +224,11 @@
        [menus/instrument-selection]
        [:br]
        [menus/key-selection]
+       [:br]
+       [menus/settings
+        {:as-text?      (= instrument-type :fretboard)
+         :nr-of-frets?  (= instrument-type :fretboard)
+         :nr-of-octavs? (= instrument-type :keyboard)}]
 
        [:h3 "All " (if as-intervals "interval" "tone") " positions in the scale"]
 

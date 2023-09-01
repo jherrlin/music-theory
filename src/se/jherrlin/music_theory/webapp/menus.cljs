@@ -203,3 +203,63 @@
        [:button
         {:disabled (= current-route-name :bookmarks)}
         "Bookmarks"]]]))
+
+(defn settings
+  [{:keys [as-text? as-intervals? nr-of-frets? nr-of-octavs?]
+    :or   {as-intervals? true}}]
+  (let [path-params        @(re-frame/subscribe [:path-params])
+        _                  (def path-params path-params)
+        query-params       @(re-frame/subscribe [:query-params])
+        _                  (def query-params query-params)
+        current-route-name @(re-frame/subscribe [:current-route-name])
+        _                  (def current-route-name current-route-name)
+        key-of             @(re-frame/subscribe [:key-of])
+        _                  (def key-of key-of)
+        instrument-type    @(re-frame/subscribe [:instrument-type])
+        _                  (def instrument-type instrument-type)
+        as-intervals       @(re-frame/subscribe [:as-intervals])
+        _                  (def as-intervals as-intervals)
+        nr-of-octavs       @(re-frame/subscribe [:nr-of-octavs])
+        _                  (def nr-of-octavs nr-of-octavs)
+        as-text            @(re-frame/subscribe [:as-text])
+        _                  (def as-text as-text)
+        nr-of-frets        @(re-frame/subscribe [:nr-of-frets])
+        _                  (def nr-of-frets nr-of-frets)
+        tuning             @(re-frame/subscribe [:tuning])
+        _                  (def tuning tuning)
+        chord              @(re-frame/subscribe [:chord])
+        _                  (def chord chord)]
+    [:div {:style {:display "flex"}}
+     (when as-intervals?
+       [:div
+        [:input {:on-click #(re-frame/dispatch [:href [current-route-name path-params (assoc query-params :as-intervals (not as-intervals))]])
+                 :checked  as-intervals
+                 :type     "checkbox" :id "as-intervals-checkbox" :name "as-intervals-checkbox"}]
+        [:label {:for "as-intervals-checkbox"} "Show intervals"]])
+
+     (when as-text?
+       [:div {:style {:margin-left "1rem"}}
+        [:input {:on-click #(re-frame/dispatch [:href [current-route-name path-params (assoc query-params :as-text (not as-text))]])
+                 :checked  as-text
+                 :type     "checkbox" :id "as-text-checkbox" :name "as-text-checkbox"}]
+        [:label {:for "as-text-checkbox"} "Fretboard in text"]])
+
+     (when nr-of-frets?
+       [:div {:style {:margin-left "1rem"}}
+        [:label {:for "nr-of-frets-input"} "Nr of frets:"]
+        [:input {:style     {:width "3rem"}
+                 :on-change #(re-frame/dispatch [:href [current-route-name path-params (assoc query-params :nr-of-frets (-> % .-target .-value))]])
+                 :value     nr-of-frets
+                 :max       37
+                 :min       2
+                 :type      "number" :id "nr-of-frets-input" :name "nr-of-frets-input"}]])
+
+     (when nr-of-octavs?
+       [:div {:style {:margin-left "1rem"}}
+        [:label {:for "nr-of-octavs-input"} "Nr of octavs:"]
+        [:input {:style     {:width "3rem"}
+                 :on-change #(re-frame/dispatch [:href [current-route-name path-params (assoc query-params :nr-of-octavs (-> % .-target .-value))]])
+                 :value     nr-of-octavs
+                 :max       4
+                 :min       1
+                 :type      "number" :id "nr-of-octavs-input" :name "nr-of-octavs-input"}]])]))
