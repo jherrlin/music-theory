@@ -182,8 +182,6 @@
         _                   (def nr-of-frets nr-of-frets)
         tuning              @(re-frame/subscribe [:tuning])
         _                   (def tuning tuning)
-        chord               @(re-frame/subscribe [:chord])
-        _                   (def chord chord)
         harmonization-scale @(re-frame/subscribe [:harmonization-scale])
         _                   (def scale harmonization-scale)
         harmonization-fn    @(re-frame/subscribe [:harmonization-fn])
@@ -271,29 +269,32 @@
                    mode-str       :harmonization/mode-str
                    sufix          :chord/sufix
                    root           :chord/root-tone
+                   chord          :chord/chord
                    family-str     :harmonization/family-str
                    :as            m}]
              (map-indexed vector harmonization')]
          ^{:key (str "harmonization-index-" id idx)}
          [:<>
           #_[common/debug-view m]
-          [:div {:style {:display         :flex
-                         :flex-direction  :column
-                         :justify-content :center}}
-           [:div {:style {:display :flex
-                                        ;:justify-content :center
-                          }}
-            [:h3 {:style {:margin-right "2em"}} index]
+          [:div {:style {:display     :flex
+                         :align-items :center}}
+
+           [:h2 {:style {:margin-right "2em"}} index]
+           [:a
+            {:href (rfe/href
+                    :chord
+                    (assoc path-params :chord chord :key-of root)
+                    query-params)}
             [:p {:style {:margin-right "2em"}}
-             (str (some-> interval-tones first name str/capitalize) sufix)]
-            [:p {:style {:margin-right "2em"}} mode-str]
-            [:p {:style {:margin-right "2em"}} family-str]
-            [:p {:style {:margin-right "2em"}}
-             (->> intervals (str/join ", "))]
-            [:p {:style {:margin-right "2em"}}
-             (->> (utils/tones-by-key-and-intervals root intervals)
-                  (map (comp str/capitalize name))
-                  (str/join ", "))]]]
+             (str (some-> interval-tones first name str/capitalize) sufix)]]
+           [:p {:style {:margin-right "2em"}} mode-str]
+           [:p {:style {:margin-right "2em"}} family-str]
+           [:p {:style {:margin-right "2em"}}
+            (->> intervals (str/join ", "))]
+           [:p {:style {:margin-right "2em"}}
+            (->> (utils/tones-by-key-and-intervals root intervals)
+                 (map (comp str/capitalize name))
+                 (str/join ", "))]]
           [instrument-types/instrument-component
            {:fretboard-matrix (if as-intervals
                                 (utils/with-all-intervals
