@@ -73,6 +73,9 @@
 (defn patterns []
   (get @definitions :patterns))
 
+(defn pattern [id]
+  (get-in @definitions [:patterns id]))
+
 (defn chord-patterns-by-belonging-and-tuning [belongs-to tuning]
   (->> (get @definitions :patterns)
        (vals)

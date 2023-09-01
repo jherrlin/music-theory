@@ -39,65 +39,88 @@
         _                            (def chord chord)]
     (let [instrument-tuning            (get-in definitions/instrument-with-tuning [tuning :tuning])
           _                            (def instrument-tuning instrument-tuning)
-          {definition-type :type
+          {definition-type :type                   ;;
+           pattern-for     :fretboard-pattern/type ;; #{:scale :chord :triad}
            :as             definition} (definitions/by-id id)
           _                            (def definition definition)
           _                            (def definition-type definition-type)
+          _                            (def pattern-for pattern-for)
           ]
       [:<>
        [menus/menu]
        [:br]
+       [menus/settings
+        {:as-text?      true
+         :as-intervals? true
+         :nr-of-frets?  true
+         :nr-of-octavs? true}]
+       [:br]
        [:div
         (when definition
-            (let [{id          :id
-                   indexes     (condp = definition-type
-                                 :chord :chord/indexes
-                                 :scale :scale/indexes)
-                   intervals   (condp = definition-type
-                                 :chord :chord/intervals
-                                 :scale :scale/intervals)
-                   :as         m}   (case definition-type
-                                      :chord (definitions/chord (:chord/chord definition))
-                                      :scale (definitions/scale (-> definition :scale/scale first)))
-                  _                 (def indexes indexes)
-                  _                 (def m m)
-                  _                 (def intervals intervals)
-                  index-tones       (utils/index-tones indexes key-of)
-                  _                 (def index-tones index-tones)
-                  interval-tones    (utils/interval-tones intervals key-of)
-                  _                 (def interval-tones interval-tones)
-                  instrument-tuning (get-in definitions/instrument-with-tuning [tuning :tuning])
-                  _                 (def instrument-tuning instrument-tuning)
-                  fretboard-matrix  (when (= instrument-type :fretboard)
-                                      (utils/fretboard-strings
-                                       instrument-tuning
-                                       nr-of-frets))
-                  _                 (def fretboard-matrix fretboard-matrix)]
+          (let [{id        :id
+                 indexes   (condp = definition-type
+                             :chord :chord/indexes
+                             :scale :scale/indexes
+                             :pattern
+                             (condp = pattern-for
+                               :scale :scale/indexes
+                               :chord :chord/indexes
+                               :triad :chord/indexes))
+                 intervals (condp = definition-type
+                             :chord :chord/intervals
+                             :scale :scale/intervals
+                             :pattern
+                             (condp = pattern-for
+                               :scale :scale/intervals
+                               :chord :chord/intervals
+                               :triad :chord/intervals))
+                 :as       m}     (condp = definition-type
+                                    :chord (definitions/chord (:chord/chord definition))
+                                    :scale (-> definition :scale/scale first definitions/scale)
+                                    :pattern
+                                    (condp = pattern-for
+                                      :scale (-> definition :fretboard-pattern/belongs-to definitions/scale)
+                                      :chord (-> definition :fretboard-pattern/belongs-to definitions/chord)
+                                      :triad (-> definition :fretboard-pattern/belongs-to definitions/chord)))
+                _                 (def indexes indexes)
+                _                 (def m m)
+                _                 (def intervals intervals)
+                index-tones       (utils/index-tones indexes key-of)
+                _                 (def index-tones index-tones)
+                interval-tones    (utils/interval-tones intervals key-of)
+                _                 (def interval-tones interval-tones)
+                instrument-tuning (get-in definitions/instrument-with-tuning [tuning :tuning])
+                _                 (def instrument-tuning instrument-tuning)
+                fretboard-matrix  (when (= instrument-type :fretboard)
+                                    (utils/fretboard-strings
+                                     instrument-tuning
+                                     nr-of-frets))
+                _                 (def fretboard-matrix fretboard-matrix)]
 
-              [instrument-types/instrument-component
-               {:fretboard-matrix (if as-intervals
-                                    (utils/with-all-intervals
-                                      (mapv vector interval-tones intervals)
-                                      fretboard-matrix)
-                                    (utils/with-all-tones
-                                      interval-tones
-                                      fretboard-matrix))
-                :id id
-                :as-text          as-text
-                :instrument-type  instrument-type
-                :key-of           key-of
-                :tuning           tuning
-                :chord            chord
-                :nr-of-frets      nr-of-frets
-                :as-intervals     as-intervals
-                :index-tones      index-tones
-                :interval-tones   interval-tones
-                :intervals        intervals
-                :nr-of-octavs     nr-of-octavs}]))]])))
+            [instrument-types/instrument-component
+             {:fretboard-matrix (if as-intervals
+                                  (utils/with-all-intervals
+                                    (mapv vector interval-tones intervals)
+                                    fretboard-matrix)
+                                  (utils/with-all-tones
+                                    interval-tones
+                                    fretboard-matrix))
+              :id               id
+              :as-text          as-text
+              :instrument-type  instrument-type
+              :key-of           key-of
+              :tuning           tuning
+              :chord            chord
+              :nr-of-frets      nr-of-frets
+              :as-intervals     as-intervals
+              :index-tones      index-tones
+              :interval-tones   interval-tones
+              :intervals        intervals
+              :nr-of-octavs     nr-of-octavs}]))]])))
 
 (def routes
   (let [route-name :focus]
-    ["/focus/:instrument-type/:tuning/:key-of/:chord-or-scale/:id"
+    ["/focus/:instrument-type/:tuning/:key-of/:id"
      {:name       route-name
       :view       [focus-view]
       :coercion   reitit.coercion.malli/coercion
@@ -112,8 +135,18 @@
                            [:as-intervals {:optional true} boolean?]
                            [:as-text      {:optional true} boolean?]]}
       :controllers
-      [{:parameters {:path [:instrument-type :tuning :key-of :id]}
+      [{:parameters {:path  [:instrument-type :tuning :key-of :id]
+                     :query [:nr-of-frets :as-intervals :as-text :nr-of-octavs]}
         :start      (fn [{p :path q :query}]
                       (events/do-on-url-change route-name p q))}]}]))
 
+;; Chord works
 ;; http://localhost:8080/#/focus/fretboard/guitar/c/1cd72972-ca33-4962-871c-1551b7ea5244
+;; Scale works
+;; http://localhost:8080/#/focus/fretboard/guitar/c/39af7096-b5c6-45e9-b743-6791b217a3df
+;; Chord pattern works
+;; http://localhost:8080/#/focus/fretboard/guitar/c/94f5f7a4-d852-431f-90ca-9e99f89bbb9c
+;; Triad pattern works
+;; http://localhost:8080/#/focus/fretboard/guitar/c/a9acea3e-3069-4c22-9c71-076721597739
+;; Scale pattern
+;; http://localhost:8080/#/focus/fretboard/guitar/c/55189945-37fa-4071-9170-b0b068a23174

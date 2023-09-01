@@ -61,6 +61,6 @@
        (if bookmark-exists?
          "Remove from bookmarks"
          "Add to bookmark")]
-      #_[:a {:style {:margin-left "1rem"}
+      [:a {:style {:margin-left "1rem"}
            :href  (rfe/href :focus (select-keys m [:instrument-type :tuning :key-of :id]) query-params)}
        [:button "Focus"]]]]))
