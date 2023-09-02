@@ -228,7 +228,8 @@
       [common/intervals-to-tones intervals interval-tones])
 
 
-    ]])
+    [:a {:href "https://github.com/jherrlin/music-theory"}
+     "Source code"]]])
 
 (def routes
   (let [route-name :home]
