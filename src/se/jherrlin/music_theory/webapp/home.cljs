@@ -22,10 +22,10 @@
      (str
       "The main thing you can find here is chords, scales and harmonizations "
       "for different instruments.")]
-    [:p "Lets walk through some of the features."]
-    [:h2 "Chords"]
-    [:p "This is pattern that shows how you can play a Major C chord on guitar."]
-    [:p "It displays the positions and what tone is in the position on the fretboard."]
+    ;; [:p "Lets walk through some of the features."]
+    ;; [:h2 "Chords"]
+    ;; [:p "This is pattern that shows how you can play a Major C chord on guitar."]
+    ;; [:p "It displays the positions and what tone is in the position on the fretboard."]
 
     ;; (let [nr-of-frets       4
     ;;       instrument-tuning [:e :a :d :g :b :e]
@@ -219,11 +219,11 @@
             key-of         :c]
       [common/highlight-tones interval-tones key-of])
 
-    (let [intervals      ["1" "3" "5"]
+    #_(let [intervals      ["1" "3" "5"]
           interval-tones [:c :e :g]]
       [common/intervals-to-tones intervals interval-tones])
 
-    (let [intervals      ["1" "b3" "5"]
+    #_(let [intervals      ["1" "b3" "5"]
           interval-tones [:c :eb :g]]
       [common/intervals-to-tones intervals interval-tones])
 
