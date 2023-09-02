@@ -39,9 +39,11 @@
     [:<>
      [menus/menu]
      [:div
-      (for [[idx bookmark] (map-indexed vector bookmarks)]
-        ^{:key (str "bookmark-" idx)}
-        [instrument-types/instrument-component bookmark])]]))
+      (if-not (seq bookmarks)
+        [:p "No bookmarks yet"]
+        (for [[idx bookmark] (map-indexed vector bookmarks)]
+          ^{:key (str "bookmark-" idx)}
+          [instrument-types/instrument-component bookmark]))]]))
 
 (def routes
   (let [route-name :bookmarks]
