@@ -57,31 +57,8 @@
        [:br]
        [:div
         (when definition
-          (let [{id        :id
-                 indexes   (condp = definition-type
-                             :chord :chord/indexes
-                             :scale :scale/indexes
-                             :pattern
-                             (condp = pattern-for
-                               :scale :scale/indexes
-                               :chord :chord/indexes
-                               :triad :chord/indexes))
-                 intervals (condp = definition-type
-                             :chord :chord/intervals
-                             :scale :scale/intervals
-                             :pattern
-                             (condp = pattern-for
-                               :scale :scale/intervals
-                               :chord :chord/intervals
-                               :triad :chord/intervals))
-                 :as       m}     (condp = definition-type
-                                    :chord (definitions/chord (:chord/chord definition))
-                                    :scale (-> definition :scale/scale first definitions/scale)
-                                    :pattern
-                                    (condp = pattern-for
-                                      :scale (-> definition :fretboard-pattern/belongs-to definitions/scale)
-                                      :chord (-> definition :fretboard-pattern/belongs-to definitions/chord)
-                                      :triad (-> definition :fretboard-pattern/belongs-to definitions/chord)))
+          (let [{:keys [id indexes intervals]}
+                (common/essentials-from-definition definition)
                 _                 (def indexes indexes)
                 _                 (def m m)
                 _                 (def intervals intervals)

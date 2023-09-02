@@ -3,7 +3,12 @@
    [clojure.set :as set]
    [clojure.string :as str]
    [re-frame.core :as re-frame]
-   [se.jherrlin.music-theory.utils :as utils]))
+   [se.jherrlin.music-theory.webapp.events :as events]
+   [se.jherrlin.music-theory.webapp.menus :as menus]
+   [se.jherrlin.music-theory.definitions :as definitions]
+   [se.jherrlin.music-theory.utils :as utils]
+   [se.jherrlin.music-theory.webapp.common :as common]
+   [se.jherrlin.music-theory.webapp.instrument-types :as instrument-types]))
 
 (defn debug-view
   ([]
@@ -25,6 +30,50 @@
    (when explanation
      [:p {:style {:margin-left "2rem"}}
       (str "(" explanation ")")])])
+
+(defn essentials-from-definition
+  "Definitions have different keys.
+  Find `id`, `type`, `indexes` and `intervals` from a definition.
+  It's a bit hairy."
+  [{definition-type :type                   ;;
+    pattern-for     :fretboard-pattern/type ;; #{:scale :chord :triad}
+    :as             definition}]
+  (let [{id        :id
+         type      :type
+         indexes   (condp = definition-type
+                     :chord :chord/indexes
+                     :scale :scale/indexes
+                     :pattern
+                     (condp = pattern-for
+                       :scale :scale/indexes
+                       :chord :chord/indexes
+                       :triad :chord/indexes))
+         intervals (condp = definition-type
+                     :chord :chord/intervals
+                     :scale :scale/intervals
+                     :pattern
+                     (condp = pattern-for
+                       :scale :scale/intervals
+                       :chord :chord/intervals
+                       :triad :chord/intervals))
+         :as       m} (condp = definition-type
+                        :chord (definitions/chord (:chord/chord definition))
+                        :scale (-> definition :scale/scale first definitions/scale)
+                        :pattern
+                        (condp = pattern-for
+                          :scale (-> definition :fretboard-pattern/belongs-to definitions/scale)
+                          :chord (-> definition :fretboard-pattern/belongs-to definitions/chord)
+                          :triad (-> definition :fretboard-pattern/belongs-to definitions/chord)))]
+    {:indexes indexes :intervals intervals :id id :type type}))
+
+(comment
+  (essentials-from-definition
+   {:id #uuid "39af7096-b5c6-45e9-b743-6791b217a3df",
+    :type :scale,
+    :scale/scale #{:ionian :major},
+    :scale/intervals ["1" "2" "3" "4" "5" "6" "7"],
+    :scale/indexes [0 2 4 5 7 9 11]})
+  )
 
 (defn highlight-tones [tones key-of]
   [:div {:style {:margin-top  "1em"
