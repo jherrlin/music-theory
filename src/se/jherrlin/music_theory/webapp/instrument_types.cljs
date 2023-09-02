@@ -55,12 +55,13 @@
      [instrument m]
      [:div {:style {:margin-top "0.5rem"
                     :display    "flex"}}
-      [:button {:on-click (if bookmark-exists?
+      [:button {:style    {:margin-right "1rem"}
+                :on-click (if bookmark-exists?
                             #(re-frame/dispatch [:remove-bookmark m])
                             #(re-frame/dispatch [:add-bookmark m]))}
        (if bookmark-exists?
          "Remove from bookmarks"
-         "Add to bookmark")]
-      [:a {:style {:margin-left "1rem"}
+         "Add to bookmarks")]
+      [:a {:style {:margin-right "1rem"}
            :href  (rfe/href :focus (select-keys m [:instrument-type :tuning :key-of :id]) query-params)}
        [:button "Focus"]]]]))
