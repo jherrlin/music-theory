@@ -1991,7 +1991,7 @@
    2   -   3   4   -   5
    -   -   -   -   -   1")
 
-(define-scale-pattern #uuid "11a94327-3df5-419b-8c0a-eba0c46ef780"
+(define-scale-pattern #uuid "982e6f6c-ad5a-4d11-969a-392c245565d7"
   {:belongs-to :major
    :tuning     mandolin
    :text       "Pinky finger positon"
@@ -1999,6 +1999,36 @@
   "6   -   7   1   -   -
    2   -   3   4   -   5
    -   -   -   -   -   1
+   -   -   -   -   -   -")
+
+(define-scale-pattern #uuid "3926946b-8017-47e6-a3d9-5a94710aa0d0"
+  {:belongs-to :minor
+   :tuning     mandolin
+   :text       "Index finger positon"
+   :order      1}
+  "-   -   -   -   -   -
+   -   -   -   -   -   -
+   5  b6   -  b7   -   1
+   1   -   2  b3   -   4")
+
+(define-scale-pattern #uuid "35a245fb-3323-413f-b2f2-045642aaddca"
+  {:belongs-to :minor
+   :tuning     mandolin
+   :text       "Index finger positon"
+   :order      2}
+  "-   -   -   -   -   -
+   5  b6   -  b7   -   1
+   1   -   2  b3   -   4
+   -   -   -   -   -   -")
+
+(define-scale-pattern #uuid "6d7480a5-fe70-4ad4-b71f-619a71a3df07"
+  {:belongs-to :minor
+   :tuning     mandolin
+   :text       "Index finger positon"
+   :order      3}
+  "5  b6   -  b7   -   1
+   1   -   2  b3   -   4
+   -   -   -   -   -   -
    -   -   -   -   -   -")
 
 ;; ---------------
