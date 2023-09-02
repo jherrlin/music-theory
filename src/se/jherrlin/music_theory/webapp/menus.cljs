@@ -133,6 +133,7 @@
      (for [{:keys [title scale] :as m}
            ;; Only scales with 7 notes
            (->> (scale-sort-order)
+                (remove (comp #{:lydian-minor} :scale)) ;; TODO check why this hangs
                 (filter (comp #{7} count :scale/intervals definitions/scale :scale)))]
        ^{:key title}
        [:div {:style {:margin-right "10px" :display "inline"}}
