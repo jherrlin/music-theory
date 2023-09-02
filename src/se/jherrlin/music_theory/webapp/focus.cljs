@@ -37,7 +37,7 @@
         _                            (def tuning tuning)
         chord                        @(re-frame/subscribe [:chord])
         _                            (def chord chord)]
-    (let [instrument-tuning            (get-in definitions/instrument-with-tuning [tuning :tuning])
+    (let [instrument-tuning            (definitions/instrument-tuning tuning)
           _                            (def instrument-tuning instrument-tuning)
           {definition-type :type                   ;;
            pattern-for     :fretboard-pattern/type ;; #{:scale :chord :triad}
@@ -66,22 +66,29 @@
                 _                 (def index-tones index-tones)
                 interval-tones    (utils/interval-tones intervals key-of)
                 _                 (def interval-tones interval-tones)
-                instrument-tuning (get-in definitions/instrument-with-tuning [tuning :tuning])
+                instrument-tuning (definitions/instrument-tuning tuning)
                 _                 (def instrument-tuning instrument-tuning)
                 fretboard-matrix  (when (= instrument-type :fretboard)
                                     (utils/fretboard-strings
                                      instrument-tuning
                                      nr-of-frets))
-                _                 (def fretboard-matrix fretboard-matrix)]
-
+                _                 (def fretboard-matrix fretboard-matrix)
+                fretboard-matrix' (if as-intervals
+                                    (utils/with-all-intervals
+                                      (mapv vector interval-tones intervals)
+                                      fretboard-matrix)
+                                    (utils/with-all-tones
+                                      interval-tones
+                                      fretboard-matrix))
+                _                 (def fretboard-matrix' fretboard-matrix')]
+            (let [fretboard-length (-> fretboard-matrix' first count)]
+              (common/merge-to-fretboard-matrix 0 0 {:hehe :hoho} fretboard-matrix')
+              (->> (apply concat fretboard-matrix')
+                   (partition-all fretboard-length)
+                   (mapv #(mapv identity %))
+                   (= fretboard-matrix')))
             [instrument-types/instrument-component
-             {:fretboard-matrix (if as-intervals
-                                  (utils/with-all-intervals
-                                    (mapv vector interval-tones intervals)
-                                    fretboard-matrix)
-                                  (utils/with-all-tones
-                                    interval-tones
-                                    fretboard-matrix))
+             {:fretboard-matrix fretboard-matrix'
               :id               id
               :as-text          as-text
               :instrument-type  instrument-type

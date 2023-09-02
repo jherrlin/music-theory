@@ -66,6 +66,17 @@
                           :triad (-> definition :fretboard-pattern/belongs-to definitions/chord)))]
     {:indexes indexes :intervals intervals :id id :type type}))
 
+(defn merge-to-fretboard-matrix [x' y' m matrix]
+  (let [fretboard-length (-> matrix first count)]
+    (->> (apply concat matrix)
+         (mapv (fn [{:keys [x y] :as tone}]
+                (if-not (and (= x x')
+                         (= y y'))
+                  tone
+                  (merge tone m))))
+         (partition-all fretboard-length)
+         (mapv #(mapv identity %)))))
+
 (comment
   (essentials-from-definition
    {:id #uuid "39af7096-b5c6-45e9-b743-6791b217a3df",

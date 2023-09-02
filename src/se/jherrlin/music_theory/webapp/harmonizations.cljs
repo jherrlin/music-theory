@@ -200,7 +200,7 @@
           _                 (def index-tones index-tones)
           interval-tones    (utils/interval-tones intervals key-of)
           _                 (def interval-tones interval-tones)
-          instrument-tuning (get-in definitions/instrument-with-tuning [tuning :tuning])
+          instrument-tuning (definitions/instrument-tuning tuning)
           _                 (def instrument-tuning instrument-tuning)
           fretboard-matrix  (when (= instrument-type :fretboard)
                               (utils/fretboard-strings

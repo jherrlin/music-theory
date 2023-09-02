@@ -41,6 +41,9 @@
    :octave-mandolin {:tuning octave-mandolin
                      :text   "Octave mandolin standard tuning"}})
 
+(defn instrument-tuning [k]
+  (get-in instrument-with-tuning [k :tuning]))
+
 (defn tuning
   "Get tuning and text from key `k`"
   [k]
