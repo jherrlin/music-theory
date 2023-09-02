@@ -1934,7 +1934,7 @@
   {:belongs-to :major
    :tuning     mandolin
    :order      1
-   :text       "Index finger positon"}
+   :text       "Index finger position"}
   "-   -   -   -   -   -
    -   -   -   -   -   -
    5   -   6   -   7   1
@@ -1944,7 +1944,7 @@
   {:belongs-to :major
    :tuning     mandolin
    :order      2
-   :text       "Index finger positon"}
+   :text       "Index finger position"}
   "-   -   -   -   -   -
    5   -   6   -   7   1
    1   -   2   -   3   4
@@ -1955,7 +1955,7 @@
   {:belongs-to :major
    :tuning     mandolin
    :order      3
-   :text       "Index finger positon"}
+   :text       "Index finger position"}
   "5   -   6   -   7   1
    1   -   2   -   3   4
    -   -   -   -   -   -
@@ -1965,7 +1965,7 @@
   {:belongs-to :major
    :tuning     mandolin
    :order      4
-   :text       "Middle finger positon"}
+   :text       "Ring finger positon"}
   "-   -   -   -   -   -
    7   1   -   -   -   -
    3   4   -   5   -   6
@@ -1975,26 +1975,32 @@
   {:belongs-to :major
    :tuning     mandolin
    :order      5
-   :text       "Middle finger positon"}
+   :text       "Ring finger positon"}
   "7   1   -   -   -   -
    3   4   -   5   -   6
    -   -   -   1   -   2
    -   -   -   -   -   -")
 
-
-
-
-
-
+(define-scale-pattern #uuid "11a94327-3df5-419b-8c0a-eba0c46ef780"
+  {:belongs-to :major
+   :tuning     mandolin
+   :text       "Pinky finger positon"
+   :order      6}
+  "-   -   -   -   -   -
+   6   -   7   1   -   -
+   2   -   3   4   -   5
+   -   -   -   -   -   1")
 
 (define-scale-pattern #uuid "11a94327-3df5-419b-8c0a-eba0c46ef780"
   {:belongs-to :major
    :tuning     mandolin
-   :order      2}
+   :text       "Pinky finger positon"
+   :order      7}
   "6   -   7   1   -   -
    2   -   3   4   -   5
    -   -   -   -   -   1
    -   -   -   -   -   -")
+
 ;; ---------------
 ;; Scales patterns end
 ;; ---------------

@@ -35,7 +35,9 @@
         tuning             @(re-frame/subscribe [:tuning])
         _                  (def tuning tuning)
         scale              @(re-frame/subscribe [:scale])
-        _                  (def scale scale)]
+        _                  (def scale scale)
+        debug              @(re-frame/subscribe [:debug])
+        _                  (def debug debug)]
     (when (and scale key-of)
       (let [{id          :id
              indexes     :scale/indexes
@@ -101,11 +103,15 @@
               [:h3 "Scale patterns"]
               (for [{id      :id
                      pattern :fretboard-pattern/pattern
+                     text    :fretboard-pattern/text
                      :as     scale-pattern}
                     scale-patterns]
                 ^{:key id}
                 [:div {:style {:margin-bottom "2rem"}}
-                 #_[common/debug-view scale-pattern]
+                 (when debug
+                   [common/debug-view scale-pattern])
+                 (when text
+                   [:p text])
                  [instrument-types/instrument-component
                   {:id               id
                    :as-text          as-text

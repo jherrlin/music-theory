@@ -31,7 +31,8 @@
    :query-params       {:nr-of-frets  15
                         :nr-of-octavs 2
                         :as-intervals false
-                        :as-text      false}})
+                        :as-text      false
+                        :debug        false}})
 
 (def events-
   [{:n :key-of
@@ -62,6 +63,7 @@
     :s (fn [db [k]] (get-in db [:path-params k]))
     :e (fn [db [k v]] (assoc-in db [:path-params k] v))}
 
+
    {:n :query-params
     :e merge'
     :s (fn [db [k]]
@@ -76,6 +78,9 @@
     :s (fn [db [k]] (get-in db [:query-params k] false))
     :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
    {:n :as-text
+    :s (fn [db [k]] (get-in db [:query-params k] false))
+    :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
+   {:n :debug
     :s (fn [db [k]] (get-in db [:query-params k] false))
     :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
 
