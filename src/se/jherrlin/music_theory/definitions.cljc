@@ -1595,6 +1595,17 @@
    -   -   -   -
    -   -   -   -")
 
+(define-scale-pattern #uuid "fb4b0879-0664-49a2-a5f6-e8f46ccc4fa4"
+  {:belongs-to :ionian
+   :tuning     guitar
+   :order      6}
+  "-   -   -   -
+   7   1   -   -
+   5   -   6   -
+   2   -   3   4
+   -   -   -   1
+   -   -   -   -")
+
 (define-scale-pattern #uuid "900094ba-9561-4bca-8750-f21f47d08c27"
   {:belongs-to :mixolydian
    :tuning     guitar}
