@@ -114,8 +114,15 @@
                  #_[common/debug-view chord-pattern]
                  [instrument-types/instrument-component
                   {:id               id
-                   :instrument-type  instrument-type
                    :as-text          as-text
+                   :instrument-type  instrument-type
+                   :key-of           key-of
+                   :tuning           tuning
+                   :nr-of-frets      nr-of-frets
+                   :as-intervals     as-intervals
+                   :index-tones      index-tones
+                   :interval-tones   interval-tones
+                   :intervals        intervals
                    :fretboard-matrix ((if as-intervals
                                         utils/pattern-with-intervals
                                         utils/pattern-with-tones)

@@ -37,6 +37,7 @@
   It's a bit hairy."
   [{definition-type :type                   ;;
     pattern-for     :fretboard-pattern/type ;; #{:scale :chord :triad}
+    pattern         :fretboard-pattern/pattern
     :as             definition}]
   (let [{id        :id
          type      :type
@@ -64,7 +65,11 @@
                           :scale (-> definition :fretboard-pattern/belongs-to definitions/scale)
                           :chord (-> definition :fretboard-pattern/belongs-to definitions/chord)
                           :triad (-> definition :fretboard-pattern/belongs-to definitions/chord)))]
-    {:indexes indexes :intervals intervals :id id :type type}))
+    {:indexes   indexes
+     :intervals intervals
+     :id        id
+     :type      type
+     :pattern   pattern}))
 
 (defn merge-to-fretboard-matrix [x' y' m matrix]
   (let [fretboard-length (-> matrix first count)]

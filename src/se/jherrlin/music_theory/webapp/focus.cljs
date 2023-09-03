@@ -57,11 +57,12 @@
        [:br]
        [:div
         (when definition
-          (let [{:keys [id indexes intervals]}
+          (let [{:keys [id indexes intervals pattern]}
                 (common/essentials-from-definition definition)
                 _                 (def indexes indexes)
                 _                 (def m m)
                 _                 (def intervals intervals)
+                _                 (def pattern pattern)
                 index-tones       (utils/index-tones indexes key-of)
                 _                 (def index-tones index-tones)
                 interval-tones    (utils/interval-tones intervals key-of)
@@ -73,13 +74,20 @@
                                      instrument-tuning
                                      nr-of-frets))
                 _                 (def fretboard-matrix fretboard-matrix)
-                fretboard-matrix' (if as-intervals
-                                    (utils/with-all-intervals
-                                      (mapv vector interval-tones intervals)
-                                      fretboard-matrix)
-                                    (utils/with-all-tones
-                                      interval-tones
-                                      fretboard-matrix))
+                fretboard-matrix' (if pattern
+                                    ((if as-intervals
+                                       utils/pattern-with-intervals
+                                       utils/pattern-with-tones)
+                                     key-of
+                                     pattern
+                                     fretboard-matrix)
+                                    (if as-intervals
+                                      (utils/with-all-intervals
+                                        (mapv vector interval-tones intervals)
+                                        fretboard-matrix)
+                                      (utils/with-all-tones
+                                        interval-tones
+                                        fretboard-matrix)))
                 _                 (def fretboard-matrix' fretboard-matrix')]
             (let [fretboard-length (-> fretboard-matrix' first count)]
               (common/merge-to-fretboard-matrix 0 0 {:hehe :hoho} fretboard-matrix')
