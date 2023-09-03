@@ -2034,6 +2034,26 @@
    -   -   -   -   -   -
    -   -   -   -   -   -")
 
+(define-scale-pattern #uuid "a8c2971b-2103-4d6c-821c-98bc706beb8b"
+  {:belongs-to :minor
+   :tuning     mandolin
+   :text       "Middle finger positon"
+   :order      4}
+  "-   -   -   -   -   -
+   1   -   -   -   -   -
+   4   -   5  b6   -  b7
+   -   -   1   -   2  b3")
+
+(define-scale-pattern #uuid "f8b3e6cd-72e2-40ef-bea3-03f36da51033"
+  {:belongs-to :minor
+   :tuning     mandolin
+   :text       "Middle finger positon"
+   :order      5}
+  "1   -   -   -   -   -
+   4   -   5  b6   -  b7
+   -   -   1   -   2  b3
+   -   -   -   -   -   -")
+
 ;; ---------------
 ;; Scales patterns end
 ;; ---------------
