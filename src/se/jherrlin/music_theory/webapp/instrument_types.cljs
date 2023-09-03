@@ -39,7 +39,11 @@
            key-of
            nr-of-frets
            nr-of-octavs
-           tuning]
+           tuning
+           bookmark-button?
+           focus-button?]
+    :or   {bookmark-button? true
+           focus-button? true}
     :as   m}]
   {:pre [(uuid? id)]}
   (let [bookmarks        @(re-frame/subscribe [:bookmarks])
@@ -55,13 +59,15 @@
      [instrument m]
      [:div {:style {:margin-top "0.5rem"
                     :display    "flex"}}
-      [:button {:style    {:margin-right "1rem"}
-                :on-click (if bookmark-exists?
-                            #(re-frame/dispatch [:remove-bookmark m])
-                            #(re-frame/dispatch [:add-bookmark m]))}
-       (if bookmark-exists?
-         "Remove from bookmarks"
-         "Add to bookmarks")]
-      [:a {:style {:margin-right "1rem"}
-           :href  (rfe/href :focus (select-keys m [:instrument-type :tuning :key-of :id]) query-params)}
-       [:button "Focus"]]]]))
+      (when bookmark-button?
+        [:button {:style    {:margin-right "1rem"}
+                  :on-click (if bookmark-exists?
+                              #(re-frame/dispatch [:remove-bookmark m])
+                              #(re-frame/dispatch [:add-bookmark m]))}
+         (if bookmark-exists?
+           "Remove from bookmarks"
+           "Add to bookmarks")])
+      (when focus-button?
+        [:a {:style {:margin-right "1rem"}
+             :href  (rfe/href :focus (select-keys m [:instrument-type :tuning :key-of :id]) query-params)}
+         [:button "Focus"]])]]))
