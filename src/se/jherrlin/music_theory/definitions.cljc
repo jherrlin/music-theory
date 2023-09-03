@@ -1120,6 +1120,56 @@
    5   -
    1   -")
 
+
+(define-chord-pattern #uuid "1a808ddd-db74-4076-b384-67e6b5059b58"
+  {:belongs-to :major
+   :tuning     tres-cubano
+   :order      1}
+  "5  -  -
+   -  3  -
+   -  -  1")
+
+(define-chord-pattern #uuid "c6936da6-8370-46d7-9f36-7e8b860d0a83"
+  {:belongs-to :major
+   :tuning     tres-cubano
+   :order      2}
+  "3
+   1
+   5")
+
+(define-chord-pattern #uuid "1143df4f-9a9e-43a2-9e89-99712784ca32"
+  {:belongs-to :major
+   :tuning     tres-cubano
+   :order      3}
+  "-  1  -
+   5  -  -
+   -  -  3")
+
+(define-chord-pattern #uuid "358351b7-3713-4667-908a-3145e90a8637"
+  {:belongs-to :minor
+   :tuning     tres-cubano
+   :order      1}
+  "5  -  -
+  b3  -  -
+   -  -  1")
+
+(define-chord-pattern #uuid "37e7536a-9e99-481f-8907-26bcf651e7a9"
+  {:belongs-to :minor
+   :tuning     tres-cubano
+   :order      2}
+  "-  1
+   5  -
+   - b3")
+
+(define-chord-pattern #uuid "53e19294-9978-41af-94b9-f327164a8788"
+  {:belongs-to :minor
+   :tuning     tres-cubano
+   :order      3}
+  "b3 -
+   -  1
+   -  5")
+
+
 ;; --------------------
 ;; Chord patterns end
 ;; --------------------
