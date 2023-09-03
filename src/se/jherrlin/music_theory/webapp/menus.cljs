@@ -54,7 +54,10 @@
     :title           "Ukulele"}
    {:instrument-type :fretboard
     :tuning          :banjo-irish
-    :title           "Banjo (Irish)"}])
+    :title           "Banjo (Irish)"}
+   {:instrument-type :fretboard
+    :tuning          :tres-cubano
+    :title           "Tres cubano"}])
 
 (defn instrument-selection []
   (let [current-route      @(re-frame/subscribe [:current-route])

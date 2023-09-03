@@ -17,6 +17,7 @@
 (def banjo-chicago           [:d :g :b :e])
 (def mandola                 [:c :g :d :a])
 (def octave-mandolin         [:g :d :a :e])
+(def tres-cubano             [:g :c :e])
 
 
 (def instrument-with-tuning
@@ -39,7 +40,9 @@
    :mandola         {:tuning mandola
                      :text   "Mandola standard tuning"}
    :octave-mandolin {:tuning octave-mandolin
-                     :text   "Octave mandolin standard tuning"}})
+                     :text   "Octave mandolin standard tuning"}
+   :tres-cubano     {:tuning tres-cubano
+                     :text   "Tres cubano standard tuning"}})
 
 (defn instrument-tuning [k]
   (get-in instrument-with-tuning [k :tuning]))
