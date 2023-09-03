@@ -59,7 +59,15 @@
                                 (utils/fretboard-strings
                                  instrument-tuning
                                  nr-of-frets))
-            _                 (def fretboard-matrix fretboard-matrix)]
+            _                 (def fretboard-matrix fretboard-matrix)
+            fretboard-matrix' (if as-intervals
+                                (utils/with-all-intervals
+                                  (mapv vector interval-tones intervals)
+                                  fretboard-matrix)
+                                (utils/with-all-tones
+                                  interval-tones
+                                  fretboard-matrix))
+            _                 (def fretboard-matrix' fretboard-matrix')]
         [:<>
          [menus/menu]
          [:br]
@@ -78,13 +86,7 @@
          [common/intervals-to-tones intervals interval-tones]
          [:h3 "All " (if as-intervals "interval" "tone") " positions in the scale"]
          [instrument-types/instrument-component
-          {:fretboard-matrix (if as-intervals
-                               (utils/with-all-intervals
-                                 (mapv vector interval-tones intervals)
-                                 fretboard-matrix)
-                               (utils/with-all-tones
-                                 interval-tones
-                                 fretboard-matrix))
+          {:fretboard-matrix fretboard-matrix'
            :id               id
            :as-text          as-text
            :instrument-type  instrument-type

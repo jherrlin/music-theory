@@ -15,7 +15,8 @@
    [se.jherrlin.music-theory.webapp.events :as events]
    [se.jherrlin.music-theory.webapp.menus :as menus]
    [se.jherrlin.music-theory.webapp.home :as home]
-   [se.jherrlin.music-theory.webapp.bookmarks :as bookmarks]))
+   [se.jherrlin.music-theory.webapp.bookmarks :as bookmarks]
+   [se.jherrlin.music-theory.webapp.instrument-types.fretboard :as fretboard]))
 
 
 
@@ -24,6 +25,7 @@
    chords/routes
    scales/routes
    harmonizations/routes
+   fretboard/routes
    bookmarks/routes
    home/routes])
 
