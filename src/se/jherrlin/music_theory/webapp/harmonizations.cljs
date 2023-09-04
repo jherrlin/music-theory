@@ -221,6 +221,8 @@
        [:br]
        [menus/instrument-selection]
        [:br]
+       [common/instrument-description]
+       [:br]
        [menus/key-selection]
        [:br]
        [menus/harmonization-scale-selection]

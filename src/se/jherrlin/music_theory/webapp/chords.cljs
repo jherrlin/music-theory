@@ -64,6 +64,8 @@
          [:br]
          [menus/instrument-selection]
          [:br]
+         [common/instrument-description]
+         [:br]
          [menus/key-selection]
          [:br]
          [menus/settings
@@ -74,6 +76,8 @@
          [menus/chord-selection]
          [:br]
          [common/chord-name key-of m]
+         [:br]
+
          [:br]
          [common/highlight-tones interval-tones key-of]
          [:br]

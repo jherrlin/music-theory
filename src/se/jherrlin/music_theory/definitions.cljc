@@ -18,34 +18,43 @@
 (def mandola                 [:c :g :d :a])
 (def octave-mandolin         [:g :d :a :e])
 (def tres-cubano             [:g :c :e])
+(def cuban-cuatro            [:g :c :e :a])
+(def puerto-rican-cuatro     [:b :e :a :d :g])
 
 
 (def instrument-with-tuning
-  {:guitar          {:tuning guitar
-                     :text   "Standard guitar tuning"}
-   :guitar-dadgad   {:tuning guitar-dadgad
-                     :text   "Guitar in DADGAD tuning"}
-   :bass            {:tuning bass
-                     :text   "Standard bass tuning"}
-   :ukulele         {:tuning ukulele
-                     :text   "Standard ukulele tuning"}
-   :banjo-standard  {:tuning banjo
-                     :text   "Standard tenor tuning"}
-   :banjo-irish     {:tuning banjo-irish
-                     :text   "Irish tenor tuning"}
-   :banjo-chicago   {:tuning banjo-chicago
-                     :text   "Chicago tuning"}
-   :mandolin        {:tuning mandolin
-                     :text   "Mandolin standard tuning"}
-   :mandola         {:tuning mandola
-                     :text   "Mandola standard tuning"}
-   :octave-mandolin {:tuning octave-mandolin
-                     :text   "Octave mandolin standard tuning"}
-   :tres-cubano     {:tuning tres-cubano
-                     :text   "Tres cubano standard tuning"}})
+  {:guitar              {:tuning guitar
+                         :text   "Standard guitar tuning"}
+   :guitar-dadgad       {:tuning guitar-dadgad
+                         :text   "Guitar in DADGAD tuning"}
+   :bass                {:tuning bass
+                         :text   "Standard bass tuning"}
+   :ukulele             {:tuning ukulele
+                         :text   "Standard ukulele tuning"}
+   :banjo-standard      {:tuning banjo
+                         :text   "Standard tenor tuning"}
+   :banjo-irish         {:tuning banjo-irish
+                         :text   "Irish tenor tuning"}
+   :banjo-chicago       {:tuning banjo-chicago
+                         :text   "Chicago tuning"}
+   :mandolin            {:tuning mandolin
+                         :text   "Mandolin standard tuning"}
+   :mandola             {:tuning mandola
+                         :text   "Mandola standard tuning"}
+   :octave-mandolin     {:tuning octave-mandolin
+                         :text   "Octave mandolin standard tuning"}
+   :tres-cubano         {:tuning tres-cubano
+                         :text   "Tres cubano standard tuning"}
+   :cuban-cuatro        {:tuning cuban-cuatro
+                         :text   "Cuban cuatro"}
+   :puerto-rican-cuatro {:tuning puerto-rican-cuatro
+                         :text   "Puerto Rican cuatro"}})
 
 (defn instrument-tuning [k]
   (get-in instrument-with-tuning [k :tuning]))
+
+(defn instrument-description [k]
+  (get-in instrument-with-tuning [k :text]))
 
 (defn tuning
   "Get tuning and text from key `k`"

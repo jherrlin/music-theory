@@ -57,7 +57,13 @@
     :title           "Banjo (Irish)"}
    {:instrument-type :fretboard
     :tuning          :tres-cubano
-    :title           "Tres cubano"}])
+    :title           "Tres cubano"}
+   {:instrument-type :fretboard
+    :tuning          :cuban-cuatro
+    :title           "Cuban cuatro"}
+   {:instrument-type :fretboard
+    :tuning          :puerto-rican-cuatro
+    :title           "Puerto Rican cuatro"}])
 
 (defn instrument-selection []
   (let [current-route      @(re-frame/subscribe [:current-route])

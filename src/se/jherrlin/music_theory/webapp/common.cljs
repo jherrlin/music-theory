@@ -134,3 +134,15 @@
         (str/join "\n")
         (apply str)
         (str "Interval -> Tone\n"))])
+
+(defn instrument-description []
+  (let [instrument-type   @(re-frame/subscribe [:instrument-type])
+        _                 (def instrument-type instrument-type)
+        tuning            @(re-frame/subscribe [:tuning])
+        _                 (def tuning tuning)
+        instrument-tuning (definitions/instrument-tuning tuning)
+        _                 (def instrument-tuning instrument-tuning)]
+    (when (#{:fretboard} instrument-type)
+      [:div
+       [:p (str "Instrument: " (definitions/instrument-description tuning))]
+       [:p (str "Instrument tuning: " (str/join " " (map #(-> % name str/capitalize) instrument-tuning)))]])))
