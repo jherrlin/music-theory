@@ -147,7 +147,7 @@
                                  "white"
                                  "#000000d6")
              :fret-color       (cond
-                                 (= x min-x) "linear-gradient(black, black, black)"
+                                 (= x 0) "linear-gradient(black, black, black)"
                                  (= x max-x) "linear-gradient(#000000d6, #000000d6, #000000d6)"
                                  :else
                                  "linear-gradient(to right, #FFFFFF , #706e68)")}])])]))

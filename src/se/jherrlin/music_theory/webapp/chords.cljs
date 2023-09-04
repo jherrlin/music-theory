@@ -35,7 +35,9 @@
         tuning             @(re-frame/subscribe [:tuning])
         _                  (def tuning tuning)
         chord              @(re-frame/subscribe [:chord])
-        _                  (def chord chord)]
+        _                  (def chord chord)
+        trim-fretboard     @(re-frame/subscribe [:trim-fretboard])
+        _                  (def trim-fretboard trim-fretboard)]
     (when (and chord key-of)
       (let [{id          :id
              indexes     :chord/indexes
@@ -69,9 +71,10 @@
          [menus/key-selection]
          [:br]
          [menus/settings
-          {:as-text?      (= instrument-type :fretboard)
-           :nr-of-frets?  (= instrument-type :fretboard)
-           :nr-of-octavs? (= instrument-type :keyboard)}]
+          {:as-text?        (= instrument-type :fretboard)
+           :nr-of-frets?    (= instrument-type :fretboard)
+           :trim-fretboard? (= instrument-type :fretboard)
+           :nr-of-octavs?   (= instrument-type :keyboard)}]
          [:br]
          [menus/chord-selection]
          [:br]
@@ -85,13 +88,15 @@
 
          [:h3 "All " (if as-intervals "interval" "tone") " positions in the chord"]
          [instrument-types/instrument-component
-          {:fretboard-matrix (if as-intervals
-                               (utils/with-all-intervals
-                                 (mapv vector interval-tones intervals)
-                                 fretboard-matrix)
-                               (utils/with-all-tones
-                                 interval-tones
-                                 fretboard-matrix))
+          {:fretboard-matrix (cond->>
+                              (if as-intervals
+                                (utils/with-all-intervals
+                                  (mapv vector interval-tones intervals)
+                                  fretboard-matrix)
+                                (utils/with-all-tones
+                                  interval-tones
+                                  fretboard-matrix))
+                               trim-fretboard (utils/trim-matrix #(every? nil? (map :out %))))
            :id               id
            :as-text          as-text
            :instrument-type  instrument-type
@@ -127,12 +132,13 @@
                    :index-tones      index-tones
                    :interval-tones   interval-tones
                    :intervals        intervals
-                   :fretboard-matrix ((if as-intervals
-                                        utils/pattern-with-intervals
-                                        utils/pattern-with-tones)
-                                      key-of
-                                      pattern
-                                      fretboard-matrix)}]])]))
+                   :fretboard-matrix (cond->> ((if as-intervals
+                                                 utils/pattern-with-intervals
+                                                 utils/pattern-with-tones)
+                                               key-of
+                                               pattern
+                                               fretboard-matrix)
+                                       trim-fretboard (utils/trim-matrix #(every? nil? (map :out %))))}]])]))
 
          (let [triad-patterns (definitions/chord-triad-patterns-by-belonging-and-tuning chord instrument-tuning)]
            (when (seq triad-patterns)
@@ -146,14 +152,22 @@
                 [:div {:style {:margin-bottom "2rem"}}
                  [instrument-types/instrument-component
                   {:id               id
-                   :instrument-type  instrument-type
                    :as-text          as-text
-                   :fretboard-matrix ((if as-intervals
-                                        utils/pattern-with-intervals
-                                        utils/pattern-with-tones)
-                                      key-of
-                                      pattern
-                                      fretboard-matrix)}]])]))
+                   :instrument-type  instrument-type
+                   :key-of           key-of
+                   :tuning           tuning
+                   :nr-of-frets      nr-of-frets
+                   :as-intervals     as-intervals
+                   :index-tones      index-tones
+                   :interval-tones   interval-tones
+                   :intervals        intervals
+                   :fretboard-matrix (cond->> ((if as-intervals
+                                                 utils/pattern-with-intervals
+                                                 utils/pattern-with-tones)
+                                               key-of
+                                               pattern
+                                               fretboard-matrix)
+                                       trim-fretboard (utils/trim-matrix #(every? nil? (map :out %))))}]])]))
 
          (let [scales-to-chord (utils/scales-to-chord (definitions/scales) indexes)]
            (when (seq scales-to-chord)
@@ -183,12 +197,13 @@
                            [:key-of          keyword?]
                            [:chord           keyword?]]
                    :query [:map
-                           [:nr-of-frets  {:optional true} int?]
-                           [:nr-of-octavs {:optional true} int?]
-                           [:as-intervals {:optional true} boolean?]
-                           [:as-text      {:optional true} boolean?]]}
+                           [:nr-of-frets    {:optional true} int?]
+                           [:nr-of-octavs   {:optional true} int?]
+                           [:as-intervals   {:optional true} boolean?]
+                           [:as-text        {:optional true} boolean?]
+                           [:trim-fretboard {:optional true} boolean?]]}
       :controllers
       [{:parameters {:path  [:instrument-type :tuning :key-of :chord]
-                     :query [:nr-of-frets :as-intervals :as-text :nr-of-octavs]}
+                     :query [:nr-of-frets :as-intervals :as-text :nr-of-octavs :trim-fretboard]}
         :start      (fn [{p :path q :query}]
                       (events/do-on-url-change route-name p q))}]}]))

@@ -37,7 +37,9 @@
         scale              @(re-frame/subscribe [:scale])
         _                  (def scale scale)
         debug              @(re-frame/subscribe [:debug])
-        _                  (def debug debug)]
+        _                  (def debug debug)
+        trim-fretboard     @(re-frame/subscribe [:trim-fretboard])
+        _                  (def trim-fretboard trim-fretboard)]
     (when (and scale key-of)
       (let [{id          :id
              indexes     :scale/indexes
@@ -78,9 +80,10 @@
          [menus/key-selection]
          [:br]
          [menus/settings
-          {:as-text?      (= instrument-type :fretboard)
-           :nr-of-frets?  (= instrument-type :fretboard)
-           :nr-of-octavs? (= instrument-type :keyboard)}]
+          {:as-text?        (= instrument-type :fretboard)
+           :nr-of-frets?    (= instrument-type :fretboard)
+           :trim-fretboard? (= instrument-type :fretboard)
+           :nr-of-octavs?   (= instrument-type :keyboard)}]
          [:br]
          [menus/scale-selection]
          [common/highlight-tones interval-tones key-of]
@@ -88,7 +91,8 @@
          [common/intervals-to-tones intervals interval-tones]
          [:h3 "All " (if as-intervals "interval" "tone") " positions in the scale"]
          [instrument-types/instrument-component
-          {:fretboard-matrix fretboard-matrix'
+          {:fretboard-matrix (cond->> fretboard-matrix'
+                               trim-fretboard (utils/trim-matrix #(every? nil? (map :out %))))
            :id               id
            :as-text          as-text
            :instrument-type  instrument-type
@@ -128,12 +132,13 @@
                    :interval-tones   interval-tones
                    :intervals        intervals
                    :nr-of-octavs     nr-of-octavs
-                   :fretboard-matrix ((if as-intervals
-                                        utils/pattern-with-intervals
-                                        utils/pattern-with-tones)
-                                      key-of
-                                      pattern
-                                      fretboard-matrix)}]])]))
+                   :fretboard-matrix (cond->> ((if as-intervals
+                                                 utils/pattern-with-intervals
+                                                 utils/pattern-with-tones)
+                                               key-of
+                                               pattern
+                                               fretboard-matrix)
+                                       trim-fretboard (utils/trim-matrix #(every? nil? (map :out %))))}]])]))
 
          (let [chords-to-scale (utils/chords-to-scale (definitions/chords) indexes)]
            (when (seq chords-to-scale)
@@ -161,13 +166,14 @@
                            [:key-of          keyword?]
                            [:scale           keyword?]]
                    :query [:map
-                           [:nr-of-frets  {:optional true} int?]
-                           [:nr-of-octavs {:optional true} int?]
-                           [:as-intervals {:optional true} boolean?]
-                           [:as-text      {:optional true} boolean?]
-                           [:debug        {:optional true} boolean?]]}
+                           [:nr-of-frets    {:optional true} int?]
+                           [:nr-of-octavs   {:optional true} int?]
+                           [:as-intervals   {:optional true} boolean?]
+                           [:as-text        {:optional true} boolean?]
+                           [:debug          {:optional true} boolean?]
+                           [:trim-fretboard {:optional true} boolean?]]}
       :controllers
       [{:parameters {:path  [:instrument-type :tuning :key-of :scale]
-                     :query [:nr-of-frets :as-intervals :as-text :nr-of-octavs :debug]}
+                     :query [:nr-of-frets :as-intervals :as-text :nr-of-octavs :debug :trim-fretboard]}
         :start      (fn [{p :path q :query}]
                       (events/do-on-url-change route-name p q))}]}]))

@@ -28,11 +28,12 @@
                         :harmonization-scale :major
                         :chord               :major
                         :harmonization-fn    :triad}
-   :query-params       {:nr-of-frets  15
-                        :nr-of-octavs 2
-                        :as-intervals false
-                        :as-text      false
-                        :debug        false}})
+   :query-params       {:nr-of-frets    15
+                        :nr-of-octavs   2
+                        :as-intervals   false
+                        :as-text        false
+                        :trim-fretboard true
+                        :debug          false}})
 
 (def events-
   [{:n :key-of
@@ -75,13 +76,16 @@
     :s (fn [db [k]] (get-in db [:query-params k]))
     :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
    {:n :as-intervals
-    :s (fn [db [k]] (get-in db [:query-params k] false))
+    :s (fn [db [k]] (get-in db [:query-params k]))
     :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
    {:n :as-text
-    :s (fn [db [k]] (get-in db [:query-params k] false))
+    :s (fn [db [k]] (get-in db [:query-params k]))
+    :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
+   {:n :trim-fretboard
+    :s (fn [db [k]] (get-in db [:query-params k]))
     :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
    {:n :debug
-    :s (fn [db [k]] (get-in db [:query-params k] false))
+    :s (fn [db [k]] (get-in db [:query-params k]))
     :e (fn [db [k v]] (assoc-in db [:query-params k] v))}
 
    {:n :add-bookmark

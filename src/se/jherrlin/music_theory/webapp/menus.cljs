@@ -264,8 +264,9 @@
         "Bookmarks"]]]))
 
 (defn settings
-  [{:keys [as-text? as-intervals? nr-of-frets? nr-of-octavs?]
-    :or   {as-intervals? true}}]
+  [{:keys [as-text? as-intervals? nr-of-frets? nr-of-octavs? trim-fretboard?]
+    :or   {as-intervals? true}
+    :as m}]
   (let [path-params        @(re-frame/subscribe [:path-params])
         _                  (def path-params path-params)
         query-params       @(re-frame/subscribe [:query-params])
@@ -287,7 +288,9 @@
         tuning             @(re-frame/subscribe [:tuning])
         _                  (def tuning tuning)
         chord              @(re-frame/subscribe [:chord])
-        _                  (def chord chord)]
+        _                  (def chord chord)
+        trim-fretboard     @(re-frame/subscribe [:trim-fretboard])
+        _                  (def trim-fretboard trim-fretboard)]
     [:div {:style {:display "flex"}}
      (when as-intervals?
        [:div
@@ -302,6 +305,13 @@
                  :checked  as-text
                  :type     "checkbox" :id "as-text-checkbox" :name "as-text-checkbox"}]
         [:label {:for "as-text-checkbox"} "Fretboard in text"]])
+
+     (when trim-fretboard?
+       [:div {:style {:margin-left "1rem"}}
+        [:input {:on-click #(re-frame/dispatch [:href [current-route-name path-params (assoc query-params :trim-fretboard (not trim-fretboard))]])
+                 :checked  trim-fretboard
+                 :type     "checkbox" :id "trim-fretboard-checkbox" :name "trim-fretboard-checkbox"}]
+        [:label {:for "trim-fretboard-checkbox"} "Trim fretboard"]])
 
      (when nr-of-frets?
        [:div {:style {:margin-left "1rem"}}
