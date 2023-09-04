@@ -47,9 +47,6 @@
     :tuning          :mandola
     :title           "Mandola"}
    {:instrument-type :fretboard
-    :tuning          :octave-mandolin
-    :title           "Octave mandolin"}
-   {:instrument-type :fretboard
     :tuning          :ukulele
     :title           "Ukulele"}
    {:instrument-type :fretboard

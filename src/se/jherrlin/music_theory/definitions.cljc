@@ -16,7 +16,6 @@
 (def mandolin                [:g :d :a :e])
 (def banjo-chicago           [:d :g :b :e])
 (def mandola                 [:c :g :d :a])
-(def octave-mandolin         [:g :d :a :e])
 (def tres-cubano             [:g :c :e])
 (def cuban-cuatro            [:g :c :e :a])
 (def puerto-rican-cuatro     [:b :e :a :d :g])
@@ -41,8 +40,6 @@
                          :text   "Mandolin standard tuning"}
    :mandola             {:tuning mandola
                          :text   "Mandola standard tuning"}
-   :octave-mandolin     {:tuning octave-mandolin
-                         :text   "Octave mandolin standard tuning"}
    :tres-cubano         {:tuning tres-cubano
                          :text   "Tres cubano standard tuning"}
    :cuban-cuatro        {:tuning cuban-cuatro
