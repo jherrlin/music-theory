@@ -93,7 +93,12 @@
                 _                 (def fretboard-matrix' fretboard-matrix')]
             [:<>
              (when (= pattern-for :chord)
-               [common/chord-name key-of (definitions/chord belongs-to)])
+               [:<>
+                [:h2 (str (-> tuning name str/capitalize)
+                          " ("
+                          (str/join ", " (map (comp str/capitalize name) instrument-tuning))
+                          ")")]
+                [common/chord-name key-of (definitions/chord belongs-to)]])
              [instrument-types/instrument-component
               {:fretboard-matrix fretboard-matrix'
                :id               id
