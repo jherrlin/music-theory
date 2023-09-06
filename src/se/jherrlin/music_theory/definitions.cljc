@@ -1064,7 +1064,8 @@
 
 (define-chord-pattern #uuid "144e925c-52c8-4089-b855-efe5bf66d266"
   {:belongs-to :major
-   :tuning     mandolin}
+   :tuning     mandolin
+   :order      1}
   "-   -   -   1
    -   -   3   -
    5   -   -   -
@@ -1096,11 +1097,21 @@
 
 (define-chord-pattern #uuid "44837702-2c92-4b90-adfb-7e5a82799e42"
   {:belongs-to :minor
-   :tuning     mandolin}
+   :tuning     mandolin
+   :order      1}
   "-   -   -   1
    -  b3   -   -
    5   -   -   -
    1   -   -   -")
+
+(define-chord-pattern #uuid "2467a28a-d01a-43e0-a3e4-47a776997b58"
+  {:belongs-to :minor
+   :tuning     mandolin
+   :order      2}
+  "-   -   1   -   -   -   -
+  b3   -   -   -   -   -   -
+   -   -   -   -   1   -   -
+   -   -   -   -   -   -   5")
 
 (define-chord-pattern #uuid "e1ce4515-14fb-48fb-bd7d-c489b7267e55"
   {:belongs-to :major-maj-seven

@@ -41,10 +41,12 @@
           _                            (def instrument-tuning instrument-tuning)
           {definition-type :type                   ;;
            pattern-for     :fretboard-pattern/type ;; #{:scale :chord :triad}
+           belongs-to      :fretboard-pattern/belongs-to
            :as             definition} (definitions/by-id id)
           _                            (def definition definition)
           _                            (def definition-type definition-type)
           _                            (def pattern-for pattern-for)
+          _                            (def belongs-to belongs-to)
           ]
       [:<>
        [menus/menu]
@@ -89,26 +91,23 @@
                                         interval-tones
                                         fretboard-matrix)))
                 _                 (def fretboard-matrix' fretboard-matrix')]
-            (let [fretboard-length (-> fretboard-matrix' first count)]
-              (common/merge-to-fretboard-matrix 0 0 {:hehe :hoho} fretboard-matrix')
-              (->> (apply concat fretboard-matrix')
-                   (partition-all fretboard-length)
-                   (mapv #(mapv identity %))
-                   (= fretboard-matrix')))
-            [instrument-types/instrument-component
-             {:fretboard-matrix fretboard-matrix'
-              :id               id
-              :as-text          as-text
-              :instrument-type  instrument-type
-              :key-of           key-of
-              :tuning           tuning
-              :chord            chord
-              :nr-of-frets      nr-of-frets
-              :as-intervals     as-intervals
-              :index-tones      index-tones
-              :interval-tones   interval-tones
-              :intervals        intervals
-              :nr-of-octavs     nr-of-octavs}]))]])))
+            [:<>
+             (when (= pattern-for :chord)
+               [common/chord-name key-of (definitions/chord belongs-to)])
+             [instrument-types/instrument-component
+              {:fretboard-matrix fretboard-matrix'
+               :id               id
+               :as-text          as-text
+               :instrument-type  instrument-type
+               :key-of           key-of
+               :tuning           tuning
+               :chord            chord
+               :nr-of-frets      nr-of-frets
+               :as-intervals     as-intervals
+               :index-tones      index-tones
+               :interval-tones   interval-tones
+               :intervals        intervals
+               :nr-of-octavs     nr-of-octavs}]]))]])))
 
 (def routes
   (let [route-name :focus]
