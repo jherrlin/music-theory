@@ -103,7 +103,8 @@
                (map keyword)))
          (map (fn [x]
                 {:title (-> x name (str/replace "-" " ") str/capitalize)
-                 :scale x})))))
+                 :scale x
+                 :m     (definitions/scale x)})))))
 
 (defn scale-selection []
   (let [current-route      @(re-frame/subscribe [:current-route])

@@ -92,30 +92,32 @@
            [:th "Intervals"]
            [:th "Tones"]]]
          [:tbody
-          (for [[scale {id          :id
-                        intervals   :scale/intervals
-                        name'       :scale/name
-                        indexes     :scale/indexes
-                        sufix       :scale/sufix
-                        explanation :scale/explanation}]
-                (definitions/scales)]
+          (for [{title :title
+                 scale :scale
+                 {id          :id
+                  intervals   :scale/intervals
+                  name'       :scale/name
+                  indexes     :scale/indexes
+                  sufix       :scale/sufix
+                  explanation :scale/explanation}
+                 :m}
+                (menus/scale-sort-order)]
             ^{:key (str "scale-list-" id)}
-            [:tr
-             [:td
-              [:a
-               {:href
-                (rfe/href
-                 :scale
-                 (assoc path-params :scale scale)
-                 query-params)}
-               (-> scale name str/capitalize)]]
-             [:td
-              (->> intervals
-                   (str/join ", "))]
-             [:td
-              (->> (utils/tones-by-key-and-intervals key-of intervals)
-                   (map (comp str/capitalize name))
-                   (str/join ", "))]])]]]])))
+            (let [_ (def m m)]
+              [:tr
+               [:td
+                [:a
+                 {:href
+                  (rfe/href
+                   :scale
+                   (assoc path-params :scale scale)
+                   query-params)}
+                 title]]
+               [:td (str/join ", " intervals)]
+               [:td
+                (->> (utils/tones-by-key-and-intervals key-of intervals)
+                     (map (comp str/capitalize name))
+                     (str/join ", "))]]))]]]])))
 
 (def routes
   (let [route-name :table]
