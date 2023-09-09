@@ -151,6 +151,7 @@
   ([id chord meta-data intervals]
    {:pre [(uuid? id)]}
    (let [meta-data (assoc meta-data :chord chord)
+         meta-data (assoc meta-data :order (get meta-data :order 1000))
          chord'    (utils/define-chord id meta-data intervals)]
      (if (models-chord/valid-chord? chord')
        (do
@@ -237,8 +238,92 @@
   :major
   {:sufix        ""
    :display-text "major"
-   :explanation  "major"}
+   :explanation  "major"
+   :order        1}
   "1 3 5")
+
+(define-chord #uuid "f9426eb8-5046-474a-b4c9-62383e5b0345"
+  :minor
+  {:sufix        "m"
+   :display-text "minor"
+   :explanation  "minor"
+   :order        2}
+  "1 b3 5")
+
+(define-chord #uuid "7dab3a40-8aff-4a10-9367-52a05d737f45"
+  :major-maj-seven
+  {:sufix       "maj7"
+   :explanation "major maj 7th"
+   :order        3}
+  "1 3 5 7")
+
+(define-chord #uuid "eebf1ac1-b3c5-46f1-87ac-f8d24823b730"
+  :dominant-seven
+  {:sufix       "7"
+   :explanation "dominant 7th"
+   :order        4}
+  "1 3 5 b7")
+
+(define-chord #uuid "3e260b03-e6ce-485d-8b0c-9361a2566629"
+  :minor-seven
+  {:sufix       "m7"
+   :explanation "minor 7th"
+   :order        5}
+  "1 b3 5 b7")
+
+(define-chord #uuid "1845518b-ace4-4baa-8083-6922ce33176f"
+  :sus4-add-7
+  {:sufix       "7sus4"
+   :explanation "suspended 4 with added b7"
+   :order        6}
+  "1 4 5 b7")
+
+(define-chord #uuid "ede6dada-2c5d-4c63-af12-6569e89219c1"
+  :diminished-seventh
+  {:sufix       "dim7"
+   :explanation "diminished seven"
+   :text        "diminished whole, often sufixed with °"
+   :order        7}
+  "1 b3 b5 bb7")
+
+(define-chord #uuid "5c957f40-8961-46a5-8e30-95fdfb827628"
+  :dominant-seven-sharp-nine
+  {:sufix       "7#9"
+   :explanation "dominant 7th with a sharp nine"
+   :text        "Also knows as the Hendrix chord."
+   :order        8}
+  "1 3 5 b7 #9")
+
+(define-chord #uuid "5c957f40-8961-46a5-8e30-95fdfb827628"
+  :dominant-seven-sharp-nine
+  {:sufix       "7#9"
+   :explanation "dominant 7th with a sharp nine"
+   :text        "Also knows as the Hendrix chord."
+   :order        8}
+  "1 3 5 b7 #9")
+
+(define-chord #uuid "e2f07542-bd79-424c-8bfc-401d12cb36d9"
+  :dominant-seven-flat-nine
+  {:sufix       "7b9"
+   :explanation "dominant 9th"
+   :order        9}
+  "1 3 5 b7 b9")
+
+(define-chord #uuid "c21c6b74-d211-4b05-a521-c8c2fc646c4c"
+  :sixth
+  {:sufix       "6"
+   :explanation "sixth"
+   :text        "There are 4 tones in sixth chords."
+   :order       10}
+  "1 3 5 6")
+
+(define-chord #uuid "8962c55d-9bb5-4f44-a810-a52f8251730a"
+  :minor-sixth
+  {:sufix       "m6"
+   :explanation "minor sixth"
+   :text        "There are 4 tones in sixth chords."
+   :order       11}
+  "1 b3 5 6")
 
 (define-chord #uuid "bef8a634-b802-467a-bb35-f93643fbeb3d"
   :major-plus-5
@@ -246,49 +331,11 @@
    :explanation  "major where 5 is raised one half tone"}
   "1 3 #5")
 
-(define-chord #uuid "f9426eb8-5046-474a-b4c9-62383e5b0345"
-  :minor
-  {:sufix        "m"
-   :display-text "minor"
-   :explanation  "minor"}
-  "1 b3 5")
-
-(define-chord #uuid "7dab3a40-8aff-4a10-9367-52a05d737f45"
-  :major-maj-seven
-  {:sufix       "maj7"
-   :explanation "major maj 7th"}
-  "1 3 5 7")
-
-(define-chord #uuid "eebf1ac1-b3c5-46f1-87ac-f8d24823b730"
-  :dominant-seven
-  {:sufix       "7"
-   :explanation "dominant 7th"}
-  "1 3 5 b7")
-
-(define-chord #uuid "5c957f40-8961-46a5-8e30-95fdfb827628"
-  :dominant-seven-sharp-nine
-  {:sufix       "7#9"
-   :explanation "dominant 7th with a sharp nine"
-   :text        "Also knows as the Hendrix chord."}
-  "1 3 5 b7 #9")
-
-(define-chord #uuid "e2f07542-bd79-424c-8bfc-401d12cb36d9"
-  :dominant-seven-flat-nine
-  {:sufix       "7b9"
-   :explanation "dominant 7th"}
-  "1 3 5 b7 b9")
-
 (define-chord #uuid "5c217b88-f9d5-41bb-9b89-8589105d14dd"
   :minor-maj-seven
   {:sufix       "m(maj7)"
    :explanation "minor maj 7th"}
   "1 b3 5 7")
-
-(define-chord #uuid "3e260b03-e6ce-485d-8b0c-9361a2566629"
-  :minor-seven
-  {:sufix       "m7"
-   :explanation "minor 7th"}
-  "1 b3 5 b7")
 
 (define-chord #uuid "4f853d42-89bb-4bcb-9462-aeb4cd379fe4"
   :sus2
@@ -307,12 +354,6 @@
   {:sufix       "sus4"
    :explanation "suspended 4"}
   "1 4 5")
-
-(define-chord #uuid "1845518b-ace4-4baa-8083-6922ce33176f"
-  :sus4-add-7
-  {:sufix       "7sus4"
-   :explanation "suspended 4 with added b7"}
-  "1 4 5 b7")
 
 (define-chord #uuid "b6855fb7-bdcf-4e18-a60e-95746bf8e7e9"
   :minor-seven-flat-5
@@ -345,27 +386,6 @@
   {:sufix       "dim"
    :explanation "diminished fifth"}
   "1 b3 b5")
-
-(define-chord #uuid "ede6dada-2c5d-4c63-af12-6569e89219c1"
-  :diminished-seventh
-  {:sufix       "dim7"
-   :explanation "diminished seven"
-   :text        "diminished whole, often sufixed with °"}
-  "1 b3 b5 bb7")
-
-(define-chord #uuid "c21c6b74-d211-4b05-a521-c8c2fc646c4c"
-  :sixth
-  {:sufix       "6"
-   :explanation "sixth"
-   :text        "There are 4 tones in sixth chords."}
-  "1 3 5 6")
-
-(define-chord #uuid "8962c55d-9bb5-4f44-a810-a52f8251730a"
-  :minor-sixth
-  {:sufix       "m6"
-   :explanation "minor sixth"
-   :text        "There are 4 tones in sixth chords."}
-  "1 b3 5 6")
 
 (define-chord #uuid "6cb2b165-bd51-4c36-a5f1-e64732897bbf"
   :ninth

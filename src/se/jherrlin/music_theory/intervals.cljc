@@ -20,7 +20,9 @@
 (def diminished-seventh 9)
 (def minor-seventh      10)
 (def major-seventh      11)
+(def minor-ninth        1)
 (def ninth              major-second)
+(def augmented-ninth    3)
 (def eleventh           5)
 (def thirteen           8)
 (def octave             perfect-unison)
@@ -109,11 +111,11 @@
     :function  "9"
     :name/en   "Ninth"
     :name/sv   "Nia"}
-   {:semitones ninth
+   {:semitones augmented-ninth
     :function  "#9"
     :name/en   "Augmented ninth"
     :name/sv   "Augmented ninth"}
-   {:semitones ninth
+   {:semitones minor-ninth
     :function  "b9"
     :name/en   "Diminished ninth"
     :name/sv   "Diminished ninth"}

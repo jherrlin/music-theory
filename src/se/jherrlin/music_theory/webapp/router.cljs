@@ -16,7 +16,8 @@
    [se.jherrlin.music-theory.webapp.menus :as menus]
    [se.jherrlin.music-theory.webapp.home :as home]
    [se.jherrlin.music-theory.webapp.bookmarks :as bookmarks]
-   [se.jherrlin.music-theory.webapp.instrument-types.fretboard :as fretboard]))
+   [se.jherrlin.music-theory.webapp.instrument-types.fretboard :as fretboard]
+   [se.jherrlin.music-theory.webapp.table :as table]))
 
 
 
@@ -27,7 +28,8 @@
    harmonizations/routes
    fretboard/routes
    bookmarks/routes
-   home/routes])
+   home/routes
+   table/routes])
 
 (def router
   (rf/router

@@ -258,10 +258,16 @@
         "Harmonizations"]]
 
      [:a {:style {:margin-right "10px"}
-          :href  (rfe/href :bookmarks path-params query-params)}
+          :href  (rfe/href :table path-params query-params)}
        [:button
-        {:disabled (= current-route-name :bookmarks)}
-        "Bookmarks"]]]))
+        {:disabled (= current-route-name :table)}
+        "Table"]]
+
+     [:a {:style {:margin-right "10px"}
+          :href  (rfe/href :bookmarks path-params query-params)}
+      [:button
+       {:disabled (= current-route-name :bookmarks)}
+       "Bookmarks"]]]))
 
 (defn settings
   [{:keys [as-text? as-intervals? nr-of-frets? nr-of-octavs? trim-fretboard?]
