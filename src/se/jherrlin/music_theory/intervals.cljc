@@ -24,7 +24,7 @@
 (def ninth              major-second)
 (def augmented-ninth    3)
 (def eleventh           5)
-(def thirteen           8)
+(def thirteen           9)
 (def octave             perfect-unison)
 (def perfect-octave     perfect-unison)
 
