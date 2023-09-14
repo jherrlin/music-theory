@@ -278,6 +278,18 @@
    :order        6}
   "1 4 5 b7")
 
+(define-chord #uuid "ae6c7f03-819d-446e-a99a-edcee7c9d849"
+  :seven-sharp-five
+  {:sufix       "7#5"
+   :order        6}
+  "1 3 #5 b7")
+
+(define-chord #uuid "d7a0a50b-5424-443c-83cb-d2354ba622e2"
+  :seven-flat-five
+  {:sufix       "7b5"
+   :order        6}
+  "1 3 b5 b7")
+
 (define-chord #uuid "ede6dada-2c5d-4c63-af12-6569e89219c1"
   :diminished-seventh
   {:sufix       "dim7"
@@ -285,14 +297,6 @@
    :text        "diminished whole, often sufixed with °"
    :order        7}
   "1 b3 b5 bb7")
-
-(define-chord #uuid "5c957f40-8961-46a5-8e30-95fdfb827628"
-  :dominant-seven-sharp-nine
-  {:sufix       "7#9"
-   :explanation "dominant 7th with a sharp nine"
-   :text        "Also knows as the Hendrix chord."
-   :order        8}
-  "1 3 5 b7 #9")
 
 (define-chord #uuid "5c957f40-8961-46a5-8e30-95fdfb827628"
   :dominant-seven-sharp-nine
