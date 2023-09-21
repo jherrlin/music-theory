@@ -108,7 +108,7 @@
                keys
                (remove (set predifined-order))
                (map name)
-               (sort)
+               (sort-by :scale/order)
                (map keyword)))
          (map (fn [x]
                 {:title (-> x name (str/replace "-" " ") str/capitalize)

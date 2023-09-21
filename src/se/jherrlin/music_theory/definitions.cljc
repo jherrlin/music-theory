@@ -561,6 +561,77 @@
 (define-scale #uuid "656b338a-7938-447b-ad89-c478023a21d4"
   #{:lydian-diminished}
   "1, 2, b3, #4, 5, 6, 7")
+
+(define-scale #uuid "a9141660-0d5b-4bb9-af22-773baff3a06c"
+  #{:byzantine}
+  "1 b2 3 4 5 b6 7")
+
+(define-scale #uuid "eb6d06b0-f195-4346-8d4a-941011a57535"
+  #{:enigmatic}
+  {:order 9999}
+  "1 b2 3 #4 #5 #6 7")
+
+(define-scale #uuid "b40212ef-2c7a-435e-84f2-324321247e75"
+  #{:persian}
+  {:order 9999}
+  "1 b2 3 4 b5 b6 7")
+
+(define-scale #uuid "b27b1dc3-9184-4be2-b9a5-df4b006ad5f9"
+  #{:javanese-pelog}
+  {:order 9999}
+  "1 b2 b3 4 5 6 b7")
+
+(define-scale #uuid "506e26c7-fcd1-4c93-b92a-f91f95367b39"
+  #{:neapolitan-minor}
+  {:order 9999}
+  "1 b2 b3 4 5 b6 7")
+
+(define-scale #uuid "b2073fbb-0a86-4288-b3e5-c1d2231fbe0e"
+  #{:neapolitan-major}
+  {:order 9999}
+  "1 b2 b3 4 5 6 7")
+
+(define-scale #uuid "aafd9cd7-1c57-4cb4-863b-f1adf7c952ee"
+  #{:hungarian-minor}
+  {:order 9999}
+  "1 2 b3 #4 5 b6 7")
+
+(define-scale #uuid "534f4620-7a45-4915-8053-f711ca05a5aa"
+  #{:overtone}
+  {:order 9999}
+  "1 2 3 #4 5 6 b7")
+
+(define-scale #uuid "cf8348d5-fc32-4588-9ccd-9962005c25e7"
+  #{:hindu}
+  {:order 9999}
+  "1 2 3 4 5 b6 b7")
+
+(define-scale #uuid "ffaf5574-8dc7-4077-b14d-15764c6354ec"
+  #{:romanian-major}
+  {:order 9999}
+  "1 b2 3 #4 5 6 b7")
+
+(define-scale #uuid "1e0f218a-f0b6-4bea-8144-04981136fee5"
+  #{:hungarian-major}
+  {:order 9999}
+  "1 #2 3 #4 5 6 b7")
+
+(define-scale #uuid "702f3a3b-f8d2-470b-b1d4-ef62f916a38c"
+  #{:spanish-gips}
+  {:order 9999}
+  "1 b2 3 4 5 b6 b7")
+
+(define-scale #uuid "75ff9b45-8f64-4fc5-bc8a-1eb152338efb"
+  #{:arabian}
+  {:order 9999}
+  "1 2 3 4 b5 b6 b7")
+
+(define-scale #uuid "3ff2667c-29df-4855-afc1-cd7db100feb9"
+  #{:asian}
+  {:order 9999}
+  "1 b2 3 4 b5 6 b7")
+
+
 ;; ---------------
 ;; Scales end
 ;; ---------------
