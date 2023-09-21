@@ -19,6 +19,8 @@
 (def tres-cubano             [:g :c :e])
 (def cuban-cuatro            [:g :c :e :a])
 (def puerto-rican-cuatro     [:b :e :a :d :g])
+(def greek-bouzouki-3        [:d :a :d])
+(def greek-bouzouki-4        [:c :f :a :d])
 
 
 (def instrument-with-tuning
@@ -45,7 +47,11 @@
    :cuban-cuatro        {:tuning cuban-cuatro
                          :text   "Cuban cuatro"}
    :puerto-rican-cuatro {:tuning puerto-rican-cuatro
-                         :text   "Puerto Rican cuatro"}})
+                         :text   "Puerto Rican cuatro"}
+   :greek-bouzouki-3    {:tuning greek-bouzouki-3
+                         :text   "Greek bouzouki (3)"}
+   :greek-bouzouki-4    {:tuning greek-bouzouki-4
+                         :text   "Greek bouzouki (4)"}})
 
 (defn instrument-tuning [k]
   (get-in instrument-with-tuning [k :tuning]))

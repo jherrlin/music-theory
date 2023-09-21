@@ -60,7 +60,13 @@
     :title           "Cuban cuatro"}
    {:instrument-type :fretboard
     :tuning          :puerto-rican-cuatro
-    :title           "Puerto Rican cuatro"}])
+    :title           "Puerto Rican cuatro"}
+   {:instrument-type :fretboard
+    :tuning          :greek-bouzouki-3
+    :title           "Greek bouzouki (3)"}
+   {:instrument-type :fretboard
+    :tuning          :greek-bouzouki-4
+    :title           "Greek bouzouki (4)"}])
 
 (defn instrument-selection []
   (let [current-route      @(re-frame/subscribe [:current-route])
