@@ -2168,6 +2168,53 @@
    -   -   1   -   2  b3
    -   -   -   -   -   -")
 
+(define-scale-pattern #uuid "5cac16cb-ac24-4fb6-a456-b7434642bace"
+  {:belongs-to :mixolydian
+   :tuning     mandolin
+   :order      1}
+  "-   -   -   -   -   -
+   -   -   -   -   -   -
+   5   -   6  b7   -   1
+   1   -   2   -   3   4")
+
+(define-scale-pattern #uuid "ad1ccf28-ea6f-4574-88a4-ba304a84f018"
+  {:belongs-to :mixolydian
+   :tuning     mandolin
+   :order      2}
+  "-   -   -   -   -   -
+   5   -   6  b7   -   1
+   1   -   2   -   3   4
+   -   -   -   -   -   -")
+
+(define-scale-pattern #uuid "31c28cf0-808e-4c6d-be74-51f5e136c210"
+  {:belongs-to :mixolydian
+   :tuning     mandolin
+   :order      3}
+  "5   -   6  b7   -   1
+   1   -   2   -   3   4
+   -   -   -   -   -   -
+   -   -   -   -   -   -")
+
+
+(define-scale-pattern #uuid "a4be6404-23eb-4c68-8a35-efb507469f68"
+  {:belongs-to :mixolydian
+   :tuning     mandolin
+   :order      4}
+  "-   -   -   -   -   -
+   6  b7   -   1   -   -
+   2   -   3   4   -   5
+   -   -   -   -   -   1")
+
+(define-scale-pattern #uuid "c91cddfe-f776-4c0c-8125-4f4c5d074e77"
+  {:belongs-to :mixolydian
+   :tuning     mandolin
+   :order      5}
+  "6  b7   -   1   -   -
+   2   -   3   4   -   5
+   -   -   -   -   -   1
+   -   -   -   -   -   -")
+
+
 ;; ---------------
 ;; Scales patterns end
 ;; ---------------
