@@ -21,6 +21,7 @@
 (def puerto-rican-cuatro     [:b :e :a :d :g])
 (def greek-bouzouki-3        [:d :a :d])
 (def greek-bouzouki-4        [:c :f :a :d])
+(def irish-bouzouki          [:g :d :a :d])
 
 
 (def instrument-with-tuning
@@ -51,7 +52,9 @@
    :greek-bouzouki-3    {:tuning greek-bouzouki-3
                          :text   "Greek bouzouki (3)"}
    :greek-bouzouki-4    {:tuning greek-bouzouki-4
-                         :text   "Greek bouzouki (4)"}})
+                         :text   "Greek bouzouki (4)"}
+   :irish-bouzouki      {:tuning irish-bouzouki
+                         :text   "Irish bouzouki"}})
 
 (defn instrument-tuning [k]
   (get-in instrument-with-tuning [k :tuning]))

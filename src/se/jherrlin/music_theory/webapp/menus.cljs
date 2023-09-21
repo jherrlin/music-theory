@@ -66,7 +66,10 @@
     :title           "Greek bouzouki (3)"}
    {:instrument-type :fretboard
     :tuning          :greek-bouzouki-4
-    :title           "Greek bouzouki (4)"}])
+    :title           "Greek bouzouki (4)"}
+   {:instrument-type :fretboard
+    :tuning          :irish-bouzouki
+    :title           "Irish bouzouki"}])
 
 (defn instrument-selection []
   (let [current-route      @(re-frame/subscribe [:current-route])
