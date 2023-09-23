@@ -47,6 +47,9 @@
     :tuning          :mandola
     :title           "Mandola"}
    {:instrument-type :fretboard
+    :tuning          :nordic-mandola
+    :title           "Nordic mandola"}
+   {:instrument-type :fretboard
     :tuning          :ukulele
     :title           "Ukulele"}
    {:instrument-type :fretboard

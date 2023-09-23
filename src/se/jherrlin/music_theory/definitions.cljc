@@ -22,6 +22,7 @@
 (def greek-bouzouki-3        [:d :a :d])
 (def greek-bouzouki-4        [:c :f :a :d])
 (def irish-bouzouki          [:g :d :a :d])
+(def nordic-mandola          [:c :g :d :a :e])
 
 
 (def instrument-with-tuning
@@ -43,6 +44,8 @@
                          :text   "Mandolin standard tuning"}
    :mandola             {:tuning mandola
                          :text   "Mandola standard tuning"}
+   :nordic-mandola      {:tuning nordic-mandola
+                         :text   "Nordic mandola"}
    :tres-cubano         {:tuning tres-cubano
                          :text   "Tres cubano standard tuning"}
    :cuban-cuatro        {:tuning cuban-cuatro

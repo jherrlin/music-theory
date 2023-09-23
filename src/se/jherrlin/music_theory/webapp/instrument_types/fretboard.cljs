@@ -125,7 +125,11 @@
                     :width            "0.5rem"
                     :height           "100%"}}]]))
 
-(defn styled-view [{:keys [on-click matrix] :as m}]
+(defn styled-view [{:keys [on-click matrix]
+                    :or   {on-click (fn [{:keys [x y tone out root?] :as m'}]
+                                      (def m' m')
+                                      (js/console.log m'))}
+                    :as   m}]
   (let [min-x (->> matrix first (map :x) (apply min))
         max-x (->> matrix first (map :x) (apply max))]
     [:div {:style {:overflow-x "auto"}}
@@ -141,13 +145,13 @@
            [fret
             {:y                (/ y 10)
              :circle-color     (when root? "#ff7600")
-             :on-click         #(js/console.log m)
+             :on-click         (fn [_] (on-click m))
              :circle-text      (when out out)
              :background-color (if (= x 0)
                                  "white"
                                  "#000000d6")
              :fret-color       (cond
-                                 (= x 0) "linear-gradient(black, black, black)"
+                                 (= x 0)     "linear-gradient(black, black, black)"
                                  (= x max-x) "linear-gradient(#000000d6, #000000d6, #000000d6)"
                                  :else
                                  "linear-gradient(to right, #FFFFFF , #706e68)")}])])]))
