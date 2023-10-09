@@ -809,12 +809,22 @@
 (define-chord-pattern #uuid "a8249afc-b6aa-4db1-8aed-c2110f0ce1f6"
   {:belongs-to :dominant-seven
    :tuning     guitar}
-  "1   -   -   -
+  "-   -   -   -
    -   -   -  b7
    -   3   -   -
    -   -   1   -
    -   -   5   -
-   1   -   -   -")
+   -   -   -   -")
+
+(define-chord-pattern #uuid "7dca2ec3-ac71-4562-a8c8-3a7bd994374d"
+  {:belongs-to :dominant-seven
+   :tuning     guitar}
+  "-   -   -   -
+   -   -   -   5
+   1   -   -   -
+   -   -   -  b7
+   -   -   3   -
+   -   -   -   -")
 
 (define-chord-pattern #uuid "639a0d6d-a636-4761-9c43-3563cff792ff"
   {:belongs-to :dominant-seven
@@ -858,14 +868,25 @@
 
 (define-chord-pattern #uuid "45ccc319-651a-49ae-9cd4-6f2f2a995b36"
   {:belongs-to :minor-seven
-   :tuning     guitar}
-  "
-   5   -   -
+   :tuning     guitar
+   :order      1}
+  "-   -   -
    -  b3   -
   b7   -   -
    -   -   5
    1   -   -
    -   -   -")
+
+(define-chord-pattern #uuid "8b9091f3-7452-4364-8fca-1b25d0038c60"
+  {:belongs-to :minor-seven
+   :tuning     guitar
+   :order      2}
+  "-   -
+   -   1
+   5   -
+   -  b3
+   -  b7
+   -   -")
 
 (define-chord-pattern #uuid "899aa830-b2e7-4819-b708-27b59a87345f"
   {:belongs-to :minor-seven
@@ -961,13 +982,25 @@
 
 (define-chord-pattern #uuid "14c1aabc-2bde-425c-86dc-eb604473d7bf"
   {:belongs-to :major-maj-seven
-   :tuning     guitar}
-  "5   -   -
+   :tuning     guitar
+   :order      1}
+  "-   -   -
    -   -   3
    -   7   -
    -   -   5
    1   -   -
    -   -   -")
+
+(define-chord-pattern #uuid "090c373d-87b7-4952-ad97-53c0d0e3263c"
+  {:belongs-to :major-maj-seven
+   :tuning     guitar
+   :order      2}
+  "-   -   -   -
+   -   -   -   7
+   3   -   -   -
+   -   1   -   -
+   -   5   -   -
+   -   -   -   -")
 
 (define-chord-pattern #uuid "a2e3e5c3-da29-444e-bfa3-e34b74e0cbec"
   {:belongs-to :major-maj-seven
@@ -1098,6 +1131,16 @@
    -  b7
    -   -
    -   1")
+
+(define-chord-pattern #uuid "9edf0b37-d066-4af4-bc0e-77c364df86d6"
+  {:belongs-to :minor-seven-flat-5
+   :tuning     guitar}
+  "-   -   -
+   -   -   1
+  b5   -   -
+   -   -  b3
+   -   -  b7
+   -   -   -")
 
 (define-chord-pattern #uuid "4e9d3630-d01d-4f0d-9bd1-d052af31f5b2"
   {:belongs-to :minor-seven-flat-5
