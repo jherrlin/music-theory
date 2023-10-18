@@ -347,6 +347,11 @@
    :explanation  "major where 5 is raised one half tone"}
   "1 3 #5")
 
+(define-chord #uuid "c1dff8c0-3c64-4e1c-a6cb-f311580141f9"
+  :major-plus-5-flat-7
+  {:sufix        "+7"}
+  "1 3 #5 b7")
+
 (define-chord #uuid "5c217b88-f9d5-41bb-9b89-8589105d14dd"
   :minor-maj-seven
   {:sufix       "m(maj7)"
@@ -423,6 +428,12 @@
    :explanation "minor ninth # fifth is the least important tone, it may be ignored"
    :text        "The most important tones are 1, b3, b7 and 9. The 5 can be ignored in the chord."}
   "1 b3 5 b7 9")
+
+(define-chord #uuid "32b7ad4f-8b47-4e9d-8e99-52225db82ab6"
+  :add9
+  {:sufix       "add9"
+   :explanation "major with an added 9"}
+  "1 3 5 9")
 
 (define-chord #uuid "065c90b0-a8dd-4137-9864-dc8b963c1f07"
   :minor-add9
@@ -1271,6 +1282,54 @@
    5   -   -
    1   -   -")
 
+(define-chord-pattern #uuid "7408c360-a25a-402f-bf52-9c609f6740ee"
+  {:belongs-to :major-maj-seven
+   :tuning     mandolin}
+  "1   -   -
+   -   -   5
+   -   7   -
+   -   3   -")
+
+(define-chord-pattern #uuid "b5b5e1a8-eed8-4398-8f65-725d050aeb57"
+  {:belongs-to :major-maj-seven
+   :tuning     mandolin}
+  "-   5   -
+   -   1   -
+   3   -   -
+   -   -   7")
+
+(define-chord-pattern #uuid "0f4522ba-fefd-4af9-bb54-664f79f8b05a"
+  {:belongs-to :major-maj-seven
+   :tuning     mandolin}
+  "-   -   3   -   -
+   -   -   -   -   7
+   1   -   -   -   -
+   -   -   5   -   -")
+
+(define-chord-pattern #uuid "08c87a5f-bdb3-4d43-8a60-39a50d864ebf"
+  {:belongs-to :minor-seven-flat-5
+   :tuning     mandolin}
+  "-  b5   -
+   -   -   1
+  b3   -   -
+   -   -  b7")
+
+(define-chord-pattern #uuid "08726a63-271a-4424-a4f2-5b8866e24a5d"
+  {:belongs-to :minor-seven-flat-5
+   :tuning     mandolin}
+  "-   -   -   -   -   1
+   -   -   -  b3   -   -
+   -  b5   -   -   -   -
+  b7   -   -   -   -   -")
+
+(define-chord-pattern #uuid "bdb5b4c7-c5d2-4c68-b4d4-e980b4aad494"
+  {:belongs-to :minor-seven-flat-5
+   :tuning     mandolin}
+  "-   -  b7
+   -   -  b3
+  b5   -   -
+   -   1   -")
+
 (define-chord-pattern #uuid "f812e550-0fef-4dd4-86fd-026d324da5b0"
   {:belongs-to :dominant-seven
    :tuning     mandolin}
@@ -1278,6 +1337,22 @@
    -   -   3
    5   -   -
    1   -   -")
+
+(define-chord-pattern #uuid "d87cdf9b-9d38-40d6-852e-ff6313cce4d8"
+  {:belongs-to :dominant-seven
+   :tuning     mandolin}
+  "-   -   -   -   -   1
+   -   -   -   -   3   -
+   -   -   5   -   -   -
+  b7   -   -   -   -   -")
+
+(define-chord-pattern #uuid "f4b0414a-1175-4a06-bef4-44839fddd293"
+  {:belongs-to :dominant-seven
+   :tuning     mandolin}
+  "5   -   -   -   -   -
+   -   -   -   -   3   -
+   -   -   -   -   -  b7
+   -   -   1   -   -   -")
 
 (define-chord-pattern #uuid "3974da8c-aad9-48f0-83a4-99b2700d7e56"
   {:belongs-to :minor-seven
@@ -1287,6 +1362,21 @@
    5   -
    1   -")
 
+(define-chord-pattern #uuid "5613a49c-a44e-455f-83f3-7f8592de9f20"
+  {:belongs-to :minor-seven
+   :tuning     mandolin}
+  "1   -   -
+   -   -   5
+  b7   -   -
+  b3   -   -")
+
+(define-chord-pattern #uuid "1515d7b2-0016-41a2-95ab-25a862469494"
+  {:belongs-to :minor-seven
+   :tuning     mandolin}
+  "-   -   5
+   -   -   1
+  b3   -   -
+   -   -  b7")
 
 (define-chord-pattern #uuid "1a808ddd-db74-4076-b384-67e6b5059b58"
   {:belongs-to :major
