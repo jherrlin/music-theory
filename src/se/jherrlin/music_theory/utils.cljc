@@ -1212,7 +1212,8 @@
                       :type            :scale
                       :scale/scale     scale
                       :scale/intervals intervals'
-                      :scale/indexes   indexes}
+                      :scale/indexes   indexes
+                      :scale/order     1000}
                      (->> meta-data
                           (map (fn [[k v]]
                                  [(->> k name (str "scale/") keyword) v]))
