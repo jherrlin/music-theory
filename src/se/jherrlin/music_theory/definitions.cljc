@@ -1973,7 +1973,8 @@
 
 (define-scale-pattern #uuid "9c1b21b5-028a-4a0c-a201-d592e3e319d3"
   {:belongs-to :dorian
-   :tuning     guitar}
+   :tuning     guitar
+   :order      4}
   "-   1   -   2  b3
    -   5   -   6  b7
    2  b3   -   4   -
@@ -1981,10 +1982,22 @@
    -   4   -   5   -
    -   1   -   2  b3")
 
+(define-scale-pattern #uuid "920adafa-32a3-4c21-b6e0-5186d2984348"
+  {:belongs-to :dorian
+   :tuning     guitar
+   :order      1}
+  "-   -   -   6  b7   -   1
+   -   -   -   -   4   -   5
+   6  b7   -   1   -   2  b3
+   -   4   -   5   -   -   -
+   -   1   -   2  b3   -   -
+   -   -   -   -   -   -   -")
+
 (define-scale-pattern #uuid "8d921443-11e6-4bfc-b10e-f017ce748375"
   {:belongs-to :dorian
    :string     6
-   :tuning     guitar}
+   :tuning     guitar
+   :order      5}
   "-   -   -   -   -
    -   -   -   -   -
    -   -   -   -   -
@@ -1995,7 +2008,8 @@
 (define-scale-pattern #uuid "dd98e6d1-68c7-429a-b8a5-c5c18b898b59"
   {:belongs-to :dorian
    :string     5
-   :tuning     guitar}
+   :tuning     guitar
+   :order      6}
   "-   -   -   -   -
    -   -   -   -   -
    6  b7   -   1   -
@@ -2006,7 +2020,8 @@
 (define-scale-pattern #uuid "8168c9d7-6201-4e0c-88b3-f5bcba5d68f1"
   {:belongs-to :dorian
    :string     4
-   :tuning     guitar}
+   :tuning     guitar
+   :order      2}
   "-   -   -   -
    6  b7   -   1
    4   -   5   -
@@ -2017,12 +2032,24 @@
 (define-scale-pattern #uuid "5bae88ab-d90c-4f4e-8e79-6783aaa51788"
   {:belongs-to :dorian
    :string     3
-   :tuning     guitar}
+   :tuning     guitar
+   :order      3}
   "6  b7   -   1
    -   4   -   5
    1   -   2  b3
    -   -   -   -
    -   -   -   -
+   -   -   -   -")
+
+(define-scale-pattern #uuid "5d84995d-72ba-4626-aadf-299f4f26152b"
+  {:belongs-to :dorian
+   :tuning     guitar
+   :order      10}
+  "-   -   -   -
+   -   1   -   -
+   5   -   6  b7
+   2  b3   -   4
+   -   -   -   1
    -   -   -   -")
 
 (define-scale-pattern #uuid "24aeb3b1-99dd-46bf-953a-fb21ac41c88e"
