@@ -2112,6 +2112,17 @@
    3   -  b5   5
    -   1   -   2")
 
+(define-scale-pattern #uuid "c2ece510-024e-4b38-a39e-0f776f93665e"
+  {:belongs-to :lydian
+   :tuning     guitar
+   :order      1}
+  "-   -   -   6   -   7   1
+   -   -   -   3   -  #4   5
+   6   -   7   1   -   2   -
+   3   -  #4   5   -   -   -
+   -   1   -   2   -   -   -
+   -   -   -   -   -   -   -")
+
 (define-scale-pattern #uuid "37e8a1b9-79b6-46bd-ae0b-37b6af92ebeb"
   {:belongs-to :lydian
    :tuning     guitar}
