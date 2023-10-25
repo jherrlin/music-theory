@@ -272,6 +272,7 @@
                    sufix          :chord/sufix
                    root           :chord/root-tone
                    chord          :chord/chord
+                   mode           :harmonization/mode
                    family-str     :harmonization/family-str
                    :as            m}]
              (map-indexed vector harmonization')]
@@ -289,7 +290,10 @@
                     query-params)}
             [:p {:style {:margin-right "2em"}}
              (str (some-> interval-tones first name str/capitalize) sufix)]]
-           [:p {:style {:margin-right "2em"}} mode-str]
+           [:a {:href (rfe/href :scale
+                                (assoc path-params :scale mode :key-of root)
+                                query-params)}
+            [:p {:style {:margin-right "2em"}} mode-str]]
            [:p {:style {:margin-right "2em"}} family-str]
            [:p {:style {:margin-right "2em"}}
             (->> intervals (str/join ", "))]
