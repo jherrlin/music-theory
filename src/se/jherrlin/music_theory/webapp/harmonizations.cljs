@@ -160,6 +160,37 @@
   :key-of                   :c,
   :harmonization/mode       :locrian}]
 
+(defn harmonizations-table [ms]
+  (let [path-params  @(re-frame/subscribe [:path-params])
+        _            (def path-params path-params)
+        query-params @(re-frame/subscribe [:query-params])
+        _            (def query-params query-params)]
+    [:<>
+     [:p "T = Tonic (stable), S = Subdominant (leaving), D = Dominant (back home)"]
+     [:table
+      [:tr (map (fn [m] [:th (:harmonization/index m)]) ms)]
+      [:tr (map (fn [m] [:th (:harmonization/position m)]) ms)]
+
+      [:tr (map (fn [{chord-root-tone :chord/root-tone
+                      mode            :harmonization/mode
+                      :as             m}]
+                  [:th
+                   [:a {:href (rfe/href :scale
+                                        (assoc path-params :scale mode :key-of chord-root-tone)
+                                        query-params)}
+                    (:harmonization/mode-str m)]]) ms)]
+      [:tr (map (fn [m] [:th (:harmonization/family-str m)]) ms)]
+      [:tr (map (fn [{:keys           []
+                      chord-root-tone :chord/root-tone
+                      chord           :chord/chord
+                      :as             m}]
+                  [:th
+                   [:a
+                    {:href (rfe/href
+                            :chord
+                            (assoc path-params :chord chord :key-of chord-root-tone)
+                            query-params)}
+                    (:chord-name m)]]) ms)]]]))
 
 (defn harmonizations-view []
   (let [path-params         @(re-frame/subscribe [:path-params])
@@ -235,11 +266,10 @@
          :nr-of-octavs? (= instrument-type :keyboard)}]
 
        [:br]
-       [:pre {:style {:overflow-x "auto"}}
-        (->> harmonization' (utils/harmonization-str))]
+       [harmonizations-table harmonization']
        [:br]
 
-       [:h3 "All " (if as-intervals "interval" "tone") " positions in the scale"]
+       [:h2 "All " (if as-intervals "interval" "tone") " positions in the scale"]
 
        [instrument-types/instrument-component
         {:fretboard-matrix (if as-intervals
