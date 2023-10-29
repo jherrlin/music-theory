@@ -162,9 +162,7 @@
 
 (defn harmonizations-table [ms]
   (let [path-params  @(re-frame/subscribe [:path-params])
-        _            (def path-params path-params)
-        query-params @(re-frame/subscribe [:query-params])
-        _            (def query-params query-params)]
+        query-params @(re-frame/subscribe [:query-params])]
     [:<>
      [:p "T = Tonic (stable), S = Subdominant (leaving), D = Dominant (back home)"]
      [:table
@@ -367,9 +365,10 @@
                            [:nr-of-frets  {:optional true} int?]
                            [:nr-of-octavs {:optional true} int?]
                            [:as-intervals {:optional true} boolean?]
-                           [:as-text      {:optional true} boolean?]]}
+                           [:as-text      {:optional true} boolean?]
+                           [:debug        {:optional true} boolean?]]}
       :controllers
       [{:parameters {:path  [:instrument-type :tuning :key-of :harmonization-fn :harmonization-scale]
-                     :query [:nr-of-frets :as-intervals :as-text :nr-of-octavs]}
+                     :query [:nr-of-frets :as-intervals :as-text :nr-of-octavs :debug]}
         :start      (fn [{p :path q :query}]
                       (events/do-on-url-change route-name p q))}]}]))

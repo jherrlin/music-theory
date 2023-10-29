@@ -45,7 +45,7 @@
         (for [[idx bookmark] (map-indexed vector bookmarks)]
           ^{:key (str "bookmark-" idx)}
           [:<>
-           [instrument-types/instrument-component bookmark]
+           [instrument-types/instrument-component (assoc bookmark :entity-info? true)]
            [:br]]))]]))
 
 (def routes

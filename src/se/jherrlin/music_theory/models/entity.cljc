@@ -31,9 +31,10 @@
     (str/join "," [instrument-type' tuning' key-of' id'])))
 
 (defn entities-to-string [es]
-  (->> es
-       (map entity-to-string)
-       (str/join "|")))
+  (when (seq es)
+    (->> es
+         (map entity-to-string)
+         (str/join "|"))))
 
 (comment
   (entity-to-string
