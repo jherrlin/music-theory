@@ -1241,6 +1241,15 @@
    -   -   1
    -   3   -")
 
+(define-chord-pattern #uuid "452c1047-d9c5-429f-8dd7-10b9100e86da"
+  {:belongs-to :major
+   :tuning     mandolin
+   :order      3}
+  "-   5   -   -
+   -   1   -   -
+   3   -   -   -
+   -   -   -   1")
+
 (define-chord-pattern #uuid "e4db6b64-e5e1-46c1-a8ab-e1a99aa26a85"
   {:belongs-to :major
    :tuning     mandolin}
