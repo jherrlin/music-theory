@@ -1330,9 +1330,19 @@
   b5   -   -
    -   1   -")
 
+(define-chord-pattern #uuid "c44cdfce-5408-42f1-94b9-7c88b4a37bf3"
+  {:belongs-to :dominant-seven
+   :tuning     mandolin
+   :order      1}
+  "-   -   3   -
+   -   -   -  b7
+   1   -   -   -
+   -   -   5   -")
+
 (define-chord-pattern #uuid "f812e550-0fef-4dd4-86fd-026d324da5b0"
   {:belongs-to :dominant-seven
-   :tuning     mandolin}
+   :tuning     mandolin
+   :order      2}
   "-  b7   -
    -   -   3
    5   -   -
@@ -1340,7 +1350,8 @@
 
 (define-chord-pattern #uuid "d87cdf9b-9d38-40d6-852e-ff6313cce4d8"
   {:belongs-to :dominant-seven
-   :tuning     mandolin}
+   :tuning     mandolin
+   :order      3}
   "-   -   -   -   -   1
    -   -   -   -   3   -
    -   -   5   -   -   -
@@ -1348,7 +1359,8 @@
 
 (define-chord-pattern #uuid "f4b0414a-1175-4a06-bef4-44839fddd293"
   {:belongs-to :dominant-seven
-   :tuning     mandolin}
+   :tuning     mandolin
+   :order      4}
   "5   -   -   -   -   -
    -   -   -   -   3   -
    -   -   -   -   -  b7
