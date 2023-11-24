@@ -1232,6 +1232,15 @@
    5   -   -   -
    1   -   -   -")
 
+(define-chord-pattern #uuid "86abde57-1178-425d-8db0-628cf39f0f83"
+  {:belongs-to :major
+   :tuning     mandolin
+   :order      2}
+  "1   -   -
+   -   -   5
+   -   -   1
+   -   3   -")
+
 (define-chord-pattern #uuid "e4db6b64-e5e1-46c1-a8ab-e1a99aa26a85"
   {:belongs-to :major
    :tuning     mandolin}
@@ -1265,10 +1274,19 @@
    5   -   -   -
    1   -   -   -")
 
-(define-chord-pattern #uuid "2467a28a-d01a-43e0-a3e4-47a776997b58"
+(define-chord-pattern #uuid "d3eeb38f-2606-4196-8ff7-e925987e6c2c"
   {:belongs-to :minor
    :tuning     mandolin
    :order      2}
+  "-   -   -   5
+   -   -   -   1
+   -  b3   -   -
+   5   -   -   -")
+
+(define-chord-pattern #uuid "2467a28a-d01a-43e0-a3e4-47a776997b58"
+  {:belongs-to :minor
+   :tuning     mandolin
+   :order      3}
   "-   -   1   -   -   -   -
   b3   -   -   -   -   -   -
    -   -   -   -   1   -   -
