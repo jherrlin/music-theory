@@ -24,6 +24,7 @@
 (def ninth              major-second)
 (def augmented-ninth    3)
 (def eleventh           5)
+(def augmented-eleventh 6)
 (def thirteen           9)
 (def octave             perfect-unison)
 (def perfect-octave     perfect-unison)
@@ -122,6 +123,10 @@
    {:semitones eleventh
     :function  "11"
     :name/en   "Eleventh"
+    :name/sv   "Elva"}
+   {:semitones augmented-eleventh
+    :function  "#11"
+    :name/en   "Augmented eleventh"
     :name/sv   "Elva"}
    {:semitones thirteen
     :function  "13"

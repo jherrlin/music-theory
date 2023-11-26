@@ -381,6 +381,11 @@
   {:sufix "aug7"}
   "1 3 #5 b7")
 
+(define-chord #uuid "74fe0ffb-2611-4658-a8bf-6e20497785e5"
+  :major-maj-seven-augmented-7
+  {:sufix "maj7(#11)"}
+  "1 3 7 #11")
+
 (define-chord #uuid "b6855fb7-bdcf-4e18-a60e-95746bf8e7e9"
   :minor-seven-flat-5
   {:sufix       "m7b5"
