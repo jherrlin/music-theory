@@ -376,6 +376,11 @@
    :explanation "suspended 4"}
   "1 4 5")
 
+(define-chord #uuid "3b20204a-185a-4460-b845-ef93aaee36e5"
+  :aug7
+  {:sufix "aug7"}
+  "1 3 #5 b7")
+
 (define-chord #uuid "b6855fb7-bdcf-4e18-a60e-95746bf8e7e9"
   :minor-seven-flat-5
   {:sufix       "m7b5"
