@@ -38,14 +38,20 @@
     :tuning          :mandolin
     :title           "Mandolin"}
    {:instrument-type :fretboard
+    :tuning          :mandola
+    :title           "Mandola"}
+   {:instrument-type :fretboard
+    :tuning          :cittern
+    :title           "Cittern"}
+   {:instrument-type :fretboard
+    :tuning          :mandolin-mandola
+    :title           "Mandolin-mandola"}
+   {:instrument-type :fretboard
     :tuning          :bass
     :title           "Bass"}
    {:instrument-type :fretboard
     :tuning          :guitar-dadgad
     :title           "Guitar (DADGAD)"}
-   {:instrument-type :fretboard
-    :tuning          :mandola
-    :title           "Mandola"}
    {:instrument-type :fretboard
     :tuning          :nordic-mandola
     :title           "Nordic mandola"}

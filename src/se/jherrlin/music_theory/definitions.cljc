@@ -23,6 +23,8 @@
 (def greek-bouzouki-4        [:c :f :a :d])
 (def irish-bouzouki          [:g :d :a :d])
 (def nordic-mandola          [:c :g :d :a :e])
+(def cittern                 [:d :g :d :a :d])
+(def mandolin-mandola        [:c :g :d :a :e])
 
 
 (def instrument-with-tuning
@@ -57,7 +59,11 @@
    :greek-bouzouki-4    {:tuning greek-bouzouki-4
                          :text   "Greek bouzouki (4)"}
    :irish-bouzouki      {:tuning irish-bouzouki
-                         :text   "Irish bouzouki"}})
+                         :text   "Irish bouzouki"}
+   :cittern             {:tuning cittern
+                         :text   "Cittern"}
+   :mandolin-mandola    {:tuning mandolin-mandola
+                         :text   "Mandolin-mandola"}})
 
 (defn instrument-tuning [k]
   (get-in instrument-with-tuning [k :tuning]))
@@ -2278,6 +2284,15 @@
 ;; ---------------
 ;; Scales patterns
 ;; ---------------
+(define-scale-pattern #uuid "4bdb1907-9f82-43cc-99a8-3ba4d7802ade"
+  {:belongs-to :pentatonic-blues
+   :tuning     mandolin
+   :order      1}
+  "5   -   -  b7   -   1   -
+   1   -   -  b3   -   4  b5
+   4  b5   5   -   -  b7   -
+   -   -   1   -   -  b3   -")
+
 (define-scale-pattern #uuid "c2369bd8-e82f-4405-82b7-222b9c2614bd"
   {:belongs-to :pentatonic-blues
    :tuning     guitar
