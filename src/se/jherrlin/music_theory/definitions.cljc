@@ -24,7 +24,7 @@
 (def irish-bouzouki          [:g :d :a :d])
 (def nordic-mandola          [:c :g :d :a :e])
 (def cittern                 [:d :g :d :a :d])
-(def mandolin-mandola        [:c :g :d :a :e])
+(def mandolin-mandola        nordic-mandola)
 
 
 (def instrument-with-tuning
