@@ -1239,6 +1239,60 @@
    -   -   -
    -   -   1")
 
+(define-chord-pattern #uuid "57fc33e7-ac9d-47e3-90cb-f0b2a2f8d796"
+  {:belongs-to :major
+   :tuning     mandola
+   :order      1}
+  "-   -   -   5
+   -   -   -   1
+   -   -   3   -
+   5   -   -   -")
+
+(define-chord-pattern #uuid "24febab7-3332-4b0f-9018-0e5896bc5605"
+  {:belongs-to :major
+   :tuning     mandola
+   :order      2}
+  "1   -   -
+   -   -   5
+   -   -   1
+   -   3   -")
+
+(define-chord-pattern #uuid "b589ffc5-b21a-4387-8440-3dd07f320cad"
+  {:belongs-to :minor
+   :tuning     mandola
+   :order      1}
+  "-   -   -   1
+   -  b3   -   -
+   5   -   -   -
+   1   -   -   -")
+
+(define-chord-pattern #uuid "6808731a-3c0c-4d05-a272-297a9b90cdc1"
+  {:belongs-to :minor
+   :tuning     mandola
+   :order      2}
+  "-  b3   -
+   5   -   -
+   1   -   -
+   -   -   5")
+
+(define-chord-pattern #uuid "f44d2f11-b9cd-4434-8811-73709b2b380e"
+  {:belongs-to :dominant-seven
+   :tuning     mandola
+   :order      1}
+  "-  b7   -
+   -   -   3
+   5   -   -
+   1   -   -")
+
+(define-chord-pattern #uuid "1ca3225a-296d-4f82-93a3-dc5144f384bf"
+  {:belongs-to :dominant-seven
+   :tuning     mandola
+   :order      2}
+  "5   -   -
+   1   -   -
+   -   -   5
+  b7   -   -")
+
 (define-chord-pattern #uuid "144e925c-52c8-4089-b855-efe5bf66d266"
   {:belongs-to :major
    :tuning     mandolin
