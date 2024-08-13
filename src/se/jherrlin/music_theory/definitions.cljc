@@ -347,12 +347,6 @@
    :order       11}
   "1 b3 5 6")
 
-(define-chord #uuid "bef8a634-b802-467a-bb35-f93643fbeb3d"
-  :major-plus-5
-  {:sufix        "+5"
-   :explanation  "major where 5 is raised one half tone"}
-  "1 3 #5")
-
 (define-chord #uuid "c1dff8c0-3c64-4e1c-a6cb-f311580141f9"
   :major-plus-5-flat-7
   {:sufix        "+7"}
